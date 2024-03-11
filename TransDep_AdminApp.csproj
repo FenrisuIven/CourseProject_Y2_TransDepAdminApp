@@ -51,6 +51,12 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
+        <Compile Include="Trucks\Tent.cs" />
+        <Compile Include="Trucks\Refrigerated.cs" />
+        <Compile Include="Trucks\AutomaticClutch.cs" />
+        <Compile Include="Trucks\Truck.cs" />
+        <Compile Include="Trucks\Container.cs" />
+        <Compile Include="Trucks\Truck_ViewModel.cs" />
         <Page Include="MainWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
@@ -65,6 +71,7 @@
         </Compile>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Misc\VersionUpdater.cs" />
         <Compile Include="Properties\AssemblyInfo.cs">
             <SubType>Code</SubType>
         </Compile>
