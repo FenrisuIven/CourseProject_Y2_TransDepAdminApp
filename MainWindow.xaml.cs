@@ -19,6 +19,7 @@ namespace TransDep_AdminApp
             
             trucks = new ObservableCollection<Truck>
             {
+                //
                 new Tent(
                     "Тентова фура №1",
                     new int[]{20, 25},
