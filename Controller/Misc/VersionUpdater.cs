@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace TransDep_AdminApp.Misc
+namespace TransDep_AdminApp
 {
     public class VersionUpdater
     {
@@ -16,7 +16,7 @@ namespace TransDep_AdminApp.Misc
             int numOfDay = cal.GetDayOfMonth(DateTime.Now);
             
             int gitPushNum = 1;         //Last Update: 11.03.2024
-            int countThisWeek = 1;      //Last Update: 11.03.2024 (skip 25 = z)
+            int countThisWeek = 0;      //Last Update: 25.03.2024 (skip 25 = z)
             char verChar = Convert.ToChar((countThisWeek % 26) + 97);
             
             return $"23{numOfWeek}{verChar}" + 
