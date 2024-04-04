@@ -1,27 +1,38 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
-using TransDep_AdminApp.Misc;
+using TransDep_AdminApp;
 using TransDep_AdminApp.Trucks;
 
 namespace TransDep_AdminApp
 {
-    public partial class MainWindow
+    public class Controller
     {
-<<<<<<< Updated upstream
-        public IEnumerable<Truck> trucks { get; }
-        public MainWindow()
+        private MainWindow window;
+        private UI_Controler ui;
+
+        private IEnumerable<Truck> trucks;
+        private int amountOfParkingSpots;
+
+        public Controller(MainWindow _win)
         {
-            InitializeComponent();
+            window = _win;
+        }
+
+        public Truck GetTruck(int idx) => trucks.ElementAt(idx);
+        
+        public void Initialize()
+        {
+            ui = new UI_Controler(window);
             Console.WriteLine(VersionUpdater.GetCurrentVersion());
-            version.Text = VersionUpdater.GetCurrentVersion();
+            window.version.Text = VersionUpdater.GetCurrentVersion();
             
-            trucks = new ObservableCollection<Truck>
-            {   //Don't look at this lmao I was too happy
-                //about the code working to care about...
-                //this. :)
+            TruckList.SetTruckList(new List<Truck>
+            {
                 new Tent(
                     "Тентова фура №1",
                     new int[]{20, 25},
@@ -58,27 +69,17 @@ namespace TransDep_AdminApp
                     new int[]{24, 33},
                     new int[]{60, 96},
                     false)
-            };
-            listBox.ItemsSource = trucks;
-=======
-        public Controller controller;
-        public MainWindow()
-        {
-            InitializeComponent();
-            controller = new Controller(this);
-            controller.Initialize();
-            Task temp = new Task(
-                "Test", 
-                TruckList.GetTruckFromList(1), 
-                new Driver("Name, Middle Name, Last Name"),
-                new Route("Cherkassy", "Kyiv"),
-                new Cargo(1.5, 20, "Ice Cream"));
-            Console.WriteLine(temp);
->>>>>>> Stashed changes
+            });
+            ui.amountOfParkingSpots = 10;
+            var truckList = new ObservableCollection<Truck>(TruckList.GetTruckList);
+            
+            ui.Initialize(truckList);
         }
-        public void Navigate(UserControl nextPage)
+
+        public void AddTruck()
         {
-            this.Content = nextPage;
-        } 
+            Console.WriteLine("Got: Open Second Window");
+            ui.OpenAddWindow();
+        }
     }
 }

@@ -1,4 +1,8 @@
-<div style="text-align:center"><b>Застосунок адміністратора транспортного відділу підприємства</b></div>
+<div style="text-align:center"><b>2414a04_02:</b> Basic Task system implementation. Add new classes and their basic functionality: Driver, Task, Route, Cargo. Reformat folder structure 
+
+---
+
+<b>Застосунок адміністратора транспортного відділу підприємства</b></div>
 
 ---
 
