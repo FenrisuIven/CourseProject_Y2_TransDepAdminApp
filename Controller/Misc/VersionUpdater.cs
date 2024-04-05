@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace TransDep_AdminApp.Misc
+namespace TransDep_AdminApp
 {
     public class VersionUpdater
     {
@@ -15,13 +15,8 @@ namespace TransDep_AdminApp.Misc
             int numOfWeek = cal.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
             int numOfDay = cal.GetDayOfMonth(DateTime.Now);
             
-<<<<<<< Updated upstream:Misc/VersionUpdater.cs
-            int gitPushNum = 1;         //Last Update: 11.03.2024
-            int countThisWeek = 1;      //Last Update: 11.03.2024 (skip 25 = z)
-=======
             int gitPushNum = 2;         //Last Update: 11.03.2024
-            int countThisWeek = 0;      //Last Update: 04.04.2024 (skip 25 = z)
->>>>>>> Stashed changes:Controller/Misc/VersionUpdater.cs
+            int countThisWeek = 0;      //Last Update: 05.04.2024 (skip 25 = z)
             char verChar = Convert.ToChar((countThisWeek % 26) + 97);
             
             return $"24{numOfWeek}{verChar}" + 
