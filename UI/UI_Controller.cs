@@ -24,13 +24,13 @@ namespace TransDep_AdminApp
             
             for (int i = 0; i < amountOfParkingSpots; i++)
             {
-                window.parkingGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                //window.parkingGrid.ColumnDefinitions.Add(new ColumnDefinition());
                 TextBox temp = new TextBox();
                 temp.Text = $"Truck {i}";
                 temp.TextAlignment = TextAlignment.Center;
                 
                 Grid.SetColumn(temp, i);
-                window.parkingGrid.Children.Add(temp);
+                //window.parkingGrid.Children.Add(temp);
             }
             for (int i = 0; i < amountOfParkingSpots; i++)
             {
@@ -39,7 +39,7 @@ namespace TransDep_AdminApp
                 temp.TextAlignment = TextAlignment.Center;
                 Grid.SetRow(temp, 1);
                 Grid.SetColumn(temp, i);
-                window.parkingGrid.Children.Add(temp);
+                //window.parkingGrid.Children.Add(temp);
             }
         }
 

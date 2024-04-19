@@ -33,6 +33,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="GoogleMapsApi, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\GoogleMapsApi.1.2.1\lib\netstandard2.0\GoogleMapsApi.dll</HintPath>

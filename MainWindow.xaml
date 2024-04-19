@@ -5,24 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TransDep_AdminApp" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1080"
+        Title="MainWindow" 
+        Height="720" Width="1080"
+        SizeToContent="WidthAndHeight"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     
-    <Grid Name="layoutGrid">
+    <Grid Name="layoutGrid" 
+          Height="700" Width="1080">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="640"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10*" />
-            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="360" />
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
 
         <ListBox x:Name="listBox"
-            ItemsSource="{Binding trucks}"
-            Margin="10,10,10,10" 
-            Grid.RowSpan="2" FontSize="10">
+                 ItemsSource="{Binding trucks}"
+                 Margin="10,10,10,10" 
+                 Grid.RowSpan="2" FontSize="10">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -50,33 +53,30 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Canvas Grid.Column="1" 
+        <Canvas Grid.Row="0" Grid.Column="1" 
+                Width="690" Height="625"
                 HorizontalAlignment="Center" 
-                Height="630" 
-                Width="690"
                 VerticalAlignment="Top" 
                 Background="#FFB5B5B5" 
                 Margin="0,10,0,0">
-            <Grid Name="parkingGrid" Height="630" Width="690" Background="#FFC8B6B6">
+            <!--<Grid Name="parkingGrid" Height="630" Width="690" Background="#FFC8B6B6">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                 </Grid.ColumnDefinitions>
-            </Grid>
+            </Grid>-->
         </Canvas>
 
         <Button Name="addTruckBtn"
                 Click = "addTruckBtn_Click"
                 Content="Add New Truck" 
-                HorizontalAlignment="Left" 
-                Margin="15,651,0,0" 
+                HorizontalAlignment="Left"  
                 VerticalAlignment="Top" 
-                Height="43" 
-                Width="106"
-                Grid.RowSpan="2"
-                Grid.Column="1" />
+                Width="110" Height="45" 
+                Margin="15,5,0,0"
+                Grid.Row="1" Grid.Column="1"/>
 
         <TextBox x:Name="version" Text="0" 
             Background="{x:Null}" 
