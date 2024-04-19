@@ -1,4 +1,10 @@
-<div style="text-align:center"><b>2414a04_02:</b> Basic Task system implementation. Add new classes and their basic functionality: Driver, Task, Route, Cargo. Reformat folder structure 
+
+<div style="text-align:center">
+
+![obviously not working preview image](https://github.com/FenrisuIven/CourseProject_Y2_TransDepAdminApp/blob/development/preview/preview_2416a19_03.png?raw=true)
+
+<b>2416a19_03:</b> Fixes and small adjustments to UI<br><br>
+<b>2414a04_02:</b> Basic Task system implementation. Add new classes and their basic functionality: Driver, Task, Route, Cargo. Reformat folder structure 
 
 ---
 
