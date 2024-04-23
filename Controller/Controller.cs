@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using GoogleMapsApi.Entities.Elevation.Response;
 using TransDep_AdminApp;
 using TransDep_AdminApp.Trucks;
 
@@ -13,9 +14,9 @@ namespace TransDep_AdminApp
     public class Controller
     {
         private MainWindow window;
-        private UI_Controler ui;
+        public UI_Controler ui;
 
-        private IEnumerable<Truck> trucks;
+        public TruckList truckList;
         private int amountOfParkingSpots;
 
         public Controller(MainWindow _win)
@@ -23,63 +24,68 @@ namespace TransDep_AdminApp
             window = _win;
         }
 
-        public Truck GetTruck(int idx) => trucks.ElementAt(idx);
-        
+        public Truck GetTruck(int idx) => truckList.GetTruckFromList(idx);
+
         public void Initialize()
         {
             ui = new UI_Controler(window);
+            truckList = new TruckList();
             Console.WriteLine(VersionUpdater.GetCurrentVersion());
             window.version.Text = VersionUpdater.GetCurrentVersion();
-            
-            TruckList.SetTruckList(new List<Truck>
+
+            truckList.SetTruckList(new List<Truck>
             {
                 new Tent(
                     "Тентова фура №1",
-                    new int[]{20, 25},
-                    new int[]{22, 23},
-                    new int[]{60, 96},
+                    new int[] { 20, 25 },
+                    new int[] { 22, 23 },
+                    new int[] { 60, 96 },
                     true),
                 new Refrigerated(
                     "Рефрижератор №1",
-                    new int[]{12, 22},
-                    new int[]{24, 33},
-                    new int[]{60, 96},
+                    new int[] { 12, 22 },
+                    new int[] { 24, 33 },
+                    new int[] { 60, 96 },
                     false),
                 new Tent(
                     "Тентова фура №2",
-                    new int[]{20, 25},
-                    new int[]{22, 23},
-                    new int[]{60, 96},
+                    new int[] { 20, 25 },
+                    new int[] { 22, 23 },
+                    new int[] { 60, 96 },
                     true),
                 new Refrigerated(
                     "Рефрижератор №2",
-                    new int[]{12, 22},
-                    new int[]{24, 33},
-                    new int[]{60, 96},
+                    new int[] { 12, 22 },
+                    new int[] { 24, 33 },
+                    new int[] { 60, 96 },
                     false),
                 new Tent(
                     "Тентова фура №3",
-                    new int[]{20, 25},
-                    new int[]{22, 23},
-                    new int[]{60, 96},
+                    new int[] { 20, 25 },
+                    new int[] { 22, 23 },
+                    new int[] { 60, 96 },
                     true),
                 new Refrigerated(
                     "Рефрижератор №3",
-                    new int[]{12, 22},
-                    new int[]{24, 33},
-                    new int[]{60, 96},
+                    new int[] { 12, 22 },
+                    new int[] { 24, 33 },
+                    new int[] { 60, 96 },
                     false)
             });
             ui.amountOfParkingSpots = 10;
-            var truckList = new ObservableCollection<Truck>(TruckList.GetTruckList);
-            
-            ui.Initialize(truckList);
+
+            ui.Initialize(new ObservableCollection<Truck>(truckList.GetTruckList));
         }
 
-        public void AddTruck()
+        public void RemoveTruck(object target)
         {
-            Console.WriteLine("Got: Open Second Window");
-            ui.OpenAddWindow();
+            var boxResult = MessageBox.Show("You really wanna remove this truck from the list?\n" +
+                                            "Its info cannot be restored later!", "Remove truck from the list",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes);
+            if (boxResult == MessageBoxResult.No) return;
+
+            truckList.RemoveTruck(target);
+            ui.Refresh(new ObservableCollection<Truck>(truckList.GetTruckList));
         }
     }
 }

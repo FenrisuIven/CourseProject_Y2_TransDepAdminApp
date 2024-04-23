@@ -6,14 +6,15 @@ using System.Windows;
 using System.Windows.Controls;
 using TransDep_AdminApp;
 using TransDep_AdminApp.Trucks;
+using TransDep_AdminApp.UI.Screens;
 
 namespace TransDep_AdminApp
 {
     public class UI_Controler
     {
         private MainWindow window;
-        private Window addWindow;
         public int amountOfParkingSpots;
+
         public UI_Controler(MainWindow _win)
         {
             window = _win;
@@ -43,9 +44,51 @@ namespace TransDep_AdminApp
             }
         }
 
-        public void OpenAddWindow()
+        public void Refresh(IEnumerable<Truck> _trucks)
         {
+            window.listBox.ItemsSource = _trucks;
+            window.listBox.SelectedItem = null;
+            window.listBox.SelectedIndex = -1;
+        }
+        
+        public void Window(object sender)
+        {
+            Console.WriteLine("Got: Open Second Window");
+            var target = GetTargetName(sender);
+            switch (target)
+            {
+                case "newTruck":
+                    new AddNewTruck().ShowDialog();
+                    return;
+                case "newTask":
+                    new AddNewTask().ShowDialog();
+                    return;
+                case "newDriver":
+                    new AddNewDriver().ShowDialog();
+                    return;
+                
+                case "changeTruck":
+                    new ChangeTruck().ShowDialog();
+                    return;
+                case "changeTask":
+                    new ChangeTask().ShowDialog();
+                    return;
+                case "changeDriver":
+                    new ChangeDriver().ShowDialog();
+                    return;
+                
+                case "aboutTruck":
+                    new InfoAboutTruck().ShowDialog();
+                    return;
+            }
+        }
+
+        private string GetTargetName(object sender)
+        {
+            if (sender is Button) return ((Button)sender).Name;
+            if (sender is MenuItem) return ((MenuItem)sender).Name;
             
+            return "";
         }
     }
 }

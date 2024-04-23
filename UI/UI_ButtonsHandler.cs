@@ -11,9 +11,7 @@ namespace TransDep_AdminApp
 {
     public partial class MainWindow
     {
-        private void addTruckBtn_Click(object sender, RoutedEventArgs e)
-        {
-            controller.AddTruck();
-        }
+        private void OpenWindow(object sender, RoutedEventArgs e) => controller.ui.Window(sender);
+        private void RemoveTruck(object sender, RoutedEventArgs e) => controller.RemoveTruck(listBox.SelectedItem);
     }
 }

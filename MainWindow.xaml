@@ -3,17 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TransDep_AdminApp" 
+        xmlns:local="clr-namespace:TransDep_AdminApp"
         mc:Ignorable="d"
         Title="MainWindow" 
         Height="720" Width="1080"
+        MinHeight="720" MinWidth="1080"
         SizeToContent="WidthAndHeight"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+        DataContext="{Binding 
+        RelativeSource={RelativeSource Self}}">
     
     <Grid Name="layoutGrid" 
-          Height="700" Width="1080">
+          Height="710" Width="1080">
         <Grid.RowDefinitions>
-            <RowDefinition Height="640"/>
+            <RowDefinition Height="650"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -24,8 +26,9 @@
 
         <ListBox x:Name="listBox"
                  ItemsSource="{Binding trucks}"
+                 Height="625"
                  Margin="10,10,10,10" 
-                 Grid.RowSpan="2" FontSize="10">
+                 FontSize="10">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -51,6 +54,12 @@
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="aboutTruck" Header="Info about truck" Click="OpenWindow"/>
+                    <MenuItem Header="Delete" Click="RemoveTruck"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
 
         <Canvas Grid.Row="0" Grid.Column="1" 
@@ -69,14 +78,14 @@
             </Grid>-->
         </Canvas>
 
-        <Button Name="addTruckBtn"
-                Click = "addTruckBtn_Click"
+        <Button Name="newTruck"
+                Click = "OpenWindow"
                 Content="Add New Truck" 
                 HorizontalAlignment="Left"  
                 VerticalAlignment="Top" 
                 Width="110" Height="45" 
-                Margin="15,5,0,0"
-                Grid.Row="1" Grid.Column="1"/>
+                Margin="10,5,0,0"
+                Grid.Row="1" Grid.Column="0"/>
 
         <TextBox x:Name="version" Text="0" 
             Background="{x:Null}" 

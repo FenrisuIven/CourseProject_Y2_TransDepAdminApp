@@ -11,6 +11,7 @@ namespace TransDep_AdminApp
     public partial class MainWindow
     {
         public Controller controller;
+        public UI_Controler uiController;
         public MainWindow()
         {
             InitializeComponent();
@@ -18,15 +19,11 @@ namespace TransDep_AdminApp
             controller.Initialize();
             Task temp = new Task(
                 "Test", 
-                TruckList.GetTruckFromList(1), 
+                controller.truckList.GetTruckFromList(1), 
                 new Driver("Name, Middle Name, Last Name"),
-                new Route("Cherkassy", "Kyiv"),
+                new Route("Cherkasy", "Kyiv"),
                 new Cargo(1.5, 20, "Ice Cream"));
             Console.WriteLine(temp);
         }
-        public void Navigate(UserControl nextPage)
-        {
-            this.Content = nextPage;
-        } 
     }
 }

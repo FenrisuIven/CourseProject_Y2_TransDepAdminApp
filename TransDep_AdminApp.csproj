@@ -84,7 +84,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controller\Controller.cs" />
-    <Compile Include="Controller\Misc\PageSwitcher.cs" />
     <Compile Include="Controller\Misc\VersionUpdater.cs" />
     <Compile Include="Controller\TruckList.cs" />
     <Compile Include="Model\Classes\Cargo.cs" />
@@ -97,8 +96,29 @@
     <Compile Include="Model\Classes\Trucks\Tent.cs" />
     <Compile Include="Model\Classes\Trucks\Truck.cs" />
     <Compile Include="Model\Classes\Trucks\Truck_ViewModel.cs" />
+    <Compile Include="UI\Screens\AddNewDriver.xaml.cs">
+      <DependentUpon>AddNewDriver.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\ChangeDriver.xaml.cs">
+      <DependentUpon>ChangeDriver.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\ChangeTask.xaml.cs">
+      <DependentUpon>ChangeTask.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\ChangeTruck.xaml.cs">
+      <DependentUpon>ChangeTruck.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\InfoAboutTruck.xaml.cs">
+      <DependentUpon>InfoAboutTruck.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\UI_ButtonsHandler.cs" />
     <Compile Include="UI\UI_Controller.cs" />
+    <Compile Include="UI\Screens\AddNewTask.xaml.cs">
+      <DependentUpon>AddNewTask.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\AddNewTruck.xaml.cs">
+      <DependentUpon>AddNewTruck.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -111,6 +131,13 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UI\Screens\AddNewDriver.xaml" />
+    <Page Include="UI\Screens\AddNewTask.xaml" />
+    <Page Include="UI\Screens\AddNewTruck.xaml" />
+    <Page Include="UI\Screens\ChangeDriver.xaml" />
+    <Page Include="UI\Screens\ChangeTask.xaml" />
+    <Page Include="UI\Screens\ChangeTruck.xaml" />
+    <Page Include="UI\Screens\InfoAboutTruck.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
