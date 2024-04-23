@@ -83,7 +83,7 @@ namespace TransDep_AdminApp
             }
         }
 
-        private string GetTargetName(object sender)
+        public string GetTargetName(object sender)
         {
             if (sender is Button) return ((Button)sender).Name;
             if (sender is MenuItem) return ((MenuItem)sender).Name;

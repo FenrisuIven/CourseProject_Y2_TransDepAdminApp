@@ -87,5 +87,21 @@ namespace TransDep_AdminApp
             truckList.RemoveTruck(target);
             ui.Refresh(new ObservableCollection<Truck>(truckList.GetTruckList));
         }
+
+        public void SwitchPage(object target)
+        {
+            Console.WriteLine("Got: Open Second Window");
+            var name = ui.GetTargetName(target);
+            switch (name)
+            {
+                case "newTruck":
+                    window.navigationFrame.Content = new Page1();
+                    return;
+                
+                case "aboutTruck":
+                    window.navigationFrame.Content = new Page2();
+                    return;
+            }
+        }
     }
 }

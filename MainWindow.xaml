@@ -68,6 +68,7 @@
                 VerticalAlignment="Top" 
                 Background="#FFB5B5B5" 
                 Margin="0,10,0,0">
+            <Frame Name="navigationFrame" NavigationUIVisibility="Hidden" />
             <!--<Grid Name="parkingGrid" Height="630" Width="690" Background="#FFC8B6B6">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
