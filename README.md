@@ -1,9 +1,10 @@
 
 <div style="text-align:center">
 
-![obviously not working preview image](https://github.com/FenrisuIven/CourseProject_Y2_TransDepAdminApp/blob/development/preview/preview_2417a23_04.png?raw=true)
+![obviously not working preview image](https://github.com/FenrisuIven/CourseProject_Y2_TransDepAdminApp/blob/development/preview/preview_2417c23_05.png?raw=true)
 
-<b>2417a23_04:</b> Basic Screens logic and layout implementation. Small adjustments to UI Controller logic and UI Button Click handlers. Small fixes in Main Window Layout<br><br>
+<b>2417c23_05:</b> Folder structure refactor. Truck Addition Screen: auto filled-out name of a current truck that  gets created at the top of the screen.<br><br>
+<b>2417b23_04:</b> Basic Screens logic and layout implementation. Small adjustments to UI Controller logic and UI Button Click handlers. Small fixes in Main Window Layout<br><br>
 <b>2416a19_03:</b> Fixes and small adjustments to UI<br><br>
 <b>2414a04_02:</b> Basic Task system implementation. Add new classes and their basic functionality: Driver, Task, Route, Cargo. Reformat folder structure 
 

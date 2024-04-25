@@ -13,9 +13,8 @@ namespace TransDep_AdminApp
     {
         private void OpenWindow(object sender, RoutedEventArgs e)
         {
-            controller.SwitchPage(sender);
-            controller.ui.Window(sender);
+            MainController.ui.Window(sender);
         }
-        private void RemoveTruck(object sender, RoutedEventArgs e) => controller.RemoveTruck(listBox.SelectedItem);
+        private void RemoveTruck(object sender, RoutedEventArgs e) => MainController.RemoveTruck(listBox.SelectedItem);
     }
 }

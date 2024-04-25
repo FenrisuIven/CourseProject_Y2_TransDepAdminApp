@@ -10,16 +10,16 @@ namespace TransDep_AdminApp
 {
     public partial class MainWindow
     {
-        public Controller controller;
-        public UI_Controler uiController;
+        public MainController MainController;
+        public UI_Controller uiController;
         public MainWindow()
         {
             InitializeComponent();
-            controller = new Controller(this);
-            controller.Initialize();
+            MainController = new MainController(this);
+            MainController.Initialize();
             Task temp = new Task(
                 "Test", 
-                controller.truckList.GetTruckFromList(1), 
+                MainController.truckList.GetTruckFromList(1), 
                 new Driver("Name, Middle Name, Last Name"),
                 new Route("Cherkasy", "Kyiv"),
                 new Cargo(1.5, 20, "Ice Cream"));

@@ -10,12 +10,12 @@ using TransDep_AdminApp.UI.Screens;
 
 namespace TransDep_AdminApp
 {
-    public class UI_Controler
+    public class UI_Controller
     {
         private MainWindow window;
         public int amountOfParkingSpots;
 
-        public UI_Controler(MainWindow _win)
+        public UI_Controller(MainWindow _win)
         {
             window = _win;
         }

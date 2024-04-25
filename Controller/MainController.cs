@@ -11,15 +11,15 @@ using TransDep_AdminApp.Trucks;
 
 namespace TransDep_AdminApp
 {
-    public class Controller
+    public class MainController
     {
         private MainWindow window;
-        public UI_Controler ui;
+        public UI_Controller ui;
 
         public TruckList truckList;
         private int amountOfParkingSpots;
 
-        public Controller(MainWindow _win)
+        public MainController(MainWindow _win)
         {
             window = _win;
         }
@@ -28,7 +28,7 @@ namespace TransDep_AdminApp
 
         public void Initialize()
         {
-            ui = new UI_Controler(window);
+            ui = new UI_Controller(window);
             truckList = new TruckList();
             Console.WriteLine(VersionUpdater.GetCurrentVersion());
             window.version.Text = VersionUpdater.GetCurrentVersion();
@@ -86,22 +86,6 @@ namespace TransDep_AdminApp
 
             truckList.RemoveTruck(target);
             ui.Refresh(new ObservableCollection<Truck>(truckList.GetTruckList));
-        }
-
-        public void SwitchPage(object target)
-        {
-            Console.WriteLine("Got: Open Second Window");
-            var name = ui.GetTargetName(target);
-            switch (name)
-            {
-                case "newTruck":
-                    window.navigationFrame.Content = new Page1();
-                    return;
-                
-                case "aboutTruck":
-                    window.navigationFrame.Content = new Page2();
-                    return;
-            }
         }
     }
 }

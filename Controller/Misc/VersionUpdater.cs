@@ -15,14 +15,14 @@ namespace TransDep_AdminApp
             int numOfWeek = cal.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
             int numOfDay = cal.GetDayOfMonth(DateTime.Now);
             
-            int gitPushNum = 4;         //Last Update: 23.04.2024
-            int countThisWeek = 1;      //Last Update: 23.04.2024 (skip 25 = z)
+            int gitPushNum = 5;         //Last Update: 24.04.2024
+            int countThisWeek = 2;      //Last Update: 24.04.2024 (skip 25 = z)
             char verChar = Convert.ToChar((countThisWeek % 26) + 97);
             
             return $"24{numOfWeek}{verChar}" + 
                    $"{(numOfDay < 10 ? $"0{numOfDay}" : $"{numOfDay}")}_" +
                    $"{(gitPushNum < 10 ? $"0{gitPushNum}" : $"{gitPushNum}")}";
-            //2417b23_04 (23.04.2024)
+            //2417c25_05 (24.04.2024)
         }
     }
 }
