@@ -4,55 +4,235 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:TransDep_AdminApp.UI.Screens"
-        mc:Ignorable="d"
-        Title="AddNewTruck" 
-        SizeToContent="WidthAndHeight">
+        SizeToContent="WidthAndHeight"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        SnapsToDevicePixels="True"
+        Height="500" Width="570"
+        MinHeight="500" MinWidth="570">
+    <Window.Resources>
+        <Style TargetType="Border" x:Key="divider_Bottom_Light">
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+        </Style>
+        <Style TargetType="Border" x:Key="divider_Bottom_Thick" BasedOn="{StaticResource divider_Bottom_Light}">
+            <Setter Property="BorderThickness" Value="0,0,0,3"/>
+        </Style>
+        
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Height" Value="28"/>
+        </Style>
+        <Style x:Key="inputInfo_Alignments">
+            <Setter Property="Control.VerticalAlignment" Value="Stretch"/>
+            <Setter Property="Control.HorizontalAlignment" Value="Left"/>
+            <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="infoInputField_Left_FirstRow" BasedOn="{StaticResource inputInfo_Alignments}">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="70,2,0,0"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="infoInputField_Left_SecondRow" BasedOn="{StaticResource infoInputField_Left_FirstRow}">
+            <Setter Property="Margin" Value="100,2,0,0"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="infoInputField_Right_FirstRow" BasedOn="{StaticResource inputInfo_Alignments}">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="160,2,0,0"/>
+        </Style>
+        
+        <Style TargetType="ComboBox" x:Key="infoComboField" BasedOn="{StaticResource inputInfo_Alignments}">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="Margin" Value="160,2,0,0"/>
+        </Style>
+        <Style TargetType="ComboBox" x:Key="infoComboField_SecondRow" BasedOn="{StaticResource infoComboField}">
+            <Setter Property="Margin" Value="80,2,0,0"/>
+        </Style>
+        <Style TargetType="CheckBox" BasedOn="{StaticResource inputInfo_Alignments}">
+            <Setter Property="Width" Value="15"/>
+            <Setter Property="Height" Value="15"/>
+        </Style>
+        
+        <local:InvertedBoolConverter x:Key="invertedConverter" />
+    </Window.Resources>
+    <Window.Title>
+        <MultiBinding StringFormat="{}New truck with name: {0}">
+            <Binding ElementName="input_TruckName" Path="Text"/>
+        </MultiBinding>
+    </Window.Title>
     
-    <Grid Width="800" Height="450">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="180"/>
+            <RowDefinition Height="220"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         
-        <Border Grid.Row="0" 
-                BorderThickness="0,0,0,1"
-                BorderBrush="LightGray"/>
+        <Border Grid.Row="0" Style="{DynamicResource divider_Bottom_Thick}"/>
+        <Border Grid.Row="1" Style="{DynamicResource divider_Bottom_Light}"/>
         
-        <Label Content="New truck with name:"
-               Height="28" Width="155"
-               FontSize="15"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Top"
-               Margin="10,10,0,0"
-               Grid.Row="0"/>
-        <Label Height="30" Width="625"
-               FontSize="15"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Top"
-               Margin="160,10,0,0"
-               Grid.Row="0">
-            <Label.Content>
-                <AccessText TextTrimming="CharacterEllipsis" Text="{Binding ElementName=textBox_TruckName, Path=Text}"/>
-            </Label.Content>
-        </Label>
         
-        <TextBox Name="textBox_TruckName"
-                 Width="100" Height="40"
-                 VerticalAlignment="Top"
-                 HorizontalAlignment="Left"
-                 Margin="0,10,0,0"
-                 Grid.Row="1"/>
+        <StackPanel Name="firstRow" Height="Auto" Grid.Row="0">
+            <Grid MinHeight="170" Margin="15, 2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                
+                <Label Content="Назва:"              Grid.Row="0" Grid.Column="0"/>
+                <Label Content="Марка:"              Grid.Row="1" Grid.Column="0"/>
+                <Label Content="Модель:"             Grid.Row="2" Grid.Column="0"/>
+                <Label Content="Тип:"                Grid.Row="3" Grid.Column="0"/>
+                <Label Content="Вантажопідйомність:" Grid.Row="0" Grid.Column="1"/>
+                <Label Content="Місткість:"          Grid.Row="1" Grid.Column="1"/>
+                <Label Content="Корисний обсяг:"     Grid.Row="2" Grid.Column="1"/>
+                <Label Content="Технічний стан:"     Grid.Row="3" Grid.Column="1"/>
+                
+                <TextBox Name="input_TruckName" Grid.Row="0" Grid.Column="0"
+                         Style="{DynamicResource infoInputField_Left_FirstRow}"/>
+                <TextBox Name="input_TruckBrand" Grid.Row="1" Grid.Column="0"
+                         Style="{DynamicResource infoInputField_Left_FirstRow}"/>
+                <TextBox Name="input_TruckModel" Grid.Row="2" Grid.Column="0"
+                         Style="{DynamicResource infoInputField_Left_FirstRow}"/>
+                <TextBox Name="input_TruckType" Grid.Row="3" Grid.Column="0"
+                         Style="{DynamicResource infoInputField_Left_FirstRow}"/>
+                <TextBox Name="input_CarryingCapacity" Grid.Row="0" Grid.Column="1"
+                         Style="{DynamicResource infoInputField_Right_FirstRow}"/>
+                <TextBox Name="input_UsefulVolume" Grid.Row="1" Grid.Column="1"
+                         Style="{DynamicResource infoInputField_Right_FirstRow}"/>
+                <TextBox Name="input_Capacity" Grid.Row="2" Grid.Column="1"
+                         Style="{DynamicResource infoInputField_Right_FirstRow}"/>
+                
+                <ComboBox Name="input_TechnicalQuality" Grid.Row="3" Grid.Column="1"
+                          Style="{DynamicResource infoComboField}"
+                          Template="{DynamicResource ComboBox_Transparent}">
+                    <ComboBoxItem Content="10"/>
+                    <ComboBoxItem Content="9"/>
+                    <ComboBoxItem Content="8"/>
+                    <ComboBoxItem Content="7"/>
+                    <ComboBoxItem Content="6"/>
+                    <ComboBoxItem Content="5"/>
+                    <ComboBoxItem Content="4"/>
+                    <ComboBoxItem Content="3"/>
+                    <ComboBoxItem Content="2"/>
+                    <ComboBoxItem Content="1"/>
+                </ComboBox>
+                
+            </Grid>
+        </StackPanel>
+        <StackPanel Name="secondRow" Height="Auto" Grid.Row="1">
+            <Grid MinHeight="210" Margin="15, 4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/> 
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                
+                <Label Content="Водій:"
+                       Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                       IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked, Converter={StaticResource invertedConverter}}"/>
+                <ComboBox Name="input_DriverSelection" 
+                          Width="450" Height="22"
+                          Margin="60,0,0,0"
+                          Style="{StaticResource inputInfo_Alignments}"
+                          Template="{DynamicResource ComboBox_Transparent}"
+                          Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                          IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked, Converter={StaticResource invertedConverter}}">
+                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 10"/>
+                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 9"/>
+                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 8"/>
+                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 7"/>
+                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 6"/>
+                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 5"/>
+                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 4"/>
+                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 3"/>
+                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 2"/>
+                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 1"/>
+                </ComboBox>
+                <Label Content="Додати нового водія?" Grid.Row="1" Grid.Column="0"/>
+                <CheckBox Name="check_CreateNewDriver"
+                          Margin="162,5,0,0"
+                          Grid.Row="1" Grid.Column="0"/>
+                
+                <Label Content="Прізвище:"    Grid.Row="2" Grid.Column="0" 
+                       IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
+                <Label Content="Ім'я:"        Grid.Row="3" Grid.Column="0"
+                       IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
+                <Label Content="По-Батькові:" Grid.Row="4" Grid.Column="0"
+                       IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
+                <Label Content="Рейтинг:"     Grid.Row="2" Grid.Column="1"
+                       IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
+                <Label Content="Категорії:"   Grid.Row="3" Grid.Column="1"
+                       IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
+                
+                <TextBox Grid.Row="2" Grid.Column="0"
+                         Style="{DynamicResource infoInputField_Left_SecondRow}"
+                         IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
+                <TextBox Grid.Row="3" Grid.Column="0"
+                         Style="{DynamicResource infoInputField_Left_SecondRow}"
+                         IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
+                <TextBox Grid.Row="4" Grid.Column="0"
+                         Style="{DynamicResource infoInputField_Left_SecondRow}"
+                         IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
+                
+                <ComboBox Grid.Row="2" Grid.Column="1"
+                          Style="{DynamicResource infoComboField_SecondRow}"
+                          Template="{DynamicResource ComboBox_Transparent}"
+                          IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}">
+                    <ComboBoxItem Content="10"/>
+                    <ComboBoxItem Content="9"/>
+                    <ComboBoxItem Content="8"/>
+                    <ComboBoxItem Content="7"/>
+                    <ComboBoxItem Content="6"/>
+                    <ComboBoxItem Content="5"/>
+                    <ComboBoxItem Content="4"/>
+                    <ComboBoxItem Content="3"/>
+                    <ComboBoxItem Content="2"/>
+                    <ComboBoxItem Content="1"/>
+                </ComboBox>
+                
+                <ComboBox Grid.Row="3" Grid.Column="1"
+                          Style="{DynamicResource infoComboField_SecondRow}"
+                          Template="{DynamicResource ComboBox_Transparent}"
+                          IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}">
+                    <ComboBoxItem Content="10"/>
+                    <ComboBoxItem Content="9"/>
+                    <ComboBoxItem Content="8"/>
+                    <ComboBoxItem Content="7"/>
+                    <ComboBoxItem Content="6"/>
+                    <ComboBoxItem Content="5"/>
+                    <ComboBoxItem Content="4"/>
+                    <ComboBoxItem Content="3"/>
+                    <ComboBoxItem Content="2"/>
+                    <ComboBoxItem Content="1"/>
+                </ComboBox>
+            </Grid>
+        </StackPanel>
         
         <Button Name="testButton"
                 Content="Test Button"
-                Grid.Row="3"
+                Grid.Row="2"
                 Width="100" Height="40" 
                 Click="testButtonClick"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Margin="0,0,10,10"/>
+                Margin="0,0,10,10"
+                IsEnabled="{Binding }"/>
         
     </Grid>
+    
 </Window>
