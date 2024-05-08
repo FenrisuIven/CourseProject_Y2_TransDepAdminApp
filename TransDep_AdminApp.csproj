@@ -38,26 +38,46 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="GoogleMapsApi, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\GoogleMapsApi.1.2.1\lib\netstandard2.0\GoogleMapsApi.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.0-preview.3.24172.9\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
     </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
     </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
@@ -70,6 +90,18 @@
     </Reference>
     <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.Encodings.Web.9.0.0-preview.3.24172.9\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.Json.9.0.0-preview.3.24172.9\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xaml">
@@ -86,18 +118,24 @@
     </ApplicationDefinition>
     <Compile Include="Controller\MainController.cs" />
     <Compile Include="Controller\Misc\VersionUpdater.cs" />
+    <Compile Include="Controller\ObjectMapper.cs" />
+    <Compile Include="Controller\Serialization\FileIO.cs" />
     <Compile Include="Controller\TruckController.cs" />
     <Compile Include="Controller\TruckList.cs" />
-    <Compile Include="Model\Classes\Cargo.cs" />
-    <Compile Include="Model\Classes\Driver.cs" />
-    <Compile Include="Model\Classes\Route.cs" />
-    <Compile Include="Model\Classes\Task.cs" />
-    <Compile Include="Model\Classes\Trucks\AutomaticClutch.cs" />
-    <Compile Include="Model\Classes\Trucks\Container.cs" />
-    <Compile Include="Model\Classes\Trucks\Refrigerated.cs" />
-    <Compile Include="Model\Classes\Trucks\Tent.cs" />
-    <Compile Include="Model\Classes\Trucks\Truck.cs" />
-    <Compile Include="Model\Classes\Trucks\Truck_ViewModel.cs" />
+    <Compile Include="Model\Classes\Cargo\Cargo.cs" />
+    <Compile Include="Model\Classes\Cargo\CargoDTO.cs" />
+    <Compile Include="Model\Classes\Driver\Driver.cs" />
+    <Compile Include="Model\Classes\Driver\DriverDTO.cs" />
+    <Compile Include="Model\Classes\Route\Route.cs" />
+    <Compile Include="Model\Classes\Route\RouteDTO.cs" />
+    <Compile Include="Model\Classes\Task\Task.cs" />
+    <Compile Include="Model\Classes\Task\TaskDTO.cs" />
+    <Compile Include="Model\Classes\TruckDerivedClasses\AutomaticClutch.cs" />
+    <Compile Include="Model\Classes\TruckDerivedClasses\Container.cs" />
+    <Compile Include="Model\Classes\TruckDerivedClasses\Refrigerated.cs" />
+    <Compile Include="Model\Classes\TruckDerivedClasses\Tent.cs" />
+    <Compile Include="Model\Classes\Truck\Truck.cs" />
+    <Compile Include="Model\Classes\Truck\TruckDTO.cs" />
     <Compile Include="UI\Screens\AddNewDriver.xaml.cs">
       <DependentUpon>AddNewDriver.xaml</DependentUpon>
     </Compile>
@@ -116,7 +154,7 @@
     <Compile Include="UI\Screens\TruckAdditionScreen\AddNewTruck.xaml.cs">
       <DependentUpon>AddNewTruck.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\TruckAdditionScreen\UI_AddTruckButtonHandler.cs" />
+    <Compile Include="UI\Screens\TruckAdditionScreen\AddTruck_ButtonHandler.cs" />
     <Compile Include="UI\UI_MainButtonsHandler.cs" />
     <Compile Include="UI\UI_MainController.cs" />
     <Compile Include="UI\Screens\AddNewTask.xaml.cs">
@@ -161,6 +199,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Controller\Serialization\list.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

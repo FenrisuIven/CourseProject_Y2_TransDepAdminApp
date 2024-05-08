@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" 
         Height="720" Width="1080"
-        MinHeight="720" MinWidth="1080"
+        ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         DataContext="{Binding 
         RelativeSource={RelativeSource Self}}">
@@ -26,27 +26,29 @@
 
         <ListBox x:Name="listBox"
                  ItemsSource="{Binding trucks}"
-                 Height="625"
-                 Margin="10,10,10,10" 
-                 FontSize="10">
+                 Height="683"
+                 Margin="10,7,10,10" 
+                 FontSize="10"
+                 Grid.Row="0" Grid.Column="0"
+                 Grid.RowSpan="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
                         
-                        <TextBlock Text="{Binding getName, Mode=OneWay}" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding stringName, Mode=OneWay}" FontWeight="Bold"/>
                         <TextBlock>
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}Вантажопідйомність: {0} тонн | Місткість: {1} європаллета | Корисний обсяг: {2} м.куб.">
-                                    <Binding Path="getCarryingCapacity"/>
-                                    <Binding Path="getCapacity"/>
-                                    <Binding Path="getUsefulVolume"/>
+                                    <Binding Path="stringCarryingCapacity()"/>
+                                    <Binding Path="stringCapacity()"/>
+                                    <Binding Path="stringUsefulVolume()"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
                         <TextBlock>
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}Вільність: {0}">
-                                    <Binding Path="getAvailability"/>
+                                    <Binding Path="stringAvailability()"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -56,8 +58,10 @@
             </ListBox.ItemTemplate>
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Name="aboutTruck" Header="Info about truck" Click="OpenWindow"/>
-                    <MenuItem Header="Delete" Click="RemoveTruck"/>
+                    <MenuItem Name="aboutTruck" Header="Детальна інформація про вантажівку" Click="OpenWindow"/>
+                    <MenuItem Header="Змінити водія" Click="OpenWindow"/>
+                    <MenuItem Header="Змінити місце паркування" Click="OpenWindow"/>
+                    <MenuItem Header="Видалити зі списку" Click="RemoveTruck"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
@@ -81,13 +85,27 @@
 
         <Button Name="newTruck"
                 Click = "OpenWindow"
-                Content="Add New Truck" 
+                HorizontalAlignment="Left"  
+                VerticalAlignment="Top" 
+                Width="120" Height="45" 
+                Margin="15,0,0,0"
+                Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="Додати нову вантажівку"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+        </Button>
+
+        <Button Click = "OpenWindow"
                 HorizontalAlignment="Left"  
                 VerticalAlignment="Top" 
                 Width="110" Height="45" 
-                Margin="10,5,0,0"
-                Grid.Row="1" Grid.Column="0"/>
-
+                Margin="155,0,0,0"
+                Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="Нове завдання"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+        </Button>
+        
         <TextBox x:Name="version" Text="0" 
             Background="{x:Null}" 
             BorderBrush="{x:Null}" 

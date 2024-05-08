@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:TransDep_AdminApp.UI.Screens"
+        xmlns:base="clr-namespace:TransDep_AdminApp"
         SizeToContent="WidthAndHeight"
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
@@ -42,12 +43,17 @@
             <Setter Property="Margin" Value="160,2,0,0"/>
         </Style>
         
-        <Style TargetType="ComboBox" x:Key="infoComboField" BasedOn="{StaticResource inputInfo_Alignments}">
+        <Style TargetType="ComboBox" x:Key="infoComboField_RightSmall" BasedOn="{StaticResource inputInfo_Alignments}">
             <Setter Property="Width" Value="50"/>
             <Setter Property="Height" Value="22"/>
             <Setter Property="Margin" Value="160,2,0,0"/>
         </Style>
-        <Style TargetType="ComboBox" x:Key="infoComboField_SecondRow" BasedOn="{StaticResource infoComboField}">
+        <Style TargetType="ComboBox" x:Key="infoComboField_LeftMiddle" BasedOn="{StaticResource inputInfo_Alignments}">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="Margin" Value="70,2,0,0"/>
+        </Style>
+        <Style TargetType="ComboBox" x:Key="infoComboField_SecondRow" BasedOn="{StaticResource infoComboField_RightSmall}">
             <Setter Property="Margin" Value="80,2,0,0"/>
         </Style>
         <Style TargetType="CheckBox" BasedOn="{StaticResource inputInfo_Alignments}">
@@ -98,21 +104,29 @@
                 
                 <TextBox Name="input_TruckName" Grid.Row="0" Grid.Column="0"
                          Style="{DynamicResource infoInputField_Left_FirstRow}"/>
+                
                 <TextBox Name="input_TruckBrand" Grid.Row="1" Grid.Column="0"
                          Style="{DynamicResource infoInputField_Left_FirstRow}"/>
+                
                 <TextBox Name="input_TruckModel" Grid.Row="2" Grid.Column="0"
                          Style="{DynamicResource infoInputField_Left_FirstRow}"/>
-                <TextBox Name="input_TruckType" Grid.Row="3" Grid.Column="0"
-                         Style="{DynamicResource infoInputField_Left_FirstRow}"/>
+                
                 <TextBox Name="input_CarryingCapacity" Grid.Row="0" Grid.Column="1"
                          Style="{DynamicResource infoInputField_Right_FirstRow}"/>
+                
                 <TextBox Name="input_UsefulVolume" Grid.Row="1" Grid.Column="1"
                          Style="{DynamicResource infoInputField_Right_FirstRow}"/>
+                
                 <TextBox Name="input_Capacity" Grid.Row="2" Grid.Column="1"
                          Style="{DynamicResource infoInputField_Right_FirstRow}"/>
                 
+                <ComboBox Name="input_TruckType" Grid.Row="3" Grid.Column="0"
+                          Style="{DynamicResource infoComboField_LeftMiddle}"
+                          Template="{DynamicResource ComboBox_Transparent}"
+                          SelectionChanged="TruckType_OnSelectionChanged"
+                          ItemsSource="{Binding Source={x:Static base:MainController.TruckTypeValues}}"/>
                 <ComboBox Name="input_TechnicalQuality" Grid.Row="3" Grid.Column="1"
-                          Style="{DynamicResource infoComboField}"
+                          Style="{DynamicResource infoComboField_RightSmall}"
                           Template="{DynamicResource ComboBox_Transparent}">
                     <ComboBoxItem Content="10"/>
                     <ComboBoxItem Content="9"/>
@@ -224,7 +238,7 @@
         </StackPanel>
         
         <Button Name="testButton"
-                Content="Test Button"
+                Content="Зберегти"
                 Grid.Row="2"
                 Width="100" Height="40" 
                 Click="testButtonClick"

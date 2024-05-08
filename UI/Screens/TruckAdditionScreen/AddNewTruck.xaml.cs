@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
+using TransDep_AdminApp.Trucks;
 
 namespace TransDep_AdminApp.UI.Screens
 {
@@ -10,15 +14,8 @@ namespace TransDep_AdminApp.UI.Screens
         {
             InitializeComponent();
         }
-        public bool GetCheck
-        {
-            get
-            {
-                bool truckBrandNull = input_TruckBrand.Text == null;
-                bool truckModelNull = input_TruckModel.Text == null;
-                return true;
-            }
-        }
+
+        
     }
     public class InvertedBoolConverter : IValueConverter
     {

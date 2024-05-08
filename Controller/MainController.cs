@@ -11,6 +11,13 @@ using TransDep_AdminApp.Trucks;
 
 namespace TransDep_AdminApp
 {
+    public enum TruckType
+    {
+        Refrigerated,
+        Container,
+        AutoClutch,
+        Tent
+    }
     public class MainController
     {
         private MainWindow window;
@@ -19,6 +26,9 @@ namespace TransDep_AdminApp
         public TruckList truckList;
         private int amountOfParkingSpots;
 
+        
+        public static TruckType[] TruckTypeValues = (TruckType[])Enum.GetValues(typeof(TruckType));
+        
         public MainController(MainWindow _win)
         {
             window = _win;
@@ -37,39 +47,39 @@ namespace TransDep_AdminApp
             {
                 new Tent(
                     "Тентова фура №1",
-                    new int[] { 20, 25 },
-                    new int[] { 22, 23 },
-                    new int[] { 60, 96 },
+                    22,
+                    23,
+                    60,
                     true),
                 new Refrigerated(
                     "Рефрижератор №1",
-                    new int[] { 12, 22 },
-                    new int[] { 24, 33 },
-                    new int[] { 60, 96 },
+                    22,
+                    23,
+                    60,
                     false),
                 new Tent(
                     "Тентова фура №2",
-                    new int[] { 20, 25 },
-                    new int[] { 22, 23 },
-                    new int[] { 60, 96 },
+                    22,
+                    23,
+                    60,
                     true),
                 new Refrigerated(
                     "Рефрижератор №2",
-                    new int[] { 12, 22 },
-                    new int[] { 24, 33 },
-                    new int[] { 60, 96 },
+                    22,
+                    23,
+                    60,
                     false),
                 new Tent(
                     "Тентова фура №3",
-                    new int[] { 20, 25 },
-                    new int[] { 22, 23 },
-                    new int[] { 60, 96 },
+                    25,
+                    23,
+                    60,
                     true),
                 new Refrigerated(
                     "Рефрижератор №3",
-                    new int[] { 12, 22 },
-                    new int[] { 24, 33 },
-                    new int[] { 60, 96 },
+                    22,
+                    33,
+                    60,
                     false)
             });
             ui.amountOfParkingSpots = 10;
@@ -88,4 +98,6 @@ namespace TransDep_AdminApp
             ui.Refresh(new ObservableCollection<Truck>(truckList.GetTruckList));
         }
     }
+    
+
 }

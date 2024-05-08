@@ -4,8 +4,8 @@ namespace TransDep_AdminApp
 {
     public class Route
     {
-        private string Origin { get; set; }
-        private string Destination { get; set; }
+        public string Origin { get; private set; }
+        public string Destination { get; private set; }
 
         public Route(string start, string finish)
         {
@@ -22,6 +22,6 @@ namespace TransDep_AdminApp
             return $"{hours}:{minutes}:{seconds}";
         }
 
-        public string GetRoute => $"{Origin} -- {Destination}";
+        public string GetRoute() => $"{Origin} -- {Destination}";
     }
 }

@@ -3,6 +3,7 @@
 
 ![obviously not working preview image](https://github.com/FenrisuIven/CourseProject_Y2_TransDepAdminApp/blob/development/preview/preview_2417d28_06.png?raw=true)
 
+<b>2419a08_07:</b> DTO logic for classes, Serialization and Deserialization using System.Text.Json, ObjectMapper WIP, TruckList output stopped working (TBF)<br><br>
 <b>2417d28_06:</b> Truck Addition Screen: basic layout, auto-filled title based on input Name of a truck, "Add New Driver" checkbox logic (blocking and enabling certain fields based on its state)<br><br>
 <b>2417c25_05:</b> Folder structure refactor. Truck Addition Screen: auto filled-out name of a current truck that  gets created at the top of the screen.<br><br>
 <b>2417b23_04:</b> Basic Screens logic and layout implementation. Small adjustments to UI Controller logic and UI Button Click handlers. Small fixes in Main Window Layout<br><br>
