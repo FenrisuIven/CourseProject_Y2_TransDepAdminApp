@@ -12,18 +12,18 @@ namespace TransDep_AdminApp
 {
     public class UI_Controller
     {
-        private MainWindow window;
+        public MainWindow parentWindow { get; private set; }
         public int amountOfParkingSpots;
 
         public UI_Controller(MainWindow _win)
         {
-            window = _win;
+            parentWindow = _win;
         }
-        public void Initialize(IEnumerable<Truck> _trucks)
+        public void Initialize(IEnumerable<TruckDTO> _trucks)
         {
-            window.listBox.ItemsSource = _trucks;
+            parentWindow.listBox.ItemsSource = _trucks;
             
-            for (int i = 0; i < amountOfParkingSpots; i++)
+            /*for (int i = 0; i < amountOfParkingSpots; i++)
             {
                 //window.parkingGrid.ColumnDefinitions.Add(new ColumnDefinition());
                 TextBox temp = new TextBox();
@@ -41,14 +41,20 @@ namespace TransDep_AdminApp
                 Grid.SetRow(temp, 1);
                 Grid.SetColumn(temp, i);
                 //window.parkingGrid.Children.Add(temp);
-            }
+            }*/
         }
 
-        public void Refresh(IEnumerable<Truck> _trucks)
+        public void Refresh(IEnumerable<TruckDTO> _trucks)
         {
-            window.listBox.ItemsSource = _trucks;
-            window.listBox.SelectedItem = null;
-            window.listBox.SelectedIndex = -1;
+            parentWindow.listBox.ItemsSource = _trucks;
+            parentWindow.listBox.SelectedItem = null;
+            parentWindow.listBox.SelectedIndex = -1;
+        }
+        public void Refresh()
+        {
+            parentWindow.listBox.ItemsSource = new ObservableCollection<TruckDTO>(parentWindow.mainController.truckList.GetTruckList);
+            parentWindow.listBox.SelectedItem = null;
+            parentWindow.listBox.SelectedIndex = -1;
         }
         
         public void Window(object sender)
@@ -58,7 +64,7 @@ namespace TransDep_AdminApp
             switch (target)
             {
                 case "newTruck":
-                    new AddNewTruck().ShowDialog();
+                    new AddNewTruck(this).ShowDialog();
                     return;
                 case "newTask":
                     new AddNewTask().ShowDialog();

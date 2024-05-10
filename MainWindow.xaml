@@ -25,7 +25,7 @@
 
 
         <ListBox x:Name="listBox"
-                 ItemsSource="{Binding trucks}"
+                 ItemsSource="{Binding truckListForListBox}"
                  Height="683"
                  Margin="10,7,10,10" 
                  FontSize="10"
@@ -35,20 +35,20 @@
                 <DataTemplate>
                     <StackPanel>
                         
-                        <TextBlock Text="{Binding stringName, Mode=OneWay}" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontWeight="Bold"/>
                         <TextBlock>
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}Вантажопідйомність: {0} тонн | Місткість: {1} європаллета | Корисний обсяг: {2} м.куб.">
-                                    <Binding Path="stringCarryingCapacity()"/>
-                                    <Binding Path="stringCapacity()"/>
-                                    <Binding Path="stringUsefulVolume()"/>
+                                    <Binding Path="CarryingCapacity"/>
+                                    <Binding Path="Capacity"/>
+                                    <Binding Path="UsefulVolume"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
                         <TextBlock>
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}Вільність: {0}">
-                                    <Binding Path="stringAvailability()"/>
+                                    <Binding Path="Availability"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>

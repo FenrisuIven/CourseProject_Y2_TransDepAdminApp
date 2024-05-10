@@ -57,7 +57,11 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -116,6 +120,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\Interfaces\IDataGatherer.cs" />
     <Compile Include="Controller\MainController.cs" />
     <Compile Include="Controller\Misc\VersionUpdater.cs" />
     <Compile Include="Controller\ObjectMapper.cs" />
@@ -136,6 +141,8 @@
     <Compile Include="Model\Classes\TruckDerivedClasses\Tent.cs" />
     <Compile Include="Model\Classes\Truck\Truck.cs" />
     <Compile Include="Model\Classes\Truck\TruckDTO.cs" />
+    <Compile Include="Model\View\AutoClutchValidation.cs" />
+    <Compile Include="Model\View\TruckValidation.cs" />
     <Compile Include="UI\Screens\AddNewDriver.xaml.cs">
       <DependentUpon>AddNewDriver.xaml</DependentUpon>
     </Compile>
@@ -154,9 +161,9 @@
     <Compile Include="UI\Screens\TruckAdditionScreen\AddNewTruck.xaml.cs">
       <DependentUpon>AddNewTruck.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\TruckAdditionScreen\AddTruck_ButtonHandler.cs" />
+    <Compile Include="UI\Screens\TruckAdditionScreen\AddTruck_LogicHandler.cs" />
     <Compile Include="UI\UI_MainButtonsHandler.cs" />
-    <Compile Include="UI\UI_MainController.cs" />
+    <Compile Include="UI\UI_Controller.cs" />
     <Compile Include="UI\Screens\AddNewTask.xaml.cs">
       <DependentUpon>AddNewTask.xaml</DependentUpon>
     </Compile>
@@ -201,6 +208,9 @@
   <ItemGroup>
     <Content Include="Controller\Serialization\list.json" />
     <Content Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controller\Abstract\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

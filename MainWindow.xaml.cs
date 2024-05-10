@@ -16,6 +16,7 @@ namespace TransDep_AdminApp
     {
         public MainController mainController;
         public UI_Controller uiController;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -23,7 +24,7 @@ namespace TransDep_AdminApp
             mainController.Initialize();
             Task task = new Task(
                 "Test", 
-                mainController.truckList.GetTruckFromList(1), 
+                ObjectMapper.MapToTruckSub(mainController.truckList.GetTruckFromList(1)), 
                 new Driver("Name,Middle Name,Last Name", 7),
                 new Route("Cherkasy", "Kyiv"),
                 new Cargo(1.5, 20, CargoType.RequiresRefrigerator));

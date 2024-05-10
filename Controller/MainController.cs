@@ -34,7 +34,7 @@ namespace TransDep_AdminApp
             window = _win;
         }
 
-        public Truck GetTruck(int idx) => truckList.GetTruckFromList(idx);
+        //public Truck GetTruck(int idx) => truckList.GetTruckFromList(idx);
 
         public void Initialize()
         {
@@ -47,55 +47,62 @@ namespace TransDep_AdminApp
             {
                 new Tent(
                     "Тентова фура №1",
-                    22,
-                    23,
+                    60,
+                    60,
                     60,
                     true),
                 new Refrigerated(
                     "Рефрижератор №1",
-                    22,
-                    23,
+                    60,
+                    60,
                     60,
                     false),
                 new Tent(
                     "Тентова фура №2",
-                    22,
-                    23,
+                    60,
+                    60,
                     60,
                     true),
                 new Refrigerated(
                     "Рефрижератор №2",
-                    22,
-                    23,
+                    60,
+                    60,
                     60,
                     false),
                 new Tent(
                     "Тентова фура №3",
-                    25,
-                    23,
+                    60,
+                    60,
                     60,
                     true),
                 new Refrigerated(
                     "Рефрижератор №3",
-                    22,
-                    33,
+                    60,
+                    60,
                     60,
                     false)
             });
             ui.amountOfParkingSpots = 10;
 
-            ui.Initialize(new ObservableCollection<Truck>(truckList.GetTruckList));
+            ui.Initialize(new ObservableCollection<TruckDTO>(truckList.GetTruckList));
         }
 
+        public void AddTruck(object target)
+        {
+            TruckDTO obj = target is Truck ? ObjectMapper.Map<TruckDTO>(target) : (TruckDTO)target;
+            truckList.AddNewTruck(obj);
+        }
+        
         public void RemoveTruck(object target)
         {
             var boxResult = MessageBox.Show("You really wanna remove this truck from the list?\n" +
-                                            "Its info cannot be restored later!", "Remove truck from the list",
+                                            "Its info cannot be restored later!", "Remove truck from the list?",
                 MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes);
             if (boxResult == MessageBoxResult.No) return;
 
-            truckList.RemoveTruck(target);
-            ui.Refresh(new ObservableCollection<Truck>(truckList.GetTruckList));
+            TruckDTO obj = target is Truck ? ObjectMapper.Map<TruckDTO>(target) : (TruckDTO)target;
+            truckList.RemoveTruck(obj);
+            ui.Refresh(new ObservableCollection<TruckDTO>(truckList.GetTruckList));
         }
     }
     

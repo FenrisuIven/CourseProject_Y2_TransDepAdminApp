@@ -1,8 +1,9 @@
 
-<div style="text-align:center">
+<div style="text-align:justify">
 
-![obviously not working preview image](https://github.com/FenrisuIven/CourseProject_Y2_TransDepAdminApp/blob/development/preview/preview_2417d28_06.png?raw=true)
+![obviously not working preview image](https://github.com/FenrisuIven/CourseProject_Y2_TransDepAdminApp/blob/development/preview/preview_2419b10_08.png?raw=true)
 
+<b>2419b10_08:</b> Truck data validation in AddNewTruck window, Transfer objects WIP, Truck addition partially works (only the "truck" side, new truck is present in main list and in ListBox), Object mapper works for all of the DTOs, Small Main Window UI refactor<br><br>
 <b>2419a08_07:</b> DTO logic for classes, Serialization and Deserialization using System.Text.Json, ObjectMapper WIP, TruckList output stopped working (TBF)<br><br>
 <b>2417d28_06:</b> Truck Addition Screen: basic layout, auto-filled title based on input Name of a truck, "Add New Driver" checkbox logic (blocking and enabling certain fields based on its state)<br><br>
 <b>2417c25_05:</b> Folder structure refactor. Truck Addition Screen: auto filled-out name of a current truck that  gets created at the top of the screen.<br><br>

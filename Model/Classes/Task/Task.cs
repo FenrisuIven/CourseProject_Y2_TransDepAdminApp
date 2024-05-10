@@ -1,3 +1,6 @@
+using AutoMapper.Internal;
+using mapper = TransDep_AdminApp.ObjectMapper;
+
 namespace TransDep_AdminApp
 {
     public class Task
@@ -8,21 +11,16 @@ namespace TransDep_AdminApp
         public Route Route { get; private set; }
         public Cargo Cargo { get; private set; }
         
-        public Task(string name, Truck truck, Driver driver, Route route, Cargo cargo)
+        public Task(string name, object truck, object driver, object route, object cargo)
         {
             Name = name;
-            TruckExecutor = truck;
-            DriverExecutor = driver;
-            Route = route;
-            Cargo = cargo;
+            TruckExecutor = truck is TruckDTO truckDto ? (Truck)mapper.MapToTruckSub(truckDto) : truck as Truck;
+            DriverExecutor = driver is DriverDTO driverDto ? mapper.Map<Driver>(driverDto) : driver as Driver;
+            Route = route is RouteDTO routeDto ? mapper.Map<Route>(routeDto) : route as Route;
+            Cargo = cargo is CargoDTO cargoDto ? mapper.Map<Cargo>(cargoDto) : cargo as Cargo;
         }
+        
+        public override string ToString() => $"{Name} ({DriverExecutor}; {TruckExecutor.Name}): {Route} | {Cargo}";
 
-        public override string ToString() => $"{getName()} ({getDriverExecutor()}; {getTruckExecutor()}): {getTaskRoute()} | {getCargo()}";
-
-        public string getName() => $"{Name}";
-        public string getTruckExecutor() => $"{TruckExecutor.stringName()}";
-        public string getDriverExecutor() => $"{DriverExecutor}";
-        public string getTaskRoute() => $"{Route.GetRoute()}; {Route.GetTime()}";
-        public string getCargo() => $"{Cargo.TypeToString()}; {Cargo.WeightToString()}; {Cargo.VolumeToString()};";
     }
 }   

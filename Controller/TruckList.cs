@@ -12,22 +12,19 @@ namespace TransDep_AdminApp
 {
     public class TruckList
     {
-        private static List<Truck> trucks;
+        private static List<TruckDTO> trucks;
 
         public TruckList() {}
         
-        public List<Truck> GetTruckList => trucks;
+        public List<TruckDTO> GetTruckList => trucks;
         public void SetTruckList(List<Truck> list)
         {
-            trucks = new List<Truck>();
-            foreach (var truck in list) trucks.Add(truck);
+            trucks = new List<TruckDTO>();
+            list.ForEach(elem => trucks.Add(ObjectMapper.Map<TruckDTO>(elem)));
         }
 
-        public Truck GetTruckFromList(int idx) => trucks.ElementAt(idx);
-        public void AddNewTruck(Truck truck) => trucks.Add(truck);
-        
-        public void RemoveTruck(Truck truck) => trucks.Remove(truck);
-        public void RemoveTruck(object truck) => trucks.Remove((Truck)truck);
-        public void RemoveTruck(int idx) => trucks.Remove(trucks.ElementAt(idx));
+        public TruckDTO GetTruckFromList(int idx) => trucks.ElementAt(idx);
+        public void AddNewTruck(TruckDTO truck) => trucks.Add(truck);
+        public void RemoveTruck(TruckDTO truck) => trucks.Remove(truck);
     }
 }

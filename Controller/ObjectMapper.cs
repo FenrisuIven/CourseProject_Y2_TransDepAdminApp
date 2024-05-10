@@ -33,46 +33,27 @@ namespace TransDep_AdminApp
                     .ForMember(dest => dest.Route, opt => opt.MapFrom(src => src.Route))
                     .ForMember(dest => dest.Cargo, opt => opt.MapFrom(src => src.Cargo));
                 
-                cfg.CreateMap<TaskDTO, Task>().ConstructUsing(x => MapToTask(x));
+                cfg.CreateMap<TaskDTO, Task>().ConstructUsing(dto => new Task(dto.Name, dto.TruckExecutor, dto.DriverExecutor, dto.Route, dto.Cargo));
             });
         }
 
-        public static T MapTo<T>(object obj) => GetMapper.Map<T>(obj);
-        public static TaskDTO Map(Task obj)
-        {
-            return new TaskDTO
-            {
-                Name = obj.Name,
-                TruckExecutor = MapTo<TruckDTO>(obj.TruckExecutor),
-                DriverExecutor = MapTo<DriverDTO>(obj.DriverExecutor),
-                Route = MapTo<RouteDTO>(obj.Route),
-                Cargo = MapTo<CargoDTO>(obj.Cargo)
-            };
-        }
-        //TODO: Seems to not be working. Need to be fixed
-        public static Func<TaskDTO, Task> MapToTask = (obj) => new Task(
-            obj.Name,
-            (Truck)MapToTruckSub(obj.TruckExecutor),
-            MapTo<Driver>(obj.DriverExecutor),
-            MapTo<Route>(obj.Route),
-            MapTo<Cargo>(obj.Cargo));
+        public static T Map<T>(object obj) => GetMapper.Map<T>(obj);
         
-        //TODO: -----------------------------------------
         public static object MapToTruckSub(TruckDTO dto)
         {
             switch (dto.Type)
             {
                 case TruckType.Refrigerated:
-                    return MapTo<Refrigerated>(dto);
+                    return Map<Refrigerated>(dto);
                 
                 case TruckType.Container:
-                    return MapTo<Container>(dto);
+                    return Map<Container>(dto);
                 
                 case TruckType.AutoClutch:
-                    return MapTo<AutomaticClutch>(dto);
+                    return Map<AutomaticClutch>(dto);
                 
                 case TruckType.Tent:
-                    return MapTo<Tent>(dto);
+                    return Map<Tent>(dto);
             }
             return default;
         }
