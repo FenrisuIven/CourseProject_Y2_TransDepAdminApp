@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using TransDep_AdminApp;
+using TransDep_AdminApp.Parking;
 using TransDep_AdminApp.Trucks;
 using TransDep_AdminApp.UI.Screens;
 
@@ -12,59 +15,42 @@ namespace TransDep_AdminApp
 {
     public class UI_Controller
     {
-        public MainWindow parentWindow { get; private set; }
+        private MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
         public int amountOfParkingSpots;
 
-        public UI_Controller(MainWindow _win)
+        private UI_Controller() { }
+        private static UI_Controller _instance;
+        public static UI_Controller Instance
         {
-            parentWindow = _win;
-        }
-        public void Initialize(IEnumerable<TruckDTO> _trucks)
-        {
-            parentWindow.listBox.ItemsSource = _trucks;
-            
-            /*for (int i = 0; i < amountOfParkingSpots; i++)
+            get
             {
-                //window.parkingGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                TextBox temp = new TextBox();
-                temp.Text = $"Truck {i}";
-                temp.TextAlignment = TextAlignment.Center;
-                
-                Grid.SetColumn(temp, i);
-                //window.parkingGrid.Children.Add(temp);
+                if (_instance == null) _instance = new UI_Controller();
+                return _instance;
             }
-            for (int i = 0; i < amountOfParkingSpots; i++)
-            {
-                TextBox temp = new TextBox();
-                temp.Text = $"Truck {i}";
-                temp.TextAlignment = TextAlignment.Center;
-                Grid.SetRow(temp, 1);
-                Grid.SetColumn(temp, i);
-                //window.parkingGrid.Children.Add(temp);
-            }*/
+        }
+        public void Initialize()
+        {
+            mainWindow.listBox.ItemsSource = MainController.Instance.truckList;
+            mainWindow.ParkingLot_ItemsCtrl.ItemsSource = ParkingLot.GetTrucksOnLot;
         }
 
-        public void Refresh(IEnumerable<TruckDTO> _trucks)
-        {
-            parentWindow.listBox.ItemsSource = _trucks;
-            parentWindow.listBox.SelectedItem = null;
-            parentWindow.listBox.SelectedIndex = -1;
-        }
         public void Refresh()
         {
-            parentWindow.listBox.ItemsSource = new ObservableCollection<TruckDTO>(parentWindow.mainController.truckList.GetTruckList);
-            parentWindow.listBox.SelectedItem = null;
-            parentWindow.listBox.SelectedIndex = -1;
+            mainWindow.listBox.Items.Refresh();
+            mainWindow.listBox.SelectedItem = null;
+            mainWindow.listBox.SelectedIndex = -1;
+
+            mainWindow.ParkingLot_ItemsCtrl.ItemsSource = ParkingLot.GetTrucksOnLot;
+            mainWindow.ParkingLot_ItemsCtrl.Items.Refresh();
         }
         
-        public void Window(object sender)
+        public static void Window(object sender)
         {
-            Console.WriteLine("Got: Open Second Window");
             var target = GetTargetName(sender);
             switch (target)
             {
                 case "newTruck":
-                    new AddNewTruck(this).ShowDialog();
+                    new AddNewTruck().ShowDialog();
                     return;
                 case "newTask":
                     new AddNewTask().ShowDialog();
@@ -76,9 +62,6 @@ namespace TransDep_AdminApp
                 case "changeTruck":
                     new ChangeTruck().ShowDialog();
                     return;
-                case "changeTask":
-                    new ChangeTask().ShowDialog();
-                    return;
                 case "changeDriver":
                     new ChangeDriver().ShowDialog();
                     return;
@@ -86,10 +69,20 @@ namespace TransDep_AdminApp
                 case "aboutTruck":
                     new InfoAboutTruck().ShowDialog();
                     return;
+                case "changeParkingSpace":
+                    new ChangeParkingPlace().ShowDialog();
+                    return;
+                
+                case "rawDriverData":
+                    new DriverListDisplay().Show();
+                    return;
+                case "rawTruckData":
+                    new TruckListDisplay().Show();
+                    return;
             }
         }
 
-        public string GetTargetName(object sender)
+        private static string GetTargetName(object sender)
         {
             if (sender is Button) return ((Button)sender).Name;
             if (sender is MenuItem) return ((MenuItem)sender).Name;

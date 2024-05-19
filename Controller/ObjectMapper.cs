@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
+using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.Trucks;
 
 namespace TransDep_AdminApp
@@ -8,7 +10,7 @@ namespace TransDep_AdminApp
     
     public class ObjectMapper
     {
-        public static Mapper GetMapper => new Mapper(GetMapperConfig());    //TODO: Rename GetMapper to smth
+        public static Mapper AutoMapper => new Mapper(GetMapperConfig());    //TODO: Rename GetMapper to smth
         public static MapperConfiguration GetMapperConfig()
         {
             return new MapperConfiguration(cfg =>
@@ -37,7 +39,7 @@ namespace TransDep_AdminApp
             });
         }
 
-        public static T Map<T>(object obj) => GetMapper.Map<T>(obj);
+        public static T Map<T>(object obj) => AutoMapper.Map<T>(obj);
         
         public static object MapToTruckSub(TruckDTO dto)
         {

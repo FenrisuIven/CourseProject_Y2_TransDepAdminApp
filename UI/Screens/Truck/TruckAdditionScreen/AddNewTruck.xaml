@@ -10,8 +10,7 @@
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
         SnapsToDevicePixels="True"
-        Height="500" Width="570"
-        MinHeight="500" MinWidth="570">
+        Height="500" Width="570">
     <Window.Resources>
         <Style TargetType="Border" x:Key="divider_Bottom_Light">
             <Setter Property="BorderThickness" Value="0,0,0,2"/>
@@ -42,13 +41,18 @@
             <Setter Property="Height" Value="20"/>
             <Setter Property="Margin" Value="70,2,0,0"/>
         </Style>
-        <Style TargetType="TextBox" x:Key="infoInputField_Left_SecondRow" BasedOn="{StaticResource infoInputField_Left_FirstRow}">
-            <Setter Property="Margin" Value="100,2,0,0"/>
-        </Style>
         <Style TargetType="TextBox" x:Key="infoInputField_Right_FirstRow" BasedOn="{StaticResource inputInfo_Base}">
             <Setter Property="Width" Value="100"/>
             <Setter Property="Height" Value="20"/>
             <Setter Property="Margin" Value="160,2,0,0"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="infoInputField_Left_SecondRow" BasedOn="{StaticResource infoInputField_Left_FirstRow}">
+            <Setter Property="Margin" Value="100,2,0,0"/>
+        </Style>
+        <Style TargetType="TextBox" x:Key="infoInputField_Right_SecondRow" BasedOn="{StaticResource inputInfo_Base}">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="80,2,0,0"/>
         </Style>
         
         <Style TargetType="ComboBox" x:Key="infoComboField_RightSmall" BasedOn="{StaticResource inputInfo_Base}">
@@ -73,7 +77,7 @@
         <local:SelectionAvailableConverter x:Key="selectionAvailableConverter" />
     </Window.Resources>
     <Window.Title>
-        <MultiBinding StringFormat="{}New truck with name: {0}">
+        <MultiBinding StringFormat="{}Нова вантажівка з ім'ям: {0}">
             <Binding ElementName="input_TruckName_l" Path="Text"/>
         </MultiBinding>
     </Window.Title>
@@ -88,7 +92,7 @@
         <Border Grid.Row="0" Style="{DynamicResource divider_Bottom_Thick}"/>
         <Border Grid.Row="1" Style="{DynamicResource divider_Bottom_Light}"/>
         
-        <UserControl Grid.Row="0">
+        <UserControl Name="TruckData_UserCtrl" Grid.Row="0">
             <UserControl.DataContext>
                 <view:TruckValidation />
             </UserControl.DataContext>
@@ -109,26 +113,34 @@
                     <Label Content="Марка:"              Grid.Row="1" Grid.Column="0"/>
                     <Label Content="Модель:"             Grid.Row="2" Grid.Column="0"/>
                     <Label Content="Тип:"                Grid.Row="3" Grid.Column="0"/>
-                    <Label Content="Вантажопідйомність:" Grid.Row="0" Grid.Column="1"/>
-                    <Label Content="Місткість:"          Grid.Row="1" Grid.Column="1"/>
-                    <Label Content="Корисний обсяг:"     Grid.Row="2" Grid.Column="1"/>
                     <Label Content="Технічний стан:"     Grid.Row="3" Grid.Column="1"/>
+                    
+                    <Label Content="Вантажопідйомність:" Grid.Row="0" Grid.Column="1"
+                           IsEnabled="{Binding ElementName=input_TruckType, Path=SelectedItem, Converter={StaticResource selectionAvailableConverter}}"/>
+                    <Label Content="Місткість:"          Grid.Row="1" Grid.Column="1"
+                           IsEnabled="{Binding ElementName=input_TruckType, Path=SelectedItem, Converter={StaticResource selectionAvailableConverter}}"/>
+                    <Label Content="Корисний обсяг:"     Grid.Row="2" Grid.Column="1"
+                           IsEnabled="{Binding ElementName=input_TruckType, Path=SelectedItem, Converter={StaticResource selectionAvailableConverter}}"/>
+                    
                     
                     
                     <TextBox Name="input_TruckName_l" Grid.Row="0" Grid.Column="0"
-                             Style="{DynamicResource infoInputField_Left_FirstRow}"/>
+                             Text="{Binding Path=Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                             Style="{DynamicResource infoInputField_Left_FirstRow}"
+                             TextChanged="Input_TruckName_OnTextChanged" />
                     
                     <TextBox Name="input_TruckBrand_l" Grid.Row="1" Grid.Column="0"
                              Text="{Binding Path=Brand, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{DynamicResource infoInputField_Left_FirstRow}"/>
+                             Style="{DynamicResource infoInputField_Left_FirstRow}"
+                             TextChanged="Input_TruckName_OnTextChanged"/>
                     
                     <TextBox Name="input_TruckModel_l" Grid.Row="2" Grid.Column="0"
                              Text="{Binding Path=Model, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{DynamicResource infoInputField_Left_FirstRow}"/>
+                             Style="{DynamicResource infoInputField_Left_FirstRow}"
+                             TextChanged="Input_TruckName_OnTextChanged"/>
                     
                     <UserControl Name="TruckChars_UserControl" Grid.Row="0" Grid.Column="1" Grid.RowSpan="4"
                                  IsEnabled="{Binding ElementName=input_TruckType, Path=SelectedItem, Converter={StaticResource selectionAvailableConverter}}">
-                        
                         <UserControl.DataContext>
                             <view:TruckValidation />
                         </UserControl.DataContext>
@@ -159,12 +171,10 @@
                               Style="{DynamicResource infoComboField_LeftMiddle}"
                               Template="{DynamicResource ComboBox_Transparent}"
                               SelectionChanged="TruckType_OnSelectionChanged"
-                              ItemsSource="{Binding Source={x:Static base:MainController.TruckTypeValues}}"
                               SelectedItem="{Binding Path=Type, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                     <ComboBox Name="input_TechnicalQuality" Grid.Row="3" Grid.Column="1"
                               Style="{DynamicResource infoComboField_RightSmall}"
                               Template="{DynamicResource ComboBox_Transparent}"
-                              
                               SelectedItem="{Binding Path=Quality, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBoxItem Content="10"/>
                         <ComboBoxItem Content="9"/>
@@ -181,7 +191,8 @@
                 </Grid>
             </StackPanel>
         </UserControl>
-        <StackPanel Name="secondRow" Height="Auto" Grid.Row="1">
+        
+        <StackPanel Grid.Row="1" Name="secondRow" Height="Auto">
             <Grid MinHeight="210" Margin="15, 4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -189,12 +200,8 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                
                 <Label Content="Водій:"
                        Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                        IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked, Converter={StaticResource invertedBoolConverter}}"/>
@@ -204,82 +211,104 @@
                           Style="{StaticResource inputInfo_Base}"
                           Template="{DynamicResource ComboBox_Transparent}"
                           Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                          SelectedItem="{Binding Path=DriverDto, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                           IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked, Converter={StaticResource invertedBoolConverter}}">
-                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 10"/>
-                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 9"/>
-                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 8"/>
-                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 7"/>
-                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 6"/>
-                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 5"/>
-                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 4"/>
-                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 3"/>
-                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 2"/>
-                    <ComboBoxItem Content="Прізвище Ім'я По-Батькові 1"/>
+                    <ComboBox.DataContext>
+                        <view:DriverValidation />
+                    </ComboBox.DataContext>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0}: {1}, {2}/10, {3}">
+                                        <Binding Path="Id"/>
+                                        <Binding Path="FullName"/>
+                                        <Binding Path="Rating"/>
+                                        <Binding Path="Category"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
                 <Label Content="Додати нового водія?" Grid.Row="1" Grid.Column="0"/>
                 <CheckBox Name="check_CreateNewDriver"
                           Margin="162,5,0,0"
-                          Grid.Row="1" Grid.Column="0"/>
-                
-                <Label Content="Прізвище:"    Grid.Row="2" Grid.Column="0" 
-                       IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
-                <Label Content="Ім'я:"        Grid.Row="3" Grid.Column="0"
-                       IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
-                <Label Content="По-Батькові:" Grid.Row="4" Grid.Column="0"
-                       IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
-                <Label Content="Рейтинг:"     Grid.Row="2" Grid.Column="1"
-                       IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
-                <Label Content="Категорії:"   Grid.Row="3" Grid.Column="1"
-                       IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
-                
-                <TextBox Grid.Row="2" Grid.Column="0"
-                         Style="{DynamicResource infoInputField_Left_SecondRow}"
-                         IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
-                <TextBox Grid.Row="3" Grid.Column="0"
-                         Style="{DynamicResource infoInputField_Left_SecondRow}"
-                         IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
-                <TextBox Grid.Row="4" Grid.Column="0"
-                         Style="{DynamicResource infoInputField_Left_SecondRow}"
-                         IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}"/>
-                
-                <ComboBox Grid.Row="2" Grid.Column="1"
-                          Style="{DynamicResource infoComboField_SecondRow}"
-                          Template="{DynamicResource ComboBox_Transparent}"
-                          IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}">
-                    <ComboBoxItem Content="10"/>
-                    <ComboBoxItem Content="9"/>
-                    <ComboBoxItem Content="8"/>
-                    <ComboBoxItem Content="7"/>
-                    <ComboBoxItem Content="6"/>
-                    <ComboBoxItem Content="5"/>
-                    <ComboBoxItem Content="4"/>
-                    <ComboBoxItem Content="3"/>
-                    <ComboBoxItem Content="2"/>
-                    <ComboBoxItem Content="1"/>
-                </ComboBox>
-                <ComboBox Grid.Row="3" Grid.Column="1"
-                          Style="{DynamicResource infoComboField_SecondRow}"
-                          Template="{DynamicResource ComboBox_Transparent}"
-                          IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}">
-                    <ComboBoxItem Content="10"/>
-                    <ComboBoxItem Content="9"/>
-                    <ComboBoxItem Content="8"/>
-                    <ComboBoxItem Content="7"/>
-                    <ComboBoxItem Content="6"/>
-                    <ComboBoxItem Content="5"/>
-                    <ComboBoxItem Content="4"/>
-                    <ComboBoxItem Content="3"/>
-                    <ComboBoxItem Content="2"/>
-                    <ComboBoxItem Content="1"/>
-                </ComboBox>
-            </Grid>
+                          Grid.Row="1" Grid.Column="0"
+                          Checked="Check_CreateNewDriver_OnChecked"
+                          Unchecked="Check_CreateNewDriver_OnUnchecked"/>
+                </Grid>
         </StackPanel>
+        
+        <UserControl Name="SecondRow_UserCtrl" Grid.Row="1" 
+                     IsEnabled="{Binding ElementName=check_CreateNewDriver, Path=IsChecked}">
+            <StackPanel Height="Auto">
+                <Grid  MinHeight="210" Margin="15, 4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/> 
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="90"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                <Label Content="Прізвище:"    Grid.Row="1" Grid.Column="0"/>
+                <Label Content="Ім'я:"        Grid.Row="2" Grid.Column="0"/>
+                <Label Content="По-Батькові:" Grid.Row="3" Grid.Column="0"/>
+                <Label Content="Рейтинг:"     Grid.Row="1" Grid.Column="1"/>
+                <Label Content="Категорія:"   Grid.Row="2" Grid.Column="1"/>
+                    
+                    <TextBox Name="input_DriverLastName" 
+                             Grid.Row="1" Grid.Column="0"
+                             Style="{DynamicResource infoInputField_Left_SecondRow}"
+                             Text="{Binding Path=LastName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Name="input_DriverFirstName"
+                             Grid.Row="2" Grid.Column="0"
+                             Style="{DynamicResource infoInputField_Left_SecondRow}"
+                             Text="{Binding Path=FirstName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Name="input_DriverSurName"
+                             Grid.Row="3" Grid.Column="0"
+                             Style="{DynamicResource infoInputField_Left_SecondRow}"
+                             Text="{Binding Path=MiddleName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    
+                    <ComboBox Name="input_DriverRating"
+                              Grid.Row="1" Grid.Column="1"
+                              Style="{DynamicResource infoComboField_SecondRow}"
+                              Template="{DynamicResource ComboBox_Transparent}"
+                              SelectedItem="{Binding Path=Rating, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBoxItem Content="10"/>
+                        <ComboBoxItem Content="9"/>
+                        <ComboBoxItem Content="8"/>
+                        <ComboBoxItem Content="7"/>
+                        <ComboBoxItem Content="6"/>
+                        <ComboBoxItem Content="5"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="1"/>
+                    </ComboBox>
+                    <ComboBox Name="input_DriverCategory"
+                              Grid.Row="2" Grid.Column="1"
+                              Style="{DynamicResource infoComboField_SecondRow}"
+                              Template="{DynamicResource ComboBox_Transparent}"
+                              SelectedItem="{Binding Path=Category, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBoxItem Content="B"/>
+                        <ComboBoxItem Content="BE"/>
+                        <ComboBoxItem Content="C"/>
+                        <ComboBoxItem Content="CE"/>
+                    </ComboBox>
+                </Grid>
+            </StackPanel>
+        </UserControl>
         
         <Button Name="testButton"
                 Content="Зберегти"
+                Click="testButtonClick"
                 Grid.Row="2"
                 Width="100" Height="40" 
-                Click="testButtonClick"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 Margin="0,0,10,10"/>

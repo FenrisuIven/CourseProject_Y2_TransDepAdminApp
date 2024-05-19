@@ -1,39 +1,37 @@
 ﻿using System;
+using Autofac;
+using System.Windows;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.IO;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using AutoMapper;
-using TransDep_AdminApp;
-using TransDep_AdminApp.Trucks;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using TransDep_AdminApp.Parking;
 
 namespace TransDep_AdminApp
 {
     public partial class MainWindow
     {
-        public MainController mainController;
-        public UI_Controller uiController;
-
+        private ParkingLot _parkingLot;
         public MainWindow()
         {
             InitializeComponent();
-            mainController = new MainController(this);
-            mainController.Initialize();
+            MainController.Instance.Initialize();
             Task task = new Task(
                 "Test", 
-                ObjectMapper.MapToTruckSub(mainController.truckList.GetTruckFromList(1)), 
-                new Driver("Name,Middle Name,Last Name", 7),
+                ObjectMapper.MapToTruckSub(MainController.Instance.truckList[1]), 
+                MainController.Instance.driverList[0],
                 new Route("Cherkasy", "Kyiv"),
                 new Cargo(1.5, 20, CargoType.RequiresRefrigerator));
             
-            // var cargo = new Cargo(1,1,CargoType.RequiresRefrigerator);
-            // var cargoDto = ObjectMapper.Map<CargoDTO>(cargo);
-            // var cargoObj = ObjectMapper.Map<Cargo>(cargoDto);
-            
             Console.WriteLine(task);
+        }
+
+        private void MainWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            MainController.Instance.Serialize();
         }
     }
 }

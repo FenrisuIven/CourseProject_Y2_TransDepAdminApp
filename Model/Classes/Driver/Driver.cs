@@ -1,22 +1,21 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 namespace TransDep_AdminApp
 {
     public class Driver
     {
-        public int Id { get; private set; }
+        public string Id { get; private set; }
+        public string AssignedTruckId { get; private set; }
         public string FirstName { get; private set; }
         public string MiddleName { get; private set; }
         public string LastName { get; private set; }
         public int Rating { get; private set; }
-        
-        
-        public Driver(string fullName, int rating, int id = 0)
+        public string Category { get; private set; }
+        public Driver() {}
+        public Driver(string id, string fullName, int rating, string category)
         {
-            if (rating < 0 || rating > 10) throw new ArgumentOutOfRangeException(nameof(rating),@"Id cannot be negative.");
-            if (id < 0) throw new ArgumentOutOfRangeException(nameof(id), @"ID cannot be negative.");
-            
             var pattern = @",\s?";
             try
             {
@@ -33,10 +32,14 @@ namespace TransDep_AdminApp
                     One space after comma is allowed, but is not necessary.");
             }
 
-            Rating = rating;
             Id = id;
+            Rating = rating;
+            Category = category;
         }
 
-        public override string ToString() => $"{Id}: {FirstName}, {MiddleName}, {LastName}, {Rating}/10";
+        public void ChangeAssignedTruckId(string id) => AssignedTruckId = id;
+        
+        public string GetString => $"{Id}: {FirstName} {MiddleName} {LastName}";
+        public override string ToString() => $"{Id}: {FirstName} {MiddleName} {LastName}, {Rating}/10";
     }
 }

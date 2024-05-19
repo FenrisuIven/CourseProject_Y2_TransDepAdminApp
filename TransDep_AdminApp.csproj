@@ -13,6 +13,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <LangVersion>10</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,6 +39,12 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=8.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>packages\Autofac.8.0.0\lib\netstandard2.0\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Extensions.DependencyInjection, Version=9.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>packages\Autofac.Extensions.DependencyInjection.9.0.0\lib\netstandard2.0\Autofac.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
     <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
@@ -48,6 +55,9 @@
       <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.0-preview.3.24172.9\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.DependencyInjection.Abstractions.8.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -57,6 +67,9 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.Collections.Immutable, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Collections.Immutable.9.0.0-preview.3.24172.9\lib\net462\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
@@ -64,6 +77,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Diagnostics.DiagnosticSource.7.0.2\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
     </Reference>
@@ -120,17 +136,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\Enums\TruckTypes.cs" />
     <Compile Include="Controller\Interfaces\IDataGatherer.cs" />
     <Compile Include="Controller\MainController.cs" />
+    <Compile Include="Controller\Misc\IDGenerator.cs" />
     <Compile Include="Controller\Misc\VersionUpdater.cs" />
     <Compile Include="Controller\ObjectMapper.cs" />
     <Compile Include="Controller\Serialization\FileIO.cs" />
-    <Compile Include="Controller\TruckController.cs" />
-    <Compile Include="Controller\TruckList.cs" />
     <Compile Include="Model\Classes\Cargo\Cargo.cs" />
     <Compile Include="Model\Classes\Cargo\CargoDTO.cs" />
     <Compile Include="Model\Classes\Driver\Driver.cs" />
     <Compile Include="Model\Classes\Driver\DriverDTO.cs" />
+    <Compile Include="Model\Classes\Parking\ParkingLot.cs" />
+    <Compile Include="Model\Classes\Parking\ParkedTruck.cs" />
+    <Compile Include="Model\Classes\Parking\ParkingLot_Ui.cs" />
     <Compile Include="Model\Classes\Route\Route.cs" />
     <Compile Include="Model\Classes\Route\RouteDTO.cs" />
     <Compile Include="Model\Classes\Task\Task.cs" />
@@ -141,32 +160,46 @@
     <Compile Include="Model\Classes\TruckDerivedClasses\Tent.cs" />
     <Compile Include="Model\Classes\Truck\Truck.cs" />
     <Compile Include="Model\Classes\Truck\TruckDTO.cs" />
-    <Compile Include="Model\View\AutoClutchValidation.cs" />
-    <Compile Include="Model\View\TruckValidation.cs" />
-    <Compile Include="UI\Screens\AddNewDriver.xaml.cs">
+    <Compile Include="Model\Validation\DriverValidation.cs" />
+    <Compile Include="Model\Validation\Truck\AutoClutchValidation.cs" />
+    <Compile Include="Model\Validation\Truck\TruckValidation.cs" />
+    <Compile Include="Model\Validation\ValidationsFactory.cs" />
+    <Compile Include="UI\Screens\Driver\AddNewDriver.xaml.cs">
       <DependentUpon>AddNewDriver.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\ChangeDriver.xaml.cs">
-      <DependentUpon>ChangeDriver.xaml</DependentUpon>
+    <Compile Include="UI\Screens\Driver\ChangeDriverInfo.xaml.cs">
+      <DependentUpon>ChangeDriverInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\ChangeTask.xaml.cs">
-      <DependentUpon>ChangeTask.xaml</DependentUpon>
+    <Compile Include="UI\Screens\Driver\DriverListDisplay.xaml.cs">
+      <DependentUpon>DriverListDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\ChangeTruck.xaml.cs">
-      <DependentUpon>ChangeTruck.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Screens\InfoAboutTruck.xaml.cs">
-      <DependentUpon>InfoAboutTruck.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Screens\TruckAdditionScreen\AddNewTruck.xaml.cs">
-      <DependentUpon>AddNewTruck.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Screens\TruckAdditionScreen\AddTruck_LogicHandler.cs" />
-    <Compile Include="UI\UI_MainButtonsHandler.cs" />
-    <Compile Include="UI\UI_Controller.cs" />
-    <Compile Include="UI\Screens\AddNewTask.xaml.cs">
+    <Compile Include="UI\Screens\Task\AddNewTask.xaml.cs">
       <DependentUpon>AddNewTask.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Screens\Task\ChangeTruck.xaml.cs">
+      <DependentUpon>ChangeTruck.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\Task\TaskListDisplay.xaml.cs">
+      <DependentUpon>TaskListDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\Truck\ChangeDriver.xaml.cs">
+      <DependentUpon>ChangeDriver.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\Truck\ChangeParkingPlace.xaml.cs">
+      <DependentUpon>ChangeParkingPlace.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\Truck\InfoAboutTruck.xaml.cs">
+      <DependentUpon>InfoAboutTruck.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\Truck\TruckAdditionScreen\AddNewTruck.xaml.cs">
+      <DependentUpon>AddNewTruck.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Screens\Truck\TruckAdditionScreen\AddTruck_LogicHandler.cs" />
+    <Compile Include="UI\Screens\Truck\TruckListDisplay.xaml.cs">
+      <DependentUpon>TruckListDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UI_MainButtonsHandler.cs" />
+    <Compile Include="UI\UI_Controller.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -179,13 +212,17 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UI\Screens\AddNewDriver.xaml" />
-    <Page Include="UI\Screens\AddNewTask.xaml" />
-    <Page Include="UI\Screens\ChangeDriver.xaml" />
-    <Page Include="UI\Screens\ChangeTask.xaml" />
-    <Page Include="UI\Screens\ChangeTruck.xaml" />
-    <Page Include="UI\Screens\InfoAboutTruck.xaml" />
-    <Page Include="UI\Screens\TruckAdditionScreen\AddNewTruck.xaml" />
+    <Page Include="UI\Screens\Driver\AddNewDriver.xaml" />
+    <Page Include="UI\Screens\Driver\ChangeDriverInfo.xaml" />
+    <Page Include="UI\Screens\Driver\DriverListDisplay.xaml" />
+    <Page Include="UI\Screens\Task\AddNewTask.xaml" />
+    <Page Include="UI\Screens\Task\ChangeTruck.xaml" />
+    <Page Include="UI\Screens\Task\TaskListDisplay.xaml" />
+    <Page Include="UI\Screens\Truck\ChangeDriver.xaml" />
+    <Page Include="UI\Screens\Truck\ChangeParkingPlace.xaml" />
+    <Page Include="UI\Screens\Truck\InfoAboutTruck.xaml" />
+    <Page Include="UI\Screens\Truck\TruckAdditionScreen\AddNewTruck.xaml" />
+    <Page Include="UI\Screens\Truck\TruckListDisplay.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -206,11 +243,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Controller\Serialization\list.json" />
+    <Content Include="Controller\Serialization\driverList.json" />
+    <Content Include="Controller\Serialization\taskList.json" />
+    <Content Include="Controller\Serialization\truckList.json" />
     <Content Include="README.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\Abstract\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

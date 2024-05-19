@@ -21,23 +21,23 @@ namespace TransDep_AdminApp.Model.View
                 {
                     case "CarryingCapacity":
                         if (CarryingCapacity < carryingCapacity[0] || CarryingCapacity > carryingCapacity[1]) 
-                            return $"Value should be in: [{carryingCapacity[0]} ; {carryingCapacity[1]}]";
+                            return $"Вантажопідйомність повинна бути у межах: [{carryingCapacity[0]} ; {carryingCapacity[1]}]";
                         if (string.IsNullOrEmpty(CarryingCapacity.ToString()))
-                            return "Value is mandatory";
+                            return "Вантажопідйомність обов'язкова";
                         break;
                     
                     case "UsefulVolume":
                         if (UsefulVolume < usefulVolume[0] || UsefulVolume > usefulVolume[1]) 
-                            return $"Value should be in: [{usefulVolume[0]} ; {usefulVolume[1]}]";
+                            return $"Корисний обсяг повинен бути у межах: [{usefulVolume[0]} ; {usefulVolume[1]}]";
                         if (string.IsNullOrEmpty(UsefulVolume.ToString()))
-                            return "Value is mandatory";
+                            return "Корисний обсяг обов'язковий";
                         break;
                     
                     case "Capacity":
                         if (Capacity < capacity[0] || Capacity > capacity[1]) 
-                            return $"Value should be in: [{capacity[0]} ; {capacity[1]}]";
+                            return $"Місткість повинна бути у межах: [{capacity[0]} ; {capacity[1]}]";
                         if (string.IsNullOrEmpty(Capacity.ToString()))
-                            return "Value is mandatory";
+                            return "Місткість обов'язкова";
                         break;
                 }
 
