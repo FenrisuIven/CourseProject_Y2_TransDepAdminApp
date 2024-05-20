@@ -136,70 +136,78 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controller\Enums\TruckTypes.cs" />
-    <Compile Include="Controller\Interfaces\IDataGatherer.cs" />
-    <Compile Include="Controller\MainController.cs" />
-    <Compile Include="Controller\Misc\IDGenerator.cs" />
-    <Compile Include="Controller\Misc\VersionUpdater.cs" />
-    <Compile Include="Controller\ObjectMapper.cs" />
-    <Compile Include="Controller\Serialization\FileIO.cs" />
-    <Compile Include="Model\Classes\Cargo\Cargo.cs" />
-    <Compile Include="Model\Classes\Cargo\CargoDTO.cs" />
-    <Compile Include="Model\Classes\Driver\Driver.cs" />
-    <Compile Include="Model\Classes\Driver\DriverDTO.cs" />
-    <Compile Include="Model\Classes\Parking\ParkingLot.cs" />
+    <Compile Include="Model\Classes\Cargo.cs" />
+    <Compile Include="Model\Classes\Driver.cs" />
     <Compile Include="Model\Classes\Parking\ParkedTruck.cs" />
+    <Compile Include="Model\Classes\Parking\ParkingLot.cs" />
     <Compile Include="Model\Classes\Parking\ParkingLot_Ui.cs" />
-    <Compile Include="Model\Classes\Route\Route.cs" />
-    <Compile Include="Model\Classes\Route\RouteDTO.cs" />
-    <Compile Include="Model\Classes\Task\Task.cs" />
-    <Compile Include="Model\Classes\Task\TaskDTO.cs" />
+    <Compile Include="Model\Classes\Route.cs" />
+    <Compile Include="Model\Classes\Task.cs" />
+    <Compile Include="Model\Classes\Truck.cs" />
     <Compile Include="Model\Classes\TruckDerivedClasses\AutomaticClutch.cs" />
     <Compile Include="Model\Classes\TruckDerivedClasses\Container.cs" />
     <Compile Include="Model\Classes\TruckDerivedClasses\Refrigerated.cs" />
     <Compile Include="Model\Classes\TruckDerivedClasses\Tent.cs" />
-    <Compile Include="Model\Classes\Truck\Truck.cs" />
-    <Compile Include="Model\Classes\Truck\TruckDTO.cs" />
-    <Compile Include="Model\Validation\DriverValidation.cs" />
-    <Compile Include="Model\Validation\Truck\AutoClutchValidation.cs" />
-    <Compile Include="Model\Validation\Truck\TruckValidation.cs" />
-    <Compile Include="Model\Validation\ValidationsFactory.cs" />
-    <Compile Include="UI\Screens\Driver\AddNewDriver.xaml.cs">
+    <Compile Include="Model\Enums\CargoTypes.cs" />
+    <Compile Include="Model\Enums\TruckTypes.cs" />
+    <Compile Include="Model\Interfaces\IDataGatherer.cs" />
+    <Compile Include="Model\Interfaces\IDriver.cs" />
+    <Compile Include="Model\Interfaces\ITruck.cs" />
+    <Compile Include="Model\MainController.cs" />
+    <Compile Include="Model\Misc\IDGenerator.cs" />
+    <Compile Include="Model\Misc\VersionUpdater.cs" />
+    <Compile Include="Serialization\FileIO.cs" />
+    <Compile Include="ViewModel\DTO\CargoDTO.cs" />
+    <Compile Include="ViewModel\DTO\DriverDTO.cs" />
+    <Compile Include="ViewModel\DTO\RouteDTO.cs" />
+    <Compile Include="ViewModel\DTO\TaskDTO.cs" />
+    <Compile Include="ViewModel\DTO\TruckDerivedDTOs\AutoClutchDTO.cs" />
+    <Compile Include="ViewModel\DTO\TruckDerivedDTOs\ContainerDTO.cs" />
+    <Compile Include="ViewModel\DTO\TruckDerivedDTOs\RefrigeratedDTO.cs" />
+    <Compile Include="ViewModel\DTO\TruckDerivedDTOs\TentDTO.cs" />
+    <Compile Include="ViewModel\DTO\TruckDTO.cs" />
+    <Compile Include="ViewModel\ObjectMapper.cs" />
+    <Compile Include="ViewModel\Validation\CargoValidation.cs" />
+    <Compile Include="ViewModel\Validation\DriverValidation.cs" />
+    <Compile Include="ViewModel\Validation\Truck\AutoClutchValidation.cs" />
+    <Compile Include="ViewModel\Validation\Truck\TruckValidation.cs" />
+    <Compile Include="ViewModel\Validation\ValidationsFactory.cs" />
+    <Compile Include="ViewModel\UIController.cs" />
+    <Compile Include="View\Screens\Driver\AddNewDriver.xaml.cs">
       <DependentUpon>AddNewDriver.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\Driver\ChangeDriverInfo.xaml.cs">
+    <Compile Include="View\Screens\Driver\ChangeDriverInfo.xaml.cs">
       <DependentUpon>ChangeDriverInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\Driver\DriverListDisplay.xaml.cs">
+    <Compile Include="View\Screens\Driver\DriverListDisplay.xaml.cs">
       <DependentUpon>DriverListDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\Task\AddNewTask.xaml.cs">
+    <Compile Include="View\Screens\Task\AddNewTask.xaml.cs">
       <DependentUpon>AddNewTask.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\Task\ChangeTruck.xaml.cs">
+    <Compile Include="View\Screens\Task\ChangeTruck.xaml.cs">
       <DependentUpon>ChangeTruck.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\Task\TaskListDisplay.xaml.cs">
+    <Compile Include="View\Screens\Task\TaskListDisplay.xaml.cs">
       <DependentUpon>TaskListDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\Truck\ChangeDriver.xaml.cs">
+    <Compile Include="View\Screens\Truck\ChangeDriver.xaml.cs">
       <DependentUpon>ChangeDriver.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\Truck\ChangeParkingPlace.xaml.cs">
+    <Compile Include="View\Screens\Truck\ChangeParkingPlace.xaml.cs">
       <DependentUpon>ChangeParkingPlace.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\Truck\InfoAboutTruck.xaml.cs">
+    <Compile Include="View\Screens\Truck\InfoAboutTruck.xaml.cs">
       <DependentUpon>InfoAboutTruck.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\Truck\TruckAdditionScreen\AddNewTruck.xaml.cs">
+    <Compile Include="View\Screens\Truck\TruckAdditionScreen\AddNewTruck.xaml.cs">
       <DependentUpon>AddNewTruck.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Screens\Truck\TruckAdditionScreen\AddTruck_LogicHandler.cs" />
-    <Compile Include="UI\Screens\Truck\TruckListDisplay.xaml.cs">
+    <Compile Include="View\Screens\Truck\TruckAdditionScreen\AddTruck_LogicHandler.cs" />
+    <Compile Include="View\Screens\Truck\TruckListDisplay.xaml.cs">
       <DependentUpon>TruckListDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\UI_MainButtonsHandler.cs" />
-    <Compile Include="UI\UI_Controller.cs" />
+    <Compile Include="View\UI_Controller.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -212,17 +220,17 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UI\Screens\Driver\AddNewDriver.xaml" />
-    <Page Include="UI\Screens\Driver\ChangeDriverInfo.xaml" />
-    <Page Include="UI\Screens\Driver\DriverListDisplay.xaml" />
-    <Page Include="UI\Screens\Task\AddNewTask.xaml" />
-    <Page Include="UI\Screens\Task\ChangeTruck.xaml" />
-    <Page Include="UI\Screens\Task\TaskListDisplay.xaml" />
-    <Page Include="UI\Screens\Truck\ChangeDriver.xaml" />
-    <Page Include="UI\Screens\Truck\ChangeParkingPlace.xaml" />
-    <Page Include="UI\Screens\Truck\InfoAboutTruck.xaml" />
-    <Page Include="UI\Screens\Truck\TruckAdditionScreen\AddNewTruck.xaml" />
-    <Page Include="UI\Screens\Truck\TruckListDisplay.xaml" />
+    <Page Include="View\Screens\Driver\AddNewDriver.xaml" />
+    <Page Include="View\Screens\Driver\ChangeDriverInfo.xaml" />
+    <Page Include="View\Screens\Driver\DriverListDisplay.xaml" />
+    <Page Include="View\Screens\Task\AddNewTask.xaml" />
+    <Page Include="View\Screens\Task\ChangeTruck.xaml" />
+    <Page Include="View\Screens\Task\TaskListDisplay.xaml" />
+    <Page Include="View\Screens\Truck\ChangeDriver.xaml" />
+    <Page Include="View\Screens\Truck\ChangeParkingPlace.xaml" />
+    <Page Include="View\Screens\Truck\InfoAboutTruck.xaml" />
+    <Page Include="View\Screens\Truck\TruckAdditionScreen\AddNewTruck.xaml" />
+    <Page Include="View\Screens\Truck\TruckListDisplay.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -243,10 +251,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Controller\Serialization\driverList.json" />
-    <Content Include="Controller\Serialization\taskList.json" />
-    <Content Include="Controller\Serialization\truckList.json" />
     <Content Include="README.md" />
+    <Content Include="Serialization\driverList.json" />
+    <Content Include="Serialization\taskList.json" />
+    <Content Include="Serialization\truckList.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

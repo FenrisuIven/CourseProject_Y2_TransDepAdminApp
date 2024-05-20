@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TransDep_AdminApp"
-        xmlns:parking="clr-namespace:TransDep_AdminApp.Parking"
+        xmlns:parking="clr-namespace:TransDep_AdminApp.Model.Parking"
         mc:Ignorable="d"
         UseLayoutRounding="True"
         Title="MainWindow" 
@@ -21,6 +21,8 @@
             <MenuItem Header="Show raw Drivers data" Click="OpenWindow" Name="rawDriverData"/>
             <MenuItem Header="Show raw Trucks data"  Click="OpenWindow" Name="rawTruckData"/>
             <MenuItem Header="Show raw Tasks data"   Click="OpenWindow" Name="rawTaskData"/>
+            <MenuItem Header="animate truck drive away" Click="DepartureCommand"/>
+            <MenuItem Header="animate truck drive in" Click="ArrivalCommand"/>
         </ContextMenu>
     </Window.ContextMenu>
     
@@ -116,7 +118,7 @@
         </Canvas>
 
         <Button Name="newTruck"
-                Click = "OpenWindow"
+                Click="OpenWindow"
                 HorizontalAlignment="Left"  
                 VerticalAlignment="Top" 
                 Width="120" Height="45" 
@@ -127,7 +129,8 @@
                        TextAlignment="Center"/>
         </Button>
 
-        <Button Click = "OpenWindow"
+        <Button Name="newTask"
+                Click="OpenWindow"
                 HorizontalAlignment="Left"  
                 VerticalAlignment="Top" 
                 Width="110" Height="45" 

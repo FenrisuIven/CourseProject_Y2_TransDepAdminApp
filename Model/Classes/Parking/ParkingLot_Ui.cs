@@ -7,13 +7,12 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using TransDep_AdminApp.Parking;
 
-namespace TransDep_AdminApp.Parking
+namespace TransDep_AdminApp.Model.Parking
 {
     public static class ParkingLot_Ui
     {
-        private static void AnimateTruckDeparture(ContentPresenter carPresenter)
+        public static void AnimateTruckDeparture(ContentPresenter carPresenter)
         {
             var mainWindow = Application.Current.MainWindow as MainWindow;
             double canvasWidth = mainWindow.ParkingCanvas.Width;
@@ -46,57 +45,38 @@ namespace TransDep_AdminApp.Parking
 
             storyboard.Begin();
         }
-        private static void AnimateTruckArrival(ContentPresenter carPresenter)
+        public static void AnimateTruckArrival(ContentPresenter carPresenter)
         {
-            var mainWindow = Application.Current.MainWindow as MainWindow;
             double colPos = ((ParkedTruck)carPresenter.Content).Col * (700 / 9) + 7;
-            double canvasHeight = ((ParkedTruck)carPresenter.Content).Row * 480 + 15;
+            double rowPos = ((ParkedTruck)carPresenter.Content).Row * 480 + 15;
 
 
+            var driveInAnimation = new DoubleAnimation
+            {
+                To = colPos,
+                Duration = TimeSpan.FromSeconds(3)
+            };
+            
             var centerYAnimation = new DoubleAnimation
             {
-                To = canvasHeight / 2 - carPresenter.ActualHeight / 2,
+                To = rowPos,
+                BeginTime = TimeSpan.FromSeconds(3),
                 Duration = TimeSpan.FromSeconds(2)
             };
 
-            var driveOutAnimation = new DoubleAnimation
-            {
-                To = colPos,
-                BeginTime = TimeSpan.FromSeconds(2),
-                Duration = TimeSpan.FromSeconds(3)
-            };
 
             Storyboard storyboard = new Storyboard();
+            storyboard.Children.Add(driveInAnimation);
             storyboard.Children.Add(centerYAnimation);
-            storyboard.Children.Add(driveOutAnimation);
             
-            Storyboard.SetTarget(driveOutAnimation, carPresenter);
-            Storyboard.SetTargetProperty(driveOutAnimation, new PropertyPath("(Canvas.Left)"));
+            Storyboard.SetTarget(driveInAnimation, carPresenter);
+            Storyboard.SetTargetProperty(driveInAnimation, new PropertyPath("(Canvas.Left)"));
             
             Storyboard.SetTarget(centerYAnimation, carPresenter);
             Storyboard.SetTargetProperty(centerYAnimation, new PropertyPath("(Canvas.Top)"));
 
             storyboard.Begin();
         }
-        public static void DepartureCommand()
-        {
-            var mainWindow = Application.Current.MainWindow as MainWindow;
-            var carToDriveAway = ParkingLot.ParkedTrucks.FirstOrDefault(spot => spot.TruckId == MainController.Instance.truckList[2].Id);
-            if (carToDriveAway != null)
-            {
-                var obj = mainWindow.ParkingLot_ItemsCtrl.ItemContainerGenerator.ContainerFromItem(carToDriveAway) as ContentPresenter;
-                AnimateTruckDeparture(obj);
-            }
-        }
-        public static void ArrivalCommand()
-        {
-            var mainWindow = Application.Current.MainWindow as MainWindow;
-            var carToDriveAway = ParkingLot.ParkedTrucks.FirstOrDefault(spot => spot.TruckId == MainController.Instance.truckList[2].Id);
-            if (carToDriveAway != null)
-            {
-                var obj = mainWindow.ParkingLot_ItemsCtrl.ItemContainerGenerator.ContainerFromItem(carToDriveAway) as ContentPresenter;
-                AnimateTruckArrival(obj);
-            }
-        }
+        
     }
 }

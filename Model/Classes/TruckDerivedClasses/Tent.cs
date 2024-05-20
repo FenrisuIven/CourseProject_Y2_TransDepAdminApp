@@ -1,8 +1,9 @@
 using System;
+using TransDep_AdminApp.Interfaces;
 
-namespace TransDep_AdminApp.Trucks
+namespace TransDep_AdminApp.Model.Trucks 
 {
-    public class Tent : Truck
+    public class Tent : Truck, ITruck
     {
         //TODO: Check if those values are correct
         public static int[] allowedUsefulVolume = { 50, 90 };
@@ -11,5 +12,6 @@ namespace TransDep_AdminApp.Trucks
         //TODO: ---------------------------------
         public Tent(string _id, string _driverId, string _name, int _carryingCapacity, int _usefulVolume, int _capacity, int _parkingSpot, bool _availability = true) 
             : base(_id, _driverId ,_name, _carryingCapacity, _usefulVolume, _capacity, _availability, _parkingSpot) { }
+        
     }
 }

@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 
 
-namespace TransDep_AdminApp.Parking
+namespace TransDep_AdminApp.Model.Parking
 {
     public class ParkingLot
     {

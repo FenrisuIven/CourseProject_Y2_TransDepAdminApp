@@ -1,0 +1,25 @@
+<Window x:Class="TransDep_AdminApp.View.Screens.ChangeParkingPlace"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:TransDep_AdminApp.View.Screens"
+        mc:Ignorable="d"
+        Title="ChangeParkingSpace" 
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        Height="140" Width="260">
+    <Window.Resources>
+        <Style TargetType="{x:Type FrameworkElement}" x:Key="itemAlignments">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Label Content="Місце паркування:" Margin="10" Style="{StaticResource itemAlignments}"/>
+        <ComboBox Width="100" Height="30" Style="{StaticResource itemAlignments}" Margin="130,8,0,0">
+            <ComboBoxItem Content="10"/>
+        </ComboBox>
+        <Button Width="60" Height="35" Content="Save" Style="{StaticResource itemAlignments}" Margin="170,50,0,0"/>
+    </Grid>
+</Window>

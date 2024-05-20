@@ -1,0 +1,120 @@
+<Window x:Class="TransDep_AdminApp.View.Screens.InfoAboutTruck"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:TransDep_AdminApp.View.Screens"
+        xmlns:base="clr-namespace:TransDep_AdminApp.Model"
+        mc:Ignorable="d"
+        Title="InfoAboutTruck"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        SnapsToDevicePixels="True"
+        Height="300" Width="480">
+    <Window.Resources>
+        <Style TargetType="Border" x:Key="divider_Bottom_Light">
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+        </Style>
+        <Style TargetType="Border" x:Key="divider_Bottom_Thick" BasedOn="{StaticResource divider_Bottom_Light}">
+            <Setter Property="BorderThickness" Value="0,0,0,3"/>
+        </Style>
+        
+        <Style TargetType="{x:Type FrameworkElement}" x:Key="inputInfo_Base">
+            <Setter Property="Control.VerticalAlignment" Value="Stretch"/>
+            <Setter Property="Control.HorizontalAlignment" Value="Left"/>
+            <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding 
+                            Path=(Validation.Errors)/ErrorContent, 
+                            RelativeSource={x:Static RelativeSource.Self}}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Label" BasedOn="{StaticResource inputInfo_Base}">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+        <Style TargetType="Label" x:Key="inputLabel_l" BasedOn="{StaticResource {x:Type Label}}">
+            <Setter Property="Margin" Value="85,0,0,0"/>
+        </Style>
+        <Style TargetType="Label" x:Key="inputLabel_r" BasedOn="{StaticResource {x:Type Label}}">
+            <Setter Property="Margin" Value="155,0,0,0"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="150"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Style="{DynamicResource divider_Bottom_Light}"/>
+        
+        <StackPanel Grid.Row="0" Height="Auto">
+            <Grid MinHeight="100" Margin="15, 4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.2*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="Назва:"    Grid.Row="0" Grid.Column="0"/>
+                <Label Name="truckName_Label" Content="Name"
+                       Style="{DynamicResource inputLabel_l}"
+                       Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                <Label Content="Номер:"       Grid.Row="1" Grid.Column="0"/>
+                <Label Name="truckId_Label" Content="ID"
+                       Style="{DynamicResource inputLabel_l}"
+                       Grid.Row="1" Grid.Column="0"/>
+                <Label Content="Вільність:"     Grid.Row="2" Grid.Column="0"/>
+                <Label Name="truckAvailability_Label" Content="Rating/10"
+                       Style="{DynamicResource inputLabel_l}"
+                       Grid.Row="2" Grid.Column="0"/>
+                
+                <Label Content="Вантажопідйомність:"   Grid.Row="0" Grid.Column="1"/>
+                <Label Name="truckCarrCap_Label" Content="CC"
+                       Style="{DynamicResource inputLabel_r}"
+                       Grid.Row="0" Grid.Column="1"/>
+                <Label Content="Корисний обсяг:"   Grid.Row="1" Grid.Column="1"/>
+                <Label Name="truckUVolume_Label" Content="UV"
+                       Style="{DynamicResource inputLabel_r}"
+                       Grid.Row="1" Grid.Column="1"/>
+                <Label Content="Місткість:"   Grid.Row="2" Grid.Column="1"/>
+                <Label Name="truckCap_Label" Content="CAP"
+                       Style="{DynamicResource inputLabel_r}"
+                       Grid.Row="2" Grid.Column="1"/>
+            </Grid>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="1" Height="Auto">
+            <Grid MinHeight="135" Margin="15, 4">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Content="Ім'я водія:"    Grid.Row="0" Grid.Column="0"/>
+                <Label Name="driverName_Label" Content="LastName F.M."
+                       Style="{DynamicResource inputLabel_l}"
+                       Grid.Row="0" Grid.Column="0"/>
+                <Label Content="Номер:"       Grid.Row="1" Grid.Column="0"/>
+                <Label Name="driverId_Label" Content="ID"
+                       Style="{DynamicResource inputLabel_l}"
+                       Grid.Row="1" Grid.Column="0"/>
+                <Label Content="Рейтинг:"     Grid.Row="2" Grid.Column="0"/>
+                <Label Name="driverRating_Label" Content="Rating/10"
+                       Style="{DynamicResource inputLabel_l}"
+                       Grid.Row="2" Grid.Column="0"/>
+                <Label Content="Категорія:"   Grid.Row="3" Grid.Column="0"/>
+                <Label Name="driverCategory_Label" Content="Category"
+                       Style="{DynamicResource inputLabel_l}"
+                       Grid.Row="3" Grid.Column="0"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,9 +1,11 @@
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
+using System.ComponentModel;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace TransDep_AdminApp.Parking
+using TransDep_AdminApp.ViewModel;
+
+namespace TransDep_AdminApp.Model.Parking
 {
     public class ParkedTruck : INotifyPropertyChanged
     {
@@ -31,8 +33,8 @@ namespace TransDep_AdminApp.Parking
         public ParkedTruck(int row, int col, string truckId)
         {
             var truckDto = MainController.Instance.truckList.Find(elem => elem.Id == truckId);
-            var driverDto = MainController.Instance.driverList.Find(elem => elem.AssignedTruckID == truckId);
-            var driver = ObjectMapper.Map<Driver>(driverDto);
+            var driverDto = MainController.Instance.driverList.Find(elem => elem.AssignedTruckId == truckId);
+            var driver = ObjectMapper.AutoMapper.Map<Driver>(driverDto);
 
             Row = row;
             Col = col;

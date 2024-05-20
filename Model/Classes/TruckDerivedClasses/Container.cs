@@ -1,6 +1,6 @@
 using System;
 
-namespace TransDep_AdminApp.Trucks
+namespace TransDep_AdminApp.Model.Trucks
 {
     public class Container : Truck
     {
