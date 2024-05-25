@@ -5,8 +5,8 @@ namespace TransDep_AdminApp.Model.Trucks
     public class AutomaticClutch : Truck
     {
         //TODO: Check if those values are correct
-        public static double[] allowedUsefulVolume = { 50, 90 };
         public static double[] allowedCarryingCapacity = { 50, 90 };
+        public static double[] allowedUsefulVolume = { 50, 90 };
         public static double[] allowedCapacity = { 50, 90 };
         //TODO: ---------------------------------
         

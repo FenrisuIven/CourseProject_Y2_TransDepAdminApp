@@ -29,8 +29,9 @@
                         </TextBlock>
                         <TextBlock>
                             <TextBlock.Text>
-                                <MultiBinding StringFormat="{} ID: {0} | Rating: {1}/10, Category: {2}">
+                                <MultiBinding StringFormat="{} ID: {0} | AssignedTruck: {1} | Rating: {2}/10, Category: {3}">
                                     <Binding Path="Id"/>
+                                    <Binding Path="AssignedTruckId"/>
                                     <Binding Path="Rating"/>
                                     <Binding Path="Category"/>
                                 </MultiBinding>

@@ -82,7 +82,7 @@
         </MultiBinding>
     </Window.Title>
     
-    <Grid Name="MainGrid">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="180"/>
             <RowDefinition Height="220"/>
@@ -94,10 +94,10 @@
         
         <UserControl Name="TruckData_UserCtrl" Grid.Row="0">
             <UserControl.DataContext>
-                <val:TruckValidation />
+                <val:TruckValidation/>
             </UserControl.DataContext>
-            <StackPanel Name="FirstRow_StackPanel" Height="Auto">
-                <Grid Name="FirstRowGrid" MinHeight="170" Margin="15, 2">
+            <StackPanel Height="Auto">
+                <Grid MinHeight="170" Margin="15, 2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -122,8 +122,6 @@
                     <Label Content="Корисний обсяг:"     Grid.Row="2" Grid.Column="1"
                            IsEnabled="{Binding ElementName=input_TruckType, Path=SelectedItem, Converter={StaticResource selectionAvailableConverter}}"/>
                     
-                    
-                    
                     <TextBox Name="input_TruckName_l" Grid.Row="0" Grid.Column="0"
                              Text="{Binding Path=Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                              Style="{DynamicResource infoInputField_Left_FirstRow}"
@@ -139,7 +137,7 @@
                              Style="{DynamicResource infoInputField_Left_FirstRow}"
                              TextChanged="Input_TruckName_OnTextChanged"/>
                     
-                    <UserControl Name="TruckChars_UserControl" Grid.Row="0" Grid.Column="1" Grid.RowSpan="4"
+                    <UserControl Name="TruckChars_UserCtrl" Grid.Row="0" Grid.Column="1" Grid.RowSpan="4"
                                  IsEnabled="{Binding ElementName=input_TruckType, Path=SelectedItem, Converter={StaticResource selectionAvailableConverter}}">
                         <UserControl.DataContext>
                             <val:TruckValidation />
@@ -152,15 +150,15 @@
                                     <RowDefinition Height="43"/>
                                 </Grid.RowDefinitions>
                                 
-                                <TextBox Name="input_CarryingCapacity_r" Grid.Row="0" Grid.Column="1"
+                                <TextBox Grid.Row="0"
                                          Text="{Binding Path=CarryingCapacity, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                                          Style="{DynamicResource infoInputField_Right_FirstRow}"/>
                     
-                                <TextBox Name="input_UsefulVolume_r" Grid.Row="1" Grid.Column="1"
+                                <TextBox Grid.Row="1"
                                          Text="{Binding Path=UsefulVolume, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                                          Style="{DynamicResource infoInputField_Right_FirstRow}"/>
                     
-                                <TextBox Name="input_Capacity_r" Grid.Row="2" Grid.Column="1"
+                                <TextBox Grid.Row="2"
                                          Text="{Binding Path=Capacity, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                                          Style="{DynamicResource infoInputField_Right_FirstRow}"/>
                             </Grid>
@@ -192,7 +190,7 @@
             </StackPanel>
         </UserControl>
         
-        <StackPanel Grid.Row="1" Name="secondRow" Height="Auto">
+        <StackPanel Grid.Row="1" Height="Auto">
             <Grid MinHeight="210" Margin="15, 4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -261,21 +259,17 @@
                 <Label Content="Рейтинг:"     Grid.Row="1" Grid.Column="1"/>
                 <Label Content="Категорія:"   Grid.Row="2" Grid.Column="1"/>
                     
-                    <TextBox Name="input_DriverLastName" 
-                             Grid.Row="1" Grid.Column="0"
+                    <TextBox Grid.Row="1" Grid.Column="0"
                              Style="{DynamicResource infoInputField_Left_SecondRow}"
                              Text="{Binding Path=LastName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Name="input_DriverFirstName"
-                             Grid.Row="2" Grid.Column="0"
+                    <TextBox Grid.Row="2" Grid.Column="0"
                              Style="{DynamicResource infoInputField_Left_SecondRow}"
                              Text="{Binding Path=FirstName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Name="input_DriverSurName"
-                             Grid.Row="3" Grid.Column="0"
+                    <TextBox Grid.Row="3" Grid.Column="0"
                              Style="{DynamicResource infoInputField_Left_SecondRow}"
                              Text="{Binding Path=MiddleName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                     
-                    <ComboBox Name="input_DriverRating"
-                              Grid.Row="1" Grid.Column="1"
+                    <ComboBox Grid.Row="1" Grid.Column="1"
                               Style="{DynamicResource infoComboField_SecondRow}"
                               Template="{DynamicResource ComboBox_Transparent}"
                               SelectedItem="{Binding Path=Rating, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
@@ -290,8 +284,7 @@
                         <ComboBoxItem Content="2"/>
                         <ComboBoxItem Content="1"/>
                     </ComboBox>
-                    <ComboBox Name="input_DriverCategory"
-                              Grid.Row="2" Grid.Column="1"
+                    <ComboBox Grid.Row="2" Grid.Column="1"
                               Style="{DynamicResource infoComboField_SecondRow}"
                               Template="{DynamicResource ComboBox_Transparent}"
                               SelectedItem="{Binding Path=Category, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
@@ -304,9 +297,8 @@
             </StackPanel>
         </UserControl>
         
-        <Button Name="testButton"
-                Content="Зберегти"
-                Click="testButtonClick"
+        <Button Content="Зберегти"
+                Click="SaveAndQuit"
                 Grid.Row="2"
                 Width="100" Height="40" 
                 HorizontalAlignment="Right"

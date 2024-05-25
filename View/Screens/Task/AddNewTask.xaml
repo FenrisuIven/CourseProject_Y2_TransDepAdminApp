@@ -12,7 +12,7 @@
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
         SnapsToDevicePixels="True"
-        Height="285" Width="600">
+        Height="325" Width="600">
     <Window.Resources>
         <Style TargetType="Border" x:Key="divider_Bottom_Light">
             <Setter Property="BorderThickness" Value="0,0,0,2"/>
@@ -43,11 +43,7 @@
             <Setter Property="Height" Value="20"/>
             <Setter Property="Margin" Value="70,2,0,0"/>
         </Style>
-        <Style TargetType="TextBox" x:Key="infoInputField_Right_FirstRow" BasedOn="{StaticResource inputInfo_Base}">
-            <Setter Property="Width" Value="100"/>
-            <Setter Property="Height" Value="20"/>
-            <Setter Property="Margin" Value="160,2,0,0"/>
-        </Style>
+        
         <Style TargetType="TextBox" x:Key="infoInputField_Left_SecondRow" BasedOn="{StaticResource infoInputField_Left_FirstRow}">
             <Setter Property="Margin" Value="85,2,0,0"/>
         </Style>
@@ -57,41 +53,36 @@
             <Setter Property="Margin" Value="145,2,0,0"/>
         </Style>
         
-        <Style TargetType="ComboBox" x:Key="infoComboField_RightSmall" BasedOn="{StaticResource inputInfo_Base}">
-            <Setter Property="Width" Value="50"/>
-            <Setter Property="Height" Value="22"/>
-            <Setter Property="Margin" Value="160,2,0,0"/>
+        <Style TargetType="TextBox" x:Key="infoInputField_TwoCols" BasedOn="{StaticResource inputInfo_Base}">
+            <Setter Property="Width" Value="507"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="60,2,0,0"/>
         </Style>
+        
         <Style TargetType="ComboBox" x:Key="infoComboField_LeftMiddle" BasedOn="{StaticResource inputInfo_Base}">
             <Setter Property="Width" Value="100"/>
             <Setter Property="Height" Value="22"/>
             <Setter Property="Margin" Value="145,2,0,0"/>
         </Style>
-        <Style TargetType="ComboBox" x:Key="infoComboField_SecondRow" BasedOn="{StaticResource infoComboField_RightSmall}">
-            <Setter Property="Margin" Value="80,2,0,0"/>
-        </Style>
         <Style TargetType="CheckBox" BasedOn="{StaticResource inputInfo_Base}">
             <Setter Property="Width" Value="15"/>
             <Setter Property="Height" Value="15"/>
         </Style>
-        
-        <local:InvertedBoolConverter x:Key="invertedBoolConverter" />
-        <local:SelectionAvailableConverter x:Key="selectionAvailableConverter" />
     </Window.Resources>
     
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
-            <RowDefinition Height="125"/>
+            <RowDefinition Height="165"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         
         <Border Grid.Row="0" Style="{DynamicResource divider_Bottom_Thick}"/>
         <Border Grid.Row="1" Style="{DynamicResource divider_Bottom_Light}"/>
         
-        <UserControl Name="TruckData_UserCtrl" Grid.Row="0">
-            <StackPanel Name="FirstRow_StackPanel">
-                <Grid Name="FirstRowGrid" MinHeight="90" Margin="15, 2">
+        <UserControl Grid.Row="0">
+            <StackPanel>
+                <Grid MinHeight="90" Margin="15, 2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -104,7 +95,7 @@
                     
                     <Label Content="Вантажівка:" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
                     <ComboBox Name="input_Truck" 
-                              Width="475" Height="22"
+                              Width="473" Height="22"
                               Margin="95,0,0,0"
                               Style="{StaticResource inputInfo_Base}"
                               Template="{DynamicResource ComboBox_Transparent}"
@@ -131,7 +122,7 @@
                     </ComboBox>
                     <Label Content="Водій:" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
                     <ComboBox Name="input_Driver"
-                              Width="510" Height="22"
+                              Width="507" Height="22"
                               Margin="60,0,0,0"
                               Style="{StaticResource inputInfo_Base}"
                               Template="{DynamicResource ComboBox_Transparent}"
@@ -162,10 +153,10 @@
         
         <UserControl Name="SecondRow_UserCtrl" Grid.Row="1" >
             <UserControl.DataContext>
-                <val:CargoValidation/>
+                <val:TaskValidation/>
             </UserControl.DataContext>
             <StackPanel Height="Auto">
-                <Grid  MinHeight="115" Margin="15, 4">
+                <Grid  MinHeight="155" Margin="15, 4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.3*"/>
                         <ColumnDefinition Width="*"/> 
@@ -174,50 +165,95 @@
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     
-                <Label Content="Вага:"
-                       Margin="34,0,0,0" Grid.Row="0" Grid.Column="0"/>
-                <Label Content="Об'єм:"
-                       Margin="23,0,0,0" Grid.Row="1" Grid.Column="0"/>
-                <Label Content="Кількість:"
-                       Margin="5,0,0,0" Grid.Row="2" Grid.Column="0"/>
-                <Label Content="тонн"
-                       Margin="190,0,0,0" Grid.Row="0" Grid.Column="0"/>
-                <Label Content="м. куб.:"
-                       Margin="190,0,0,0" Grid.Row="1" Grid.Column="0"/>
-                <Label Content="європалетів"
-                       Margin="190,0,0,0" Grid.Row="2" Grid.Column="0"/>
-                <Label Content="Тип:" 
-                       Margin="105,0,0,0" Grid.Row="0" Grid.Column="1"/>
-                <Label Content="Початок маршруту:" Grid.Row="1" Grid.Column="1"/>
-                <Label Content="Кінець маршруту:" 
-                       Margin="13,0,0,0" Grid.Row="2" Grid.Column="1"/>
+                    <Label Content="Назва:" Grid.Row="0" Grid.Column="0"/>
                     
-                <TextBox Grid.Row="0" Grid.Column="0"
-                         Style="{DynamicResource infoInputField_Left_SecondRow}"
-                         Text="{Binding Path=Weight, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Row="1" Grid.Column="0"
-                         Style="{DynamicResource infoInputField_Left_SecondRow}"
-                         Text="{Binding Path=Volume, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Row="2" Grid.Column="0"
-                         Style="{DynamicResource infoInputField_Left_SecondRow}"
-                         Text="{Binding Path=Amount, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="Вага:"
+                           Margin="34,0,0,0" Grid.Row="1" Grid.Column="0"/>
+                    <Label Content="Об'єм:"
+                           Margin="23,0,0,0" Grid.Row="2" Grid.Column="0"/>
+                    <Label Content="Кількість:"
+                           Margin="5,0,0,0" Grid.Row="3" Grid.Column="0"/>
+                    <Label Content="тонн"
+                           Margin="190,0,0,0" Grid.Row="1" Grid.Column="0"/>
+                    <Label Content="м. куб.:"
+                           Margin="190,0,0,0" Grid.Row="2" Grid.Column="0"/>
+                    <Label Content="європалетів"
+                           Margin="190,0,0,0" Grid.Row="3" Grid.Column="0"/>
+                    
+                    <Label Content="Тип:" 
+                           Margin="105,0,0,0" Grid.Row="1" Grid.Column="1"/>
+                    
+                    <Label Content="Початок маршруту:" 
+                           Grid.Row="2" Grid.Column="1"/>
+                    <Label Content="Кінець маршруту:" 
+                           Margin="13,0,0,0" Grid.Row="3" Grid.Column="1"/>
+                        
+                    <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                             Style="{DynamicResource infoInputField_TwoCols}"
+                             Text="{Binding Path=Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    
+                    <ComboBox Name="input_CargoType" Grid.Row="1" Grid.Column="1"
+                              Style="{DynamicResource infoComboField_LeftMiddle}"
+                              Template="{DynamicResource ComboBox_Transparent}"
+                              SelectedItem="{Binding Path=Type, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                    <!--SelectionChanged="TruckType_OnSelectionChanged"-->
+                    
+                    <UserControl Name="CargoVal_UserCtrl" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" >
+                        <UserControl.DataContext>
+                            <val:CargoValidation/>
+                        </UserControl.DataContext>
+                        <StackPanel>
+                            <Grid MinHeight="155">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                
+                                <TextBox Grid.Row="1" Grid.Column="0"
+                                         Style="{DynamicResource infoInputField_Left_SecondRow}"
+                                         Text="{Binding Path=Weight, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Row="2" Grid.Column="0"
+                                         Style="{DynamicResource infoInputField_Left_SecondRow}"
+                                         Text="{Binding Path=Volume, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Row="3" Grid.Column="0"
+                                         Style="{DynamicResource infoInputField_Left_SecondRow}"
+                                         Text="{Binding Path=Amount, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </StackPanel>
+                    </UserControl>
 
-                <ComboBox Name="input_CargoType" Grid.Row="0" Grid.Column="1"
-                          Style="{DynamicResource infoComboField_LeftMiddle}"
-                          Template="{DynamicResource ComboBox_Transparent}"
-                          SelectedItem="{Binding Path=Type, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-                          <!--SelectionChanged="TruckType_OnSelectionChanged"-->
-                <TextBox Grid.Row="1" Grid.Column="1"
-                         Style="{DynamicResource infoInputField_Right_SecondRow}"/>
-                <TextBox Grid.Row="2" Grid.Column="1"
-                         Style="{DynamicResource infoInputField_Right_SecondRow}"/>
+                    <UserControl Name="RouteVal_UserCtrl" Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" >
+                        <UserControl.DataContext>
+                            <val:RouteValidation/>
+                        </UserControl.DataContext>
+                        <StackPanel>
+                            <Grid MinHeight="155">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                
+                                <TextBox Grid.Row="2"
+                                         Style="{DynamicResource infoInputField_Right_SecondRow}"
+                                         Text="{Binding Path=Start, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Row="3"
+                                         Style="{DynamicResource infoInputField_Right_SecondRow}"
+                                         Text="{Binding Path=End, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </StackPanel>
+                    </UserControl>
                 </Grid>
             </StackPanel>
         </UserControl>
         
-        <Button Name="testButton"
+        <Button Click="OnSaveAndQuit"
                 Content="Зберегти"
                 Grid.Row="2"
                 Width="100" Height="40" 

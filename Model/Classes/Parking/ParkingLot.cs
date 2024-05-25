@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
+using TransDep_AdminApp.ViewModel;
+using TransDep_AdminApp.ViewModel.DTO;
 
 
 namespace TransDep_AdminApp.Model.Parking
@@ -24,55 +26,52 @@ namespace TransDep_AdminApp.Model.Parking
             }
         }
 
-        private static List<(int place, bool taken)> _takenPlaces;
+        private static ParkingSpot[] _takenPlaces;
+        private static int amountOfSpots = 18;
         
         public static void Initialize()
         {
-            _parkedtrucks = new ObservableCollection<ParkedTruck> {
-                new (0, 0, MainController.Instance.truckList[0].Id),
-                new (0, 1, MainController.Instance.truckList[1].Id),
-                new (0, 4, MainController.Instance.truckList[2].Id),
-                new (0, 7, MainController.Instance.truckList[3].Id),
-                new (0, 8, MainController.Instance.truckList[4].Id),
-                new (1, 0, MainController.Instance.truckList[5].Id)
-            };
+            _parkedtrucks = new ObservableCollection<ParkedTruck>(
+                MainController.Instance.truckList.ToList()
+                    .Where(elem => elem.ParkingSpot != null)
+                    .Select(elem => new ParkedTruck(new ParkingSpot(elem.ParkingSpot.Value, amountOfSpots), elem.Id)));
+            
             if (_takenPlaces != null) return;
             
-            _takenPlaces = new();
-            int count = 1;
-            for (int i = 0; i < 2; i++)
+            _takenPlaces = new ParkingSpot[amountOfSpots];
+            for (int i = 0; i < amountOfSpots; i++)
             {
-                for (int j = 0; j < 9; j++)
+                _takenPlaces[i] = new ParkingSpot(i + 1, amountOfSpots);
+                if (_parkedtrucks.ToList().Find(elem => elem.Spot.SpotNum == _takenPlaces[i].SpotNum) != null)
                 {
-                    var truck = _parkedtrucks.ToList().Find(elem => elem.Row == i && elem.Col == j);
-                    _takenPlaces.Add((count, truck != null && truck.Availability));
-                    count++;
+                    _takenPlaces[i].Taken = true;
                 }
             }
-
-            var k = 0;
         }
 
-        public static void AddParkedTruck(Truck target)
+        public static void AddParkedTruck(TruckDTO target)
         {
-            var row = (target.ParkingSpot - 1) / 9;
-            var col = (target.ParkingSpot - 1) % 9;
-            _parkedtrucks.Add(new ParkedTruck(row, col, target.Id));
+            _parkedtrucks.Add(new ParkedTruck(new ParkingSpot(target.ParkingSpot, amountOfSpots), target.Id));
+        }
+        public static void AddParkedTruck(string truckId)
+        {
+            var target = MainController.Instance.truckList.ToList().Find(elem => elem.Id == truckId);
+            _parkedtrucks.Add(new ParkedTruck(new ParkingSpot((int)target.ParkingSpot!, amountOfSpots), target.Id));
         }
         
-        public static int GetFreeSpotNum() => _takenPlaces.Find(elem => !elem.taken).place;
+        public static int GetFreeSpotNum() => _takenPlaces.ToList().Find(elem => !elem.Taken).SpotNum;
         public static void TakePlace(int place)
         {
-            var targetPlace = _takenPlaces.Find(elem => elem.place == place);
-            if (targetPlace.taken) throw new ArgumentException("Targeted place is already taken");
-            _takenPlaces = _takenPlaces.ToImmutableList().Replace(targetPlace, (targetPlace.place, true)).ToList();
+            var idx = _takenPlaces.ToList().FindIndex(elem => elem.SpotNum == place);
+            if (_takenPlaces[idx].Taken) throw new ArgumentException("Targeted place is already taken");
+            _takenPlaces[idx].Taken = true;
         }
         
         public static ObservableCollection<ParkedTruck> GetTrucksOnLot 
         {
             get
             {
-                var availableTrucks = new ObservableCollection<ParkedTruck>(ParkedTrucks.Where(elem => elem.Availability).Select(elem => elem).ToList());
+                var availableTrucks = new ObservableCollection<ParkedTruck>(ParkedTrucks.Select(elem => elem).ToList());
                 return availableTrucks;
             }
         }

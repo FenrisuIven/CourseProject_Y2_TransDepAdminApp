@@ -1,5 +1,6 @@
 using System;
 using System.CodeDom;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 
@@ -15,8 +16,7 @@ namespace TransDep_AdminApp.View.Screens
         public InfoAboutTruck()
         {
             InitializeComponent();
-            TruckDTO obj = ((MainWindow)Application.Current.MainWindow).listBox.SelectedItem as TruckDTO;
-            targetTruck = ObjectMapper.AutoMapper.Map<TruckDTO, Truck>(obj);
+            targetTruck = ((MainWindow)Application.Current.MainWindow).listBox.SelectedItem as Truck;
             InitializeTruckInfo();
             InitializeDriverInfo();
         }
@@ -33,12 +33,11 @@ namespace TransDep_AdminApp.View.Screens
 
         public void InitializeDriverInfo()
         {
-            var driver = MainController.Instance.driverList.Find(elem => elem.Id == targetTruck.DriverID);
-            driverId_Label.Content = driver.Id;
+            var driver = MainController.Instance.driverList.ToList().Find(elem => elem.Id == targetTruck.DriverID);
             driverName_Label.Content = $"{driver.LastName} {driver.FirstName} {driver.MiddleName}";
+            driverId_Label.Content = driver.Id;
             driverRating_Label.Content = $"{driver.Rating}/10";
             driverCategory_Label.Content = driver.Category;
-
         }
     }
 }

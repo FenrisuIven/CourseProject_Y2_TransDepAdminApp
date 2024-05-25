@@ -1,7 +1,9 @@
+using System.Linq;
 using System.ComponentModel;
 using System.Windows.Controls;
 using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.Interfaces;
+using TransDep_AdminApp.Model.Parking;
 
 namespace TransDep_AdminApp.ViewModel.Validation
 {
@@ -12,8 +14,7 @@ namespace TransDep_AdminApp.ViewModel.Validation
         public string Brand { get; set; }
         public string Model { get; set; }
         public ComboBoxItem Quality { get; set; }
-        
-        // TODO: IsValid() to check if all fields are valid
+        public TruckCharsValidationBase TruckCharsValidation { get; set; }
         
         public string this[string name]
         {
@@ -67,5 +68,29 @@ namespace TransDep_AdminApp.ViewModel.Validation
         }
         
         public string Error => null;
+
+        public bool IsValid()
+        {
+            if (Type is null) return false;
+            if (Name is null)
+            {
+                if (Model is null) return false;
+                if (Brand is null) return false;
+            }
+
+            if (Model is not null)
+            {
+                if (Brand is null) return false;
+            }
+
+            if (Brand is not null)
+            {
+                if (Model is null) return false;
+            }
+
+            if (Quality is null) return false;
+            
+            return TruckCharsValidation.isValid();
+        }
     }
 }

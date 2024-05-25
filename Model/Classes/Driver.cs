@@ -5,7 +5,7 @@ using TransDep_AdminApp.Interfaces;
 
 namespace TransDep_AdminApp.Model
 {
-    public class Driver : IDriver
+    public class Driver
     {
         public string Id { get; private set; }
         public string AssignedTruckId { get; private set; }

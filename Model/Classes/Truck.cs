@@ -7,10 +7,10 @@ using TransDep_AdminApp.Interfaces;
 
 namespace TransDep_AdminApp.Model
 {
-    public abstract class Truck : INotifyPropertyChanged, ITruck
+    public class Truck : INotifyPropertyChanged
     {
         public string Id { get; protected set; }
-        public string DriverID { get; protected set; }
+        public string? DriverID { get; protected set; }
         public string Name { get; protected set; }
         public int CarryingCapacity { get; protected set; }
         public int UsefulVolume { get; protected set; }
@@ -23,27 +23,29 @@ namespace TransDep_AdminApp.Model
             protected set => SetField(ref _availability, value);
         }
 
-        private int _parkingSpot;
-        public int ParkingSpot
+        private int? _parkingSpot;
+        public int? ParkingSpot
         {
             get => _parkingSpot; 
             protected set => SetField(ref _parkingSpot, value);
         }
 
-        protected Truck(string _id, string _driverId, string _name, int _carryingCapacity, int _usefulVolume, int _capacity, bool availability, int parkingSpot)
+        public Truck() {}
+        
+        public Truck(string id, string? driverId, string name, int carryingCapacity, int usefulVolume, int capacity, bool availability, int parkingSpot)
         {
-            Id = _id;
-            DriverID = _driverId;
-            Name = _name;
-            CarryingCapacity = _carryingCapacity;
-            UsefulVolume = _usefulVolume;
-            Capacity = _capacity;
+            Id = id;
+            DriverID = driverId;
+            Name = name;
+            CarryingCapacity = carryingCapacity;
+            UsefulVolume = usefulVolume;
+            Capacity = capacity;
             _availability = availability;
             _parkingSpot = parkingSpot;
         }
 
         public void SetAvailability(bool val) =>  Availability = val;
-        public void SetParkingSpot(int value) => ParkingSpot = value;
+        public void SetParkingSpot(int? value) => ParkingSpot = value;
         public void SetDriverID(string value) => DriverID = value;
         
         
