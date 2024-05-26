@@ -8,17 +8,19 @@ using TransDep_AdminApp.View;
 using TransDep_AdminApp.Model;
 using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.ViewModel;
+using TransDep_AdminApp.ViewModel.DTO;
 using TransDep_AdminApp.Model.Parking;
 
 namespace TransDep_AdminApp
 {
     public partial class MainWindow
     {
-        private ParkingLot _parkingLot;
+        private TruckListVM _localTruckVM;
         public MainWindow()
         {
             InitializeComponent();
             MainController.Instance.Initialize();
+            Initialize();
             var truckDTO = MainController.Instance.truckList[1];
             var truck = ObjectMapper.AutoMapper.Map<Truck>(truckDTO);
             Task task = new Task("Test", truckDTO, 
@@ -32,29 +34,52 @@ namespace TransDep_AdminApp
         {
             UI_Controller.Window(sender);
         }
-        
+        private void ChangeAvalDeb(object sender, RoutedEventArgs e)
+        {
+            object target = listBox.SelectedItem;
+            Truck obj = target is TruckDTO ? ObjectMapper.AutoMapper.Map<TruckDTO, Truck>(target as TruckDTO) : (Truck)target;
+            int idx = MainController.Instance.truckList.ToList().FindIndex(elem => elem == obj);
+            
+            bool availability = !obj.Availability;
+            MainController.Instance.truckList[idx].SetAvailability(availability);
+            
+            if (availability)
+            {
+                MainController.Instance.truckList[idx].SetParkingSpot(ParkingLot.GetFreeSpotNum());
+                ParkingLot.AddParkedTruck(obj.Id);
+                ParkingLot.TakePlace(MainController.Instance.truckList[idx].ParkingSpot!.Value);
+            }
+            //if (!availability) ParkingLot.Initialize();
+            MainController.Instance.RefreshParkingSpots();
+            
+            MainController.Instance.PropertyChanged(MainController.Instance.truckList[idx].Id, "Availability");
+        }
         private void RemoveTruck(object sender, RoutedEventArgs e) => MainController.Instance.RemoveTruck(listBox.SelectedItem);
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
             MainController.Instance.Serialize();
         }
+        
+        public void Initialize()
+        {
+            listBox.ItemsSource = MainController.Instance.truckList;
+            ParkingLot_ItemsCtrl.ItemsSource = ParkingLot.GetTrucksOnLot;
+        }
+        public void Refresh()
+        {
+            ParkingLot_ItemsCtrl.ItemsSource = ParkingLot.GetTrucksOnLot;
+            ParkingLot_ItemsCtrl.Items.Refresh();
+        }
+        
         public void DepartureCommand(object sender, RoutedEventArgs e)
         {
-            var carToDriveAway = ParkingLot.ParkedTrucks.FirstOrDefault(spot => spot.TruckId == MainController.Instance.truckList[2].Id);
-            if (carToDriveAway != null)
-            {
-                var obj = ParkingLot_ItemsCtrl.ItemContainerGenerator.ContainerFromItem(carToDriveAway) as ContentPresenter;
-                ParkingLot_Ui.AnimateTruckDeparture(obj);
-            }
+            ParkingLot_Ui.AnimateTruckDeparture(MainController.Instance.truckList[2].Id);
         }
         public void ArrivalCommand(object sender, RoutedEventArgs e)
         {
-            var carToDriveAway = ParkingLot.ParkedTrucks.FirstOrDefault(spot => spot.TruckId == MainController.Instance.truckList[2].Id);
-            if (carToDriveAway != null)
-            {
-                var obj = ParkingLot_ItemsCtrl.ItemContainerGenerator.ContainerFromItem(carToDriveAway) as ContentPresenter;
-                ParkingLot_Ui.AnimateTruckArrival(obj);
-            }
+            ParkingLot_Ui.AnimateTruckArrival(MainController.Instance.truckList[2].Id);
         }
+
+        
     }
 }

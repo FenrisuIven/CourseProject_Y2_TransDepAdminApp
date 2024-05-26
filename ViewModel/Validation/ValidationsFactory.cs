@@ -6,16 +6,33 @@ namespace TransDep_AdminApp.ViewModel.Validation
 {
     public class ValidationsFactory
     {
-        public static IDataErrorInfo CreateValidation(TruckType target)
+        public static IDataErrorInfo CreateTruckValidation(TruckType target)
         {
             switch (target)
             {
-                case TruckType.AutoClutch: return new AutoClutchValidation();
-                case TruckType.Container: return new AutoClutchValidation();
-                case TruckType.Refrigerated: return new AutoClutchValidation();
-                case TruckType.Tent: return new AutoClutchValidation();
+                case TruckType.AutoClutch: 
+                    return new AutoClutchValidation();
+                
+                case TruckType.Container: 
+                    return new AutoClutchValidation();
+                
+                case TruckType.Refrigerated: 
+                    return new AutoClutchValidation();
+                
+                case TruckType.Tent: 
+                    return new AutoClutchValidation();
             }
             return default;
+        }
+
+        public static IDataErrorInfo CreateCargoValidation()
+        {
+            return new CargoValidation();
+        }
+
+        public static TaskValidation CreateTaskValidation()
+        {
+            return new TaskValidation();
         }
     }
 }

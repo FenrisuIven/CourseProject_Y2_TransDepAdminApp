@@ -1,18 +1,18 @@
 using System.ComponentModel;
+using System.Linq;
 using System.Net.Configuration;
 using TransDep_AdminApp.Model.Trucks;
 
 namespace TransDep_AdminApp.ViewModel.Validation
 {
-    public class AutoClutchValidation : IDataErrorInfo
+    public class AutoClutchValidation : TruckCharsValidationBase, IDataErrorInfo
     {
-        private double[] carryingCapacity = AutomaticClutch.allowedCarryingCapacity;
-        private double[] capacity = AutomaticClutch.allowedCapacity;
-        private double[] usefulVolume = AutomaticClutch.allowedUsefulVolume;
-        public int? CarryingCapacity { get; set; }
-        public int? UsefulVolume { get; set; }
-        public int? Capacity { get; set; }
-        
+        public AutoClutchValidation()
+        {
+            carryingCapacity = AutomaticClutch.allowedCarryingCapacity;
+            usefulVolume = AutomaticClutch.allowedUsefulVolume;
+            capacity = AutomaticClutch.allowedCapacity;
+        }
         public string this[string name]
         {
             get
@@ -20,24 +20,21 @@ namespace TransDep_AdminApp.ViewModel.Validation
                 switch (name)
                 {
                     case "CarryingCapacity":
+                        if (CarryingCapacity is null) return "Вантажопідйомність обов'язкова";
                         if (CarryingCapacity < carryingCapacity[0] || CarryingCapacity > carryingCapacity[1]) 
                             return $"Вантажопідйомність повинна бути у межах: [{carryingCapacity[0]} ; {carryingCapacity[1]}]";
-                        if (string.IsNullOrEmpty(CarryingCapacity.ToString()))
-                            return "Вантажопідйомність обов'язкова";
                         break;
                     
                     case "UsefulVolume":
+                        if (UsefulVolume is null) return "Корисний обсяг обов'язковий";
                         if (UsefulVolume < usefulVolume[0] || UsefulVolume > usefulVolume[1]) 
                             return $"Корисний обсяг повинен бути у межах: [{usefulVolume[0]} ; {usefulVolume[1]}]";
-                        if (string.IsNullOrEmpty(UsefulVolume.ToString()))
-                            return "Корисний обсяг обов'язковий";
                         break;
                     
                     case "Capacity":
+                        if (Capacity is null) return "Місткість обов'язкова";
                         if (Capacity < capacity[0] || Capacity > capacity[1]) 
                             return $"Місткість повинна бути у межах: [{capacity[0]} ; {capacity[1]}]";
-                        if (string.IsNullOrEmpty(Capacity.ToString()))
-                            return "Місткість обов'язкова";
                         break;
                 }
 
@@ -46,5 +43,10 @@ namespace TransDep_AdminApp.ViewModel.Validation
         }
 
         public string Error => null;
+        public override bool isValid() => 
+            GetType().GetProperties()
+                .Where(elem => ValidatedProps.Contains(elem.Name))
+                .Select(elem => elem.Name)
+                .All(elem => string.IsNullOrEmpty(this[elem]));
     }
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TransDep_AdminApp"
+        xmlns:model="clr-namespace:TransDep_AdminApp.Model"
         xmlns:parking="clr-namespace:TransDep_AdminApp.Model.Parking"
         mc:Ignorable="d"
         UseLayoutRounding="True"
@@ -45,6 +46,9 @@
                  FontSize="10"
                  Grid.Row="0" Grid.Column="0"
                  Grid.RowSpan="2">
+            <ListBox.DataContext>
+                <model:Truck/>
+            </ListBox.DataContext>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -76,6 +80,7 @@
                     <MenuItem Name="changeDriver" Header="Призначити нового водія" Click="OpenWindow"/>
                     <MenuItem Name="changeParkingSpace" Header="Змінити місце паркування" Click="OpenWindow"/>
                     <MenuItem Header="Видалити зі списку" Click="RemoveTruck"/>
+                    <MenuItem Header="change availability" Click="ChangeAvalDeb"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>

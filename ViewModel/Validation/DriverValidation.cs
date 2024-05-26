@@ -1,7 +1,8 @@
 using System.ComponentModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
-
+using GoogleMapsApi.Entities.DistanceMatrix.Response;
 using TransDep_AdminApp.ViewModel.DTO;
 
 namespace TransDep_AdminApp.ViewModel.Validation
@@ -46,7 +47,11 @@ namespace TransDep_AdminApp.ViewModel.Validation
                 return default;
             }
         }
-
         public string Error => null;
+        public bool isValid() => 
+            GetType().GetProperties()
+                .Where(elem => elem.Name != "DriverDto")
+                .Select(elem => elem.Name)
+                .All(elem => string.IsNullOrEmpty(this[elem]));
     }
 }

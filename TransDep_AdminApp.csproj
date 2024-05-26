@@ -141,6 +141,7 @@
     <Compile Include="Model\Classes\Parking\ParkedTruck.cs" />
     <Compile Include="Model\Classes\Parking\ParkingLot.cs" />
     <Compile Include="Model\Classes\Parking\ParkingLot_Ui.cs" />
+    <Compile Include="Model\Classes\Parking\ParkingSpot.cs" />
     <Compile Include="Model\Classes\Route.cs" />
     <Compile Include="Model\Classes\Task.cs" />
     <Compile Include="Model\Classes\Truck.cs" />
@@ -151,28 +152,30 @@
     <Compile Include="Model\Enums\CargoTypes.cs" />
     <Compile Include="Model\Enums\TruckTypes.cs" />
     <Compile Include="Model\Interfaces\IDataGatherer.cs" />
-    <Compile Include="Model\Interfaces\IDriver.cs" />
-    <Compile Include="Model\Interfaces\ITruck.cs" />
+    <Compile Include="Model\Interfaces\ILayerTransfer.cs" />
+    <Compile Include="Model\Interfaces\IValidationValid.cs" />
     <Compile Include="Model\MainController.cs" />
     <Compile Include="Model\Misc\IDGenerator.cs" />
     <Compile Include="Model\Misc\VersionUpdater.cs" />
     <Compile Include="Serialization\FileIO.cs" />
+    <Compile Include="ViewModel\DriverListVM.cs" />
     <Compile Include="ViewModel\DTO\CargoDTO.cs" />
     <Compile Include="ViewModel\DTO\DriverDTO.cs" />
     <Compile Include="ViewModel\DTO\RouteDTO.cs" />
     <Compile Include="ViewModel\DTO\TaskDTO.cs" />
-    <Compile Include="ViewModel\DTO\TruckDerivedDTOs\AutoClutchDTO.cs" />
-    <Compile Include="ViewModel\DTO\TruckDerivedDTOs\ContainerDTO.cs" />
-    <Compile Include="ViewModel\DTO\TruckDerivedDTOs\RefrigeratedDTO.cs" />
-    <Compile Include="ViewModel\DTO\TruckDerivedDTOs\TentDTO.cs" />
     <Compile Include="ViewModel\DTO\TruckDTO.cs" />
     <Compile Include="ViewModel\ObjectMapper.cs" />
+    <Compile Include="ViewModel\TaskListVM.cs" />
+    <Compile Include="ViewModel\TruckListVM.cs" />
     <Compile Include="ViewModel\Validation\CargoValidation.cs" />
     <Compile Include="ViewModel\Validation\DriverValidation.cs" />
+    <Compile Include="ViewModel\Validation\LoadValidationForChosenTruck.cs" />
+    <Compile Include="ViewModel\Validation\RouteValidation.cs" />
+    <Compile Include="ViewModel\Validation\TaskValidation.cs" />
     <Compile Include="ViewModel\Validation\Truck\AutoClutchValidation.cs" />
+    <Compile Include="ViewModel\Validation\Truck\TruckCharsValidationBase.cs" />
     <Compile Include="ViewModel\Validation\Truck\TruckValidation.cs" />
     <Compile Include="ViewModel\Validation\ValidationsFactory.cs" />
-    <Compile Include="ViewModel\UIController.cs" />
     <Compile Include="View\Screens\Driver\AddNewDriver.xaml.cs">
       <DependentUpon>AddNewDriver.xaml</DependentUpon>
     </Compile>
@@ -203,7 +206,6 @@
     <Compile Include="View\Screens\Truck\TruckAdditionScreen\AddNewTruck.xaml.cs">
       <DependentUpon>AddNewTruck.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Screens\Truck\TruckAdditionScreen\AddTruck_LogicHandler.cs" />
     <Compile Include="View\Screens\Truck\TruckListDisplay.xaml.cs">
       <DependentUpon>TruckListDisplay.xaml</DependentUpon>
     </Compile>

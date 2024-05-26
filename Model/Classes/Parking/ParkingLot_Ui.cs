@@ -12,16 +12,26 @@ namespace TransDep_AdminApp.Model.Parking
 {
     public static class ParkingLot_Ui
     {
-        public static void AnimateTruckDeparture(ContentPresenter carPresenter)
+        public static void AnimateTruckDeparture(string truckId)
         {
             var mainWindow = Application.Current.MainWindow as MainWindow;
-            double canvasWidth = mainWindow.ParkingCanvas.Width;
-            double canvasHeight = mainWindow.ParkingCanvas.Height;
+            mainWindow!.Refresh();
+            
+            var carToDriveAway = ParkingLot.ParkedTrucks.FirstOrDefault(spot => spot.TruckId == truckId);
+            var truckPresenter = new ContentPresenter();
+            if (carToDriveAway != null)
+            {
+                truckPresenter = mainWindow!.ParkingLot_ItemsCtrl.ItemContainerGenerator.ContainerFromItem(carToDriveAway) as ContentPresenter;
+            }
+            else return;
+            
+            double canvasWidth = mainWindow!.ParkingCanvas.Width;
+            double canvasHeight = mainWindow!.ParkingCanvas.Height;
 
 
             var centerYAnimation = new DoubleAnimation
             {
-                To = canvasHeight / 2 - carPresenter.ActualHeight / 2,
+                To = canvasHeight / 2 - truckPresenter.ActualHeight / 2,
                 Duration = TimeSpan.FromSeconds(2)
             };
 
@@ -37,18 +47,29 @@ namespace TransDep_AdminApp.Model.Parking
             storyboard.Children.Add(driveOutAnimation);
 
 
-            Storyboard.SetTarget(centerYAnimation, carPresenter);
+            Storyboard.SetTarget(centerYAnimation, truckPresenter);
             Storyboard.SetTargetProperty(centerYAnimation, new PropertyPath("(Canvas.Top)"));
 
-            Storyboard.SetTarget(driveOutAnimation, carPresenter);
+            Storyboard.SetTarget(driveOutAnimation, truckPresenter);
             Storyboard.SetTargetProperty(driveOutAnimation, new PropertyPath("(Canvas.Left)"));
 
             storyboard.Begin();
         }
-        public static void AnimateTruckArrival(ContentPresenter carPresenter)
+        public static void AnimateTruckArrival(string truckId)
         {
-            double colPos = ((ParkedTruck)carPresenter.Content).Col * (700 / 9) + 7;
-            double rowPos = ((ParkedTruck)carPresenter.Content).Row * 480 + 15;
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow!.Refresh();
+            
+            var carToDriveAway = ParkingLot.ParkedTrucks.FirstOrDefault(spot => spot.TruckId == truckId);
+            var truckPresenter = new ContentPresenter();
+            if (carToDriveAway != null)
+            {
+                truckPresenter = mainWindow.ParkingLot_ItemsCtrl.ItemContainerGenerator.ContainerFromItem(carToDriveAway) as ContentPresenter;
+            }
+            else return;
+                
+            double colPos = ((ParkedTruck)truckPresenter.Content).Col * (700 / 9) + 7;
+            double rowPos = ((ParkedTruck)truckPresenter.Content).Row * 480 + 15;
 
 
             var driveInAnimation = new DoubleAnimation
@@ -69,14 +90,13 @@ namespace TransDep_AdminApp.Model.Parking
             storyboard.Children.Add(driveInAnimation);
             storyboard.Children.Add(centerYAnimation);
             
-            Storyboard.SetTarget(driveInAnimation, carPresenter);
+            Storyboard.SetTarget(driveInAnimation, truckPresenter);
             Storyboard.SetTargetProperty(driveInAnimation, new PropertyPath("(Canvas.Left)"));
             
-            Storyboard.SetTarget(centerYAnimation, carPresenter);
+            Storyboard.SetTarget(centerYAnimation, truckPresenter);
             Storyboard.SetTargetProperty(centerYAnimation, new PropertyPath("(Canvas.Top)"));
 
             storyboard.Begin();
         }
-        
     }
 }

@@ -1,11 +1,15 @@
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using AutoMapper;
 using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.Model;
 using TransDep_AdminApp.Model.Trucks;
+using TransDep_AdminApp.View.Screens;
 using TransDep_AdminApp.ViewModel.DTO;
 
 namespace TransDep_AdminApp.ViewModel
@@ -17,32 +21,41 @@ namespace TransDep_AdminApp.ViewModel
         {
             return new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Tent, TentDTO>();
-                cfg.CreateMap<Container, ContainerDTO>();
-                cfg.CreateMap<Refrigerated, RefrigeratedDTO>();
-                cfg.CreateMap<AutomaticClutch, AutoClutchDTO>();
+                cfg.CreateMap<Refrigerated, TruckDTO>().ForMember(dest => dest.Type, opt => opt.MapFrom(elem => TruckType.Refrigerated)).ReverseMap();
+                cfg.CreateMap<AutomaticClutch, TruckDTO>().ForMember(dest => dest.Type, opt => opt.MapFrom(elem => TruckType.AutoClutch)).ReverseMap();
+                cfg.CreateMap<Container, TruckDTO>().ForMember(dest => dest.Type, opt => opt.MapFrom(elem => TruckType.Container)).ReverseMap();
+                cfg.CreateMap<Tent, TruckDTO>().ForMember(dest => dest.Type, opt => opt.MapFrom(elem => TruckType.Tent)).ReverseMap();
 
-                cfg.CreateMap<TruckDTO, Refrigerated>()
-                    .ConstructUsing(dto => new Refrigerated(dto.Id, dto.DriverID, dto.Name, dto.CarryingCapacity, dto.UsefulVolume, dto.Capacity, dto.ParkingSpot, dto.Availability));
-                cfg.CreateMap<TruckDTO, AutomaticClutch>()
-                    .ConstructUsing(dto => new AutomaticClutch(dto.Id, dto.DriverID, dto.Name, dto.CarryingCapacity, dto.UsefulVolume, dto.Capacity, dto.ParkingSpot, dto.Availability));
-                cfg.CreateMap<TruckDTO, Container>()
-                    .ConstructUsing(dto => new Container(dto.Id, dto.DriverID, dto.Name, dto.CarryingCapacity, dto.UsefulVolume, dto.Capacity, dto.ParkingSpot, dto.Availability));
-                cfg.CreateMap<TruckDTO, Tent>()
-                    .ConstructUsing(dto => new Tent(dto.Id, dto.DriverID, dto.Name, dto.CarryingCapacity, dto.UsefulVolume, dto.Capacity, dto.ParkingSpot, dto.Availability));
+                cfg.CreateMap<TruckDTO, Truck>().ConvertUsing((dto, obj, ctx) =>
+                {
+                    switch (dto.Type)
+                    {
+                        case TruckType.Container:
+                            return ctx.Mapper.Map<Container>(dto);
+                        case TruckType.Refrigerated:
+                            return ctx.Mapper.Map<Refrigerated>(dto);
+                        case TruckType.Tent:
+                            return ctx.Mapper.Map<Tent>(dto);
+                        case TruckType.AutoClutch:
+                            return ctx.Mapper.Map<AutomaticClutch>(dto);
+                    }
+
+                    return obj;
+                });
                 
                 cfg.CreateMap<Cargo, CargoDTO>().ReverseMap();
                 cfg.CreateMap<Driver, DriverDTO>()
-                    .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName},{src.MiddleName},{src.LastName}")).ReverseMap();
+                    .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName},{src.MiddleName},{src.LastName}"))
+                    .ReverseMap();
                 cfg.CreateMap<Route, RouteDTO>().ReverseMap();
                 
                 cfg.CreateMap<Task, TaskDTO>()
-                    .ForMember(dest => dest.TruckExecutor, opt => opt.MapFrom(src => src.TruckExecutor))
-                    .ForMember(dest => dest.DriverExecutor, opt => opt.MapFrom(src => src.DriverExecutor))
+                    .ForMember(dest => dest.TruckExecutorID, opt => opt.MapFrom(src => src.TruckExecutorID))
+                    .ForMember(dest => dest.DriverExecutorID, opt => opt.MapFrom(src => src.DriverExecutorID))
                     .ForMember(dest => dest.Route, opt => opt.MapFrom(src => src.Route))
                     .ForMember(dest => dest.Cargo, opt => opt.MapFrom(src => src.Cargo));
                 
-                cfg.CreateMap<TaskDTO, Task>().ConstructUsing(dto => new Task(dto.Name, dto.TruckExecutor, dto.DriverExecutor, dto.Route, dto.Cargo));
+                cfg.CreateMap<TaskDTO, Task>().ConstructUsing(dto => new Task(dto.Name, dto.TruckExecutorID, dto.DriverExecutorID, dto.Route, dto.Cargo));
             });
         }
         
