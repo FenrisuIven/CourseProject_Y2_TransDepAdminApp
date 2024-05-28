@@ -1,0 +1,9 @@
+@startuml
+class ParkingSpot {
+    + SpotNum : int { get; private set;}
+    + Available : bool { get; private set;}
+    + TruckID : string { get; private set;}
+    + TakeSpot (truckID : string) : void
+    + FreeSpot () : void
+}
+@enduml

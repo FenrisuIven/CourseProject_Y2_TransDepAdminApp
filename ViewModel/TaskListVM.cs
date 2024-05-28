@@ -1,12 +1,12 @@
 using System;
+using System.Linq;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
+
 using TransDep_AdminApp.Model;
 using TransDep_AdminApp.Interfaces;
-using TransDep_AdminApp.Model.Parking;
 using TransDep_AdminApp.ViewModel.DTO;
 using TransDep_AdminApp.ViewModel.Validation;
 
@@ -24,11 +24,24 @@ namespace TransDep_AdminApp.ViewModel
             TransferDTO += MainController.Instance.TaskAdditionRequested;
         }
         
-        public void OnAdditionRequested(object sender, TruckValidation val)
+        public void OnAdditionRequested(object sender, TaskValidation val)
         {
-            var obj = new TaskDTO 
+            var obj = new TaskDTO
             {
-                
+                Name = val.Name,
+                TruckExecutorID = val.Truck.Id,
+                DriverExecutorID = val.Driver.Id,
+                Route = new RouteDTO()
+                {
+                    Origin = val.RouteVal.StartPoint,
+                    Destination = val.RouteVal.EndPoint
+                },
+                Cargo = new CargoDTO()
+                {
+                    Weight = double.Parse(val.CargoVal.Weight),
+                    Volume = double.Parse(val.CargoVal.Volume),
+                    Amount = double.Parse(val.CargoVal.Amount),
+                }
             };
             //if (everything is okay)
             RequestTransfer(obj);

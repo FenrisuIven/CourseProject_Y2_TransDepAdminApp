@@ -1,0 +1,49 @@
+@startuml
+!theme mono
+skinparam classAttributeIconSize 0
+
+<style>
+document {
+    Margin 50
+}
+</style>
+
+namespace Model {
+    !include .\\.\Model\MainController.puml
+    !include .\\.\Model\Classes\Cargo.puml
+    !include .\\.\Model\Classes\Driver.puml
+    !include .\\.\Model\Classes\Route.puml
+    !include .\\.\Model\Classes\Task.puml
+
+    namespace TruckDerivedClasses {
+        !include .\\.\Model\Classes\Truck.puml
+        !include .\\.\Model\Classes\TruckDerivedClasses\AutomaticClutch.puml
+        !include .\\.\Model\Classes\TruckDerivedClasses\Container.puml
+        !include .\\.\Model\Classes\TruckDerivedClasses\Refrigerated.puml
+        !include .\\.\Model\Classes\TruckDerivedClasses\Tent.puml
+    }
+}
+namespace Enums{
+    !include .\\.\Model\Misc\IDGenerator.puml
+    !include .\\.\Model\Enums\TruckTypes.puml
+    !include .\\.\Model\Enums\CargoTypes.puml
+}
+namespace Interfaces {
+    together {
+        !include .\\.\Model\Interfaces\IDataGatherer.puml
+        !include .\\.\Model\Interfaces\IValidationValid.puml
+    } 
+    together {
+        !include .\\.\Model\Interfaces\ILayerTransfer.puml
+    }
+}
+namespace Parking {
+    together {
+        !include .\\.\Model\Classes\Parking\ParkedTruck.puml
+        !include .\\.\Model\Classes\Parking\ParkingLotM.puml
+        !include .\\.\Model\Classes\Parking\ParkingSpot.puml
+    }
+}
+
+
+@enduml

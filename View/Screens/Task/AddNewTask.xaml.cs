@@ -8,14 +8,16 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TransDep_AdminApp.ViewModel;
 using TransDep_AdminApp.ViewModel.DTO;
 using TransDep_AdminApp.ViewModel.Validation;
 
 namespace TransDep_AdminApp.View.Screens
 {
-    public partial class AddNewTask : Window, INotifyPropertyChanged
+    public partial class AddNewTask : Window
     {
         private LoadValidationForChosenTruck _targetLoadValidationForChosenTruckVal = new();
+        public TaskListVM localTaskVM;
 
         private LoadValidationForChosenTruck TargetLoadValidationForChosenTruckVal
         {
@@ -25,6 +27,7 @@ namespace TransDep_AdminApp.View.Screens
 
         public AddNewTask()
         {
+            localTaskVM = new();
             var availableTrucks = MainController.Instance.truckList.Where(elem => elem.Availability).ToList();
             List<Driver> drivers = new();
             for (int i = 0; i < availableTrucks.Count; i++)
@@ -40,6 +43,8 @@ namespace TransDep_AdminApp.View.Screens
             
             ((CargoValidation)CargoVal_UserCtrl.DataContext).TargetLoadValidationForChosenTruck = TargetLoadValidationForChosenTruckVal;
             TargetLoadValidationForChosenTruckVal.PropertyChanged += ((CargoValidation)CargoVal_UserCtrl.DataContext).OnLoadValidationForChosenTruckChanged;
+            
+            TaskInputCompletionEvent += localTaskVM.OnAdditionRequested;
         }
 
         private void Truck_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -63,14 +68,14 @@ namespace TransDep_AdminApp.View.Screens
                 MessageBox.Show("sumth is wong");
                 return;
             }
-            //pass it somewhere
+            OnCompletion(taskValidation);
+            Close();
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public delegate void TaskInputCompleted(object sender, TaskValidation prop1);
+        public event TaskInputCompleted TaskInputCompletionEvent;
+        public void OnCompletion(TaskValidation val)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            TaskInputCompletionEvent?.Invoke(this, val);
         }
     }
 }

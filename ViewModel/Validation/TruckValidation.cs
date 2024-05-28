@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.Interfaces;
-using TransDep_AdminApp.Model.Parking;
 
 namespace TransDep_AdminApp.ViewModel.Validation
 {

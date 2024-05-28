@@ -139,8 +139,7 @@
     <Compile Include="Model\Classes\Cargo.cs" />
     <Compile Include="Model\Classes\Driver.cs" />
     <Compile Include="Model\Classes\Parking\ParkedTruck.cs" />
-    <Compile Include="Model\Classes\Parking\ParkingLot.cs" />
-    <Compile Include="Model\Classes\Parking\ParkingLot_Ui.cs" />
+    <Compile Include="Model\Classes\Parking\ParkingLotM.cs" />
     <Compile Include="Model\Classes\Parking\ParkingSpot.cs" />
     <Compile Include="Model\Classes\Route.cs" />
     <Compile Include="Model\Classes\Task.cs" />
@@ -165,6 +164,7 @@
     <Compile Include="ViewModel\DTO\TaskDTO.cs" />
     <Compile Include="ViewModel\DTO\TruckDTO.cs" />
     <Compile Include="ViewModel\ObjectMapper.cs" />
+    <Compile Include="ViewModel\ParkingLotVM.cs" />
     <Compile Include="ViewModel\TaskListVM.cs" />
     <Compile Include="ViewModel\TruckListVM.cs" />
     <Compile Include="ViewModel\Validation\CargoValidation.cs" />
@@ -172,10 +172,13 @@
     <Compile Include="ViewModel\Validation\LoadValidationForChosenTruck.cs" />
     <Compile Include="ViewModel\Validation\RouteValidation.cs" />
     <Compile Include="ViewModel\Validation\TaskValidation.cs" />
+    <Compile Include="ViewModel\Validation\TruckValidation.cs" />
     <Compile Include="ViewModel\Validation\Truck\AutoClutchValidation.cs" />
     <Compile Include="ViewModel\Validation\Truck\TruckCharsValidationBase.cs" />
-    <Compile Include="ViewModel\Validation\Truck\TruckValidation.cs" />
     <Compile Include="ViewModel\Validation\ValidationsFactory.cs" />
+    <Compile Include="View\Pages\ParkingLot.xaml.cs">
+      <DependentUpon>ParkingLot.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Screens\Driver\AddNewDriver.xaml.cs">
       <DependentUpon>AddNewDriver.xaml</DependentUpon>
     </Compile>
@@ -194,6 +197,9 @@
     <Compile Include="View\Screens\Task\TaskListDisplay.xaml.cs">
       <DependentUpon>TaskListDisplay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Screens\Truck\AddNewTruck.xaml.cs">
+      <DependentUpon>AddNewTruck.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Screens\Truck\ChangeDriver.xaml.cs">
       <DependentUpon>ChangeDriver.xaml</DependentUpon>
     </Compile>
@@ -203,13 +209,10 @@
     <Compile Include="View\Screens\Truck\InfoAboutTruck.xaml.cs">
       <DependentUpon>InfoAboutTruck.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Screens\Truck\TruckAdditionScreen\AddNewTruck.xaml.cs">
-      <DependentUpon>AddNewTruck.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Screens\Truck\TruckListDisplay.xaml.cs">
       <DependentUpon>TruckListDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UI_Controller.cs" />
+    <Compile Include="View\UI_NewWindowHandler.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -222,16 +225,17 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Pages\ParkingLot.xaml" />
     <Page Include="View\Screens\Driver\AddNewDriver.xaml" />
     <Page Include="View\Screens\Driver\ChangeDriverInfo.xaml" />
     <Page Include="View\Screens\Driver\DriverListDisplay.xaml" />
     <Page Include="View\Screens\Task\AddNewTask.xaml" />
     <Page Include="View\Screens\Task\ChangeTruck.xaml" />
     <Page Include="View\Screens\Task\TaskListDisplay.xaml" />
+    <Page Include="View\Screens\Truck\AddNewTruck.xaml" />
     <Page Include="View\Screens\Truck\ChangeDriver.xaml" />
     <Page Include="View\Screens\Truck\ChangeParkingPlace.xaml" />
     <Page Include="View\Screens\Truck\InfoAboutTruck.xaml" />
-    <Page Include="View\Screens\Truck\TruckAdditionScreen\AddNewTruck.xaml" />
     <Page Include="View\Screens\Truck\TruckListDisplay.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +257,27 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClassDiagrams\include.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Cargo.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Driver.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Parking\ParkedTruck.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Parking\ParkingLotM.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Parking\ParkingSpot.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Route.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Task.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Truck.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\TruckDerivedClasses\AutomaticClutch.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\TruckDerivedClasses\Container.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\TruckDerivedClasses\Refrigerated.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\TruckDerivedClasses\Tent.puml" />
+    <Content Include="ClassDiagrams\Model\Enums\CargoTypes.puml" />
+    <Content Include="ClassDiagrams\Model\Enums\TruckTypes.puml" />
+    <Content Include="ClassDiagrams\Model\Interfaces\IDataGatherer.puml" />
+    <Content Include="ClassDiagrams\Model\Interfaces\ILayerTransfer.puml" />
+    <Content Include="ClassDiagrams\Model\Interfaces\IValidationValid.puml" />
+    <Content Include="ClassDiagrams\Model\MainController.puml" />
+    <Content Include="ClassDiagrams\Model\Misc\IDGenerator.puml" />
+    <Content Include="ClassDiagrams\Model\Misc\VersionUpdater.puml" />
     <Resource Include="images\*.png" />
     <Content Include="README.md" />
     <Content Include="Serialization\driverList.json" />

@@ -1,0 +1,12 @@
+@startuml
+enum TruckType {
+    Refrigerated,
+    Container,
+    AutoClutch,
+    Tent
+}
+class TruckTypeConverter {
+    + <<static>> dictionary : new() { ... }
+}
+TruckTypeConverter::dictionary --> TruckType
+@enduml

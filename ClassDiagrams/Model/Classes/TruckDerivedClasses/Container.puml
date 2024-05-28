@@ -1,0 +1,8 @@
+@startuml
+class Container {
+    + <<static>> allowedCarryingCapacity : double[]
+    + <<static>> allowedUsefulVolume : double[]
+    + <<static>> allowedCapacity : double[]
+}
+Truck <|-- Container
+@enduml

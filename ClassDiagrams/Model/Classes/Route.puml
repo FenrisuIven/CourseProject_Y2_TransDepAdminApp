@@ -1,0 +1,8 @@
+@startuml
+class Route {
+    + Origin : string { get; private set; }
+    + Destination : string { get; private set; }
+    + GetTime() : string
+    + GetRoute() : string
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+enum CargoType {
+    RequiresRefrigerator,
+    DoesNotNeedRefrigerator
+}
+class CargoTypeConverter {
+    + <<static>> dictionary : new() { ... }
+}
+CargoTypeConverter::dictionary --> CargoType
+@enduml
