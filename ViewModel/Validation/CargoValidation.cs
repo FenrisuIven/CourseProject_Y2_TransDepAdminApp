@@ -14,7 +14,7 @@ namespace TransDep_AdminApp.ViewModel.Validation
         public string Weight { get; set; }
         public string Volume { get; set; }
         public string Amount { get; set; }
-        private CargoType _type;
+        private CargoType? _type;
         
         public LoadValidationForChosenTruck TargetLoadValidationForChosenTruck { get; set; }
         public void OnLoadValidationForChosenTruckChanged(object sender, PropertyChangedEventArgs e)
@@ -24,7 +24,11 @@ namespace TransDep_AdminApp.ViewModel.Validation
         
         public string Type
         {
-            get => CargoTypeConverter.dictionary[_type];
+            get
+            {
+                if (_type == null) return default;
+                return CargoTypeConverter.dictionary[_type.Value];
+            }
             set
             {
                 _type = CargoTypeConverter.dictionary.FirstOrDefault(elem => elem.Value == value).Key;
@@ -47,24 +51,24 @@ namespace TransDep_AdminApp.ViewModel.Validation
                         if (new Regex("[^0-9.-]+").IsMatch(Weight)) { return "Вага вантажу повинна містити лише цифри"; }
                         
                         TargetLoadValidationForChosenTruck.CarryCap = int.Parse(Weight);
-                        if (!string.IsNullOrEmpty(TargetLoadValidationForChosenTruck[name])) return TargetLoadValidationForChosenTruck[name];
+                        if (ValidateLoad(name) != null) return ValidateLoad(name); 
                         break;
                     case "Volume":
                         if (string.IsNullOrEmpty(Volume)) { return "Об'єм вантажу обов'язковий"; }
                         if (new Regex("[^0-9.-]+").IsMatch(Volume)) { return "Об'єм вантажу повинен містити лише цифри"; }
                         
                         TargetLoadValidationForChosenTruck.UseVolume = int.Parse(Volume);
-                        if (!string.IsNullOrEmpty(TargetLoadValidationForChosenTruck[name])) return TargetLoadValidationForChosenTruck[name];
+                        if (ValidateLoad(name) != null) return ValidateLoad(name); 
                         break;
                     case "Amount":
                         if (string.IsNullOrEmpty(Amount)) return "Кількість вантажу обов'язкова";
                         if (new Regex("[^0-9.-]+").IsMatch(Amount)) return "Кількість вантажу повинна містити лише цифри";
                         
                         TargetLoadValidationForChosenTruck.Capacity = int.Parse(Amount);
-                        if (!string.IsNullOrEmpty(TargetLoadValidationForChosenTruck[name])) return TargetLoadValidationForChosenTruck[name];
+                        if (ValidateLoad(name) != null) return ValidateLoad(name); 
                         break;
                     case "Type":
-                        if (string.IsNullOrEmpty(Type)) return "Тип вантажу обов'язковий";
+                        if (Type is null) return "Тип вантажу обов'язковий";
                         if (!CargoTypeConverter.dictionary.ContainsValue(Type)) return "Обраний тип не підтримується";
                         break;
                 }
@@ -72,6 +76,12 @@ namespace TransDep_AdminApp.ViewModel.Validation
             }
         }
 
+        private string ValidateLoad(string name)
+        {
+            if (!string.IsNullOrEmpty(TargetLoadValidationForChosenTruck[name])) return TargetLoadValidationForChosenTruck[name];
+            return default;
+        }
+        
         public string Error => null;
     }
 }

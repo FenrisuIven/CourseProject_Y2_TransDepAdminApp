@@ -8,8 +8,8 @@ namespace TransDep_AdminApp.ViewModel.Validation
     public class TaskValidation : IDataErrorInfo, IValidationValid
     {
         public string Name { get; set; }
-        public DriverDTO Driver { get; set; }
-        public TruckDTO Truck { get; set; }
+        public DriverDTO? Driver { get; set; }
+        public TruckDTO? Truck { get; set; }
         public CargoValidation CargoVal { get; set; }
         public RouteValidation RouteVal { get; set; }
 
@@ -27,6 +27,12 @@ namespace TransDep_AdminApp.ViewModel.Validation
                         break;
                     case "RouteVal":
                         if (!RouteVal.IsValid()) return "Error in Route Validation";
+                        break;
+                    case "Driver":
+                        if (Driver == null) return "Водій обов'язковий";
+                        break;
+                    case "Truck": 
+                        if (Truck == null) return "Вантажівка обов'язкова";
                         break;
                 }
 

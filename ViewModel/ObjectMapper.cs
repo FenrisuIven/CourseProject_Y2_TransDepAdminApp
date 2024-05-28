@@ -1,10 +1,3 @@
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using AutoMapper;
 using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.Model;

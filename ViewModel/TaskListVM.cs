@@ -49,7 +49,8 @@ namespace TransDep_AdminApp.ViewModel
                     };
                     RequestTransfer(obj);
                 }
-                catch{ /*ignored*/ }
+                catch(Exception e)
+                { /*ignored*/ }
             }
             
         }

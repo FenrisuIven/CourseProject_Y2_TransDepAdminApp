@@ -19,7 +19,14 @@ namespace TransDep_AdminApp.Model
             Route = route is RouteDTO ? ObjectMapper.AutoMapper.Map<Route>(route) : route as Route;
             Cargo = cargo is CargoDTO  ? ObjectMapper.AutoMapper.Map<Cargo>(cargo) : cargo as Cargo;
         }
-        
+        public Task(string name, string truck, string driver, object route, object cargo)
+        {
+            Name = name;
+            TruckExecutorID = truck;
+            DriverExecutorID = driver;
+            Route = route is RouteDTO ? ObjectMapper.AutoMapper.Map<Route>(route) : route as Route;
+            Cargo = cargo is CargoDTO  ? ObjectMapper.AutoMapper.Map<Cargo>(cargo) : cargo as Cargo;
+        }
         public override string ToString() => $"{Name} (Driver: {DriverExecutorID}; Truck: {TruckExecutorID}): {Route} | {Cargo}";
 
     }

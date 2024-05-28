@@ -13,13 +13,19 @@ namespace TransDep_AdminApp.ViewModel.Validation
             {
                 switch (name)
                 {
-                    
+                    case "StartPoint":
+                        if (string.IsNullOrEmpty(StartPoint)) return "Початок маршруту обов'язковий";
+                        break;
+                    case "EndPoint":
+                        if (string.IsNullOrEmpty(EndPoint)) return "Кінець маршруту обов'язковий";
+                        break;
                 }
 
                 return null;
             }
         }
-        public string Error { get; }
+
+        public string Error => null;
         
         public bool IsValid()
         {

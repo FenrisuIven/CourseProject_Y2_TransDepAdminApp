@@ -17,7 +17,10 @@ namespace TransDep_AdminApp.View.Screens
     public partial class AddNewTask : Window
     {
         private LoadValidationForChosenTruck _targetLoadValidationForChosenTruckVal = new();
-        public TaskListVM localTaskVM;
+        public TaskValidation localTaskVal = new();
+        public TaskListVM localTaskVM = new();
+        public TruckListVM localTruckVM = new();
+        public DriverListVM localDriverVM = new();
 
         private LoadValidationForChosenTruck TargetLoadValidationForChosenTruckVal
         {
@@ -27,15 +30,20 @@ namespace TransDep_AdminApp.View.Screens
 
         public AddNewTask()
         {
-            localTaskVM = new();
-            var availableTrucks = MainController.Instance.truckList.Where(elem => elem.Availability).ToList();
-            List<Driver> drivers = new();
+            var availableTrucks = localTruckVM.GetFreeTrucksList();
+            List<DriverDTO> drivers = new();
             for (int i = 0; i < availableTrucks.Count; i++)
             {
-                drivers.Add(MainController.Instance.driverList.ToList().Find(elem => elem.Id == availableTrucks[i].DriverID));
+                drivers.Add(localDriverVM.DriverList.ToList().Find(elem => elem.Id == availableTrucks[i].DriverID));
             }
 
             InitializeComponent();
+
+            localTaskVal.CargoVal = CargoVal_UserCtrl.DataContext as CargoValidation;
+            localTaskVal.RouteVal = RouteVal_UserCtrl.DataContext as RouteValidation;
+            
+            FirstRow_UserCtrl.DataContext = localTaskVal;
+            SecondRow_UserCtrl.DataContext = localTaskVal;
             
             input_Truck.ItemsSource = availableTrucks;
             input_Driver.ItemsSource = drivers;
@@ -49,33 +57,27 @@ namespace TransDep_AdminApp.View.Screens
 
         private void Truck_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var chosenTruck = input_Truck.SelectedItem as Truck;
-            var targetDriver = MainController.Instance.driverList.ToList().Find(elem => elem.Id == chosenTruck.DriverID);
+            var chosenTruck = input_Truck.SelectedItem as TruckDTO;
+            var targetDriver = localDriverVM.DriverList.ToList().Find(elem => elem.Id == chosenTruck.DriverID);
             input_Driver.SelectedItem = targetDriver;
             TargetLoadValidationForChosenTruckVal.TargetTruck = chosenTruck;
         }
 
         private void OnSaveAndQuit(object sender, RoutedEventArgs e)
         {
-            var taskValidation = SecondRow_UserCtrl.DataContext as TaskValidation;
-            taskValidation.CargoVal = CargoVal_UserCtrl.DataContext as CargoValidation;
-            taskValidation.RouteVal = RouteVal_UserCtrl.DataContext as RouteValidation;
-            
-            //driver is nonexistent in validation at this point
-            
-            if (taskValidation.IsValid() == false)
+            if (localTaskVal.IsValid() == false)
             {
-                MessageBox.Show("sumth is wong");
+                MessageBox.Show("Перевірте чи усі поля водія були правильно заповнені", null, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            OnCompletion(taskValidation);
+            OnCompletion(null, ActionType.Add);
             Close();
         }
         public delegate void TaskInputCompleted(object sender, TaskValidation prop1, TaskDTO dto = null, ActionType? tag = null);
         public event TaskInputCompleted TaskInputCompletionEvent;
-        public void OnCompletion(TaskValidation val, ActionType? tag = null)
+        public void OnCompletion(TaskValidation val = null, ActionType? tag = null)
         {
-            TaskInputCompletionEvent?.Invoke(this, val, null, tag);
+            TaskInputCompletionEvent?.Invoke(this, val ?? localTaskVal, null, tag);
         }
     }
 }

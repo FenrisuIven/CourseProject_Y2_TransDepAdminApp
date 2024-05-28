@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:TransDep_AdminApp.View.Screens"
         xmlns:base="clr-namespace:TransDep_AdminApp.Model"
+        xmlns:dto="clr-namespace:TransDep_AdminApp.ViewModel.DTO"
         xmlns:val="clr-namespace:TransDep_AdminApp.ViewModel.Validation"
         mc:Ignorable="d"
         Title="AddNewTask" 
@@ -70,7 +71,7 @@
         </Style>
     </Window.Resources>
     
-    <Grid Name="MainGrid">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="165"/>
@@ -80,7 +81,10 @@
         <Border Grid.Row="0" Style="{DynamicResource divider_Bottom_Thick}"/>
         <Border Grid.Row="1" Style="{DynamicResource divider_Bottom_Light}"/>
         
-        <UserControl Grid.Row="0">
+        <UserControl Name="FirstRow_UserCtrl" Grid.Row="0">
+            <UserControl.DataContext>
+                <val:TaskValidation/>
+            </UserControl.DataContext>
             <StackPanel>
                 <Grid MinHeight="90" Margin="15, 2">
                     <Grid.ColumnDefinitions>
@@ -100,10 +104,8 @@
                               Style="{StaticResource inputInfo_Base}"
                               Template="{DynamicResource ComboBox_Transparent}"
                               Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                              SelectedItem="{Binding Path=Truck, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                               SelectionChanged="Truck_OnSelectionChanged">
-                       <ComboBox.DataContext>
-                           <base:Truck/>
-                       </ComboBox.DataContext>
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock>
@@ -126,19 +128,15 @@
                               Margin="60,0,0,0"
                               Style="{StaticResource inputInfo_Base}"
                               Template="{DynamicResource ComboBox_Transparent}"
+                              SelectedItem="{Binding Path=Driver, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
                               Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                        <ComboBox.DataContext>
-                            <base:Driver/>
-                        </ComboBox.DataContext>
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock>
                                     <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0}: {1} {2} {3}, {4}/10, {5}">
+                                        <MultiBinding StringFormat="{}{0}: {1}, {2}/10, {3}">
                                             <Binding Path="Id"/>
-                                            <Binding Path="LastName"/>
-                                            <Binding Path="FirstName"/>
-                                            <Binding Path="MiddleName"/>
+                                            <Binding Path="FullName"/>
                                             <Binding Path="Rating"/>
                                             <Binding Path="Category"/>
                                         </MultiBinding>
@@ -147,6 +145,7 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+                    
                 </Grid>
             </StackPanel>
         </UserControl>
@@ -156,7 +155,7 @@
                 <val:TaskValidation/>
             </UserControl.DataContext>
             <StackPanel Height="Auto">
-                <Grid  MinHeight="155" Margin="15, 4">
+                <Grid MinHeight="155" Margin="15, 4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1.3*"/>
                         <ColumnDefinition Width="*"/> 
@@ -195,24 +194,27 @@
                              Style="{DynamicResource infoInputField_TwoCols}"
                              Text="{Binding Path=Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                     
-                    <ComboBox Name="input_CargoType" Grid.Row="1" Grid.Column="1"
-                              Style="{DynamicResource infoComboField_LeftMiddle}"
-                              Template="{DynamicResource ComboBox_Transparent}"
-                              SelectedItem="{Binding Path=Type, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-                    <!--SelectionChanged="TruckType_OnSelectionChanged"-->
-                    
-                    <UserControl Name="CargoVal_UserCtrl" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" >
+                    <UserControl Name="CargoVal_UserCtrl" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="4" >
                         <UserControl.DataContext>
                             <val:CargoValidation/>
                         </UserControl.DataContext>
                         <StackPanel>
-                            <Grid MinHeight="155">
+                            <Grid MinHeight="155" MaxWidth="600">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.3*"/>
+                                    <ColumnDefinition Width="*"/> 
+                                </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
+                                
+                                <ComboBox Name="input_CargoType" Grid.Row="1" Grid.Column="1"
+                                          Style="{DynamicResource infoComboField_LeftMiddle}"
+                                          Template="{DynamicResource ComboBox_Transparent}"
+                                          SelectedItem="{Binding Path=Type, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                                 
                                 <TextBox Grid.Row="1" Grid.Column="0"
                                          Style="{DynamicResource infoInputField_Left_SecondRow}"
@@ -226,13 +228,18 @@
                             </Grid>
                         </StackPanel>
                     </UserControl>
+                    
 
-                    <UserControl Name="RouteVal_UserCtrl" Grid.Row="0" Grid.Column="1" Grid.RowSpan="4" >
+                    <UserControl Name="RouteVal_UserCtrl" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="4" >
                         <UserControl.DataContext>
                             <val:RouteValidation/>
                         </UserControl.DataContext>
                         <StackPanel>
-                            <Grid MinHeight="155">
+                            <Grid MinHeight="155" MaxWidth="600">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1.3*"/>
+                                    <ColumnDefinition Width="*"/> 
+                                </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
@@ -240,12 +247,12 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 
-                                <TextBox Grid.Row="2"
+                                <TextBox Grid.Column="1" Grid.Row="2"
                                          Style="{DynamicResource infoInputField_Right_SecondRow}"
-                                         Text="{Binding Path=Start, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
-                                <TextBox Grid.Row="3"
+                                         Text="{Binding Path=StartPoint, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="1" Grid.Row="3"
                                          Style="{DynamicResource infoInputField_Right_SecondRow}"
-                                         Text="{Binding Path=End, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+                                         Text="{Binding Path=EndPoint, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </StackPanel>
                     </UserControl>

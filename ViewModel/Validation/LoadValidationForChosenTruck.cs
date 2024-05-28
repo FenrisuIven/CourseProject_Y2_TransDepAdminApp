@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using TransDep_AdminApp.Model;
-using TransDep_AdminApp.Model.Trucks;
-using Container = System.ComponentModel.Container;
+using TransDep_AdminApp.ViewModel.DTO;
 
 namespace TransDep_AdminApp.ViewModel.Validation
 {
@@ -16,8 +15,8 @@ namespace TransDep_AdminApp.ViewModel.Validation
         public int? UseVolume { get; set; }
         public int? Capacity { get; set; }
 
-        private static Truck _targetTruck;
-        public Truck TargetTruck
+        private static TruckDTO _targetTruck;
+        public TruckDTO TargetTruck
         {
             set
             {
@@ -28,7 +27,7 @@ namespace TransDep_AdminApp.ViewModel.Validation
         }
 
         public LoadValidationForChosenTruck() {}
-        public LoadValidationForChosenTruck(Truck targetTruck)
+        public LoadValidationForChosenTruck(TruckDTO targetTruck)
         {
             carryingCapacity = targetTruck.CarryingCapacity;
             capacity = targetTruck.Capacity;

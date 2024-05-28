@@ -3,6 +3,7 @@
 
 ![obviously not working preview image](https://github.com/FenrisuIven/CourseProject_Y2_TransDepAdminApp/blob/development/preview/preview_2420a19_09.png?raw=true)
 
+<b>2422c28_20:</b> Fixes to NewTask validations, passing the validation to MainController and overall working with it. Currently not working due to some issue in cast and/or mapping of TDTO to T<br><br>
 <b>2422b28_19:</b> Fix to DriverValidation, changes to AddNewTruck, Add new enum ActionType -- required changes being made to all the code that is for handling requests of actions with objects<br><br>
 <b>2422a28_18:</b> Fix to NewDriver Category and Rating selection, Fix to Images source in project<br><br>
 <b>2421c26_12:</b> Parking System re-written to MVVM, basic functionality restored<br><br>

@@ -12,6 +12,7 @@ using TransDep_AdminApp.Interfaces;
 using TransDep_AdminApp.Model.Parking;
 using TransDep_AdminApp.Model.Trucks;
 using TransDep_AdminApp.View;
+using TransDep_AdminApp.View.Screens;
 using TransDep_AdminApp.ViewModel.DTO;
 
 namespace TransDep_AdminApp.Model
@@ -29,6 +30,7 @@ namespace TransDep_AdminApp.Model
         
         public const string _serializationPath = "C:/Users/Nova/source/repos/TransDep_AdminApp/Serialization";
         
+        private MainController() { }
         private static MainController _instance;
         public static MainController Instance
         {
@@ -38,7 +40,6 @@ namespace TransDep_AdminApp.Model
                 return _instance;
             }
         }
-        private MainController() { }
         
         public void Initialize()
         {
@@ -203,11 +204,17 @@ namespace TransDep_AdminApp.Model
         public void TaskActionRequested(TaskListVM sender, TaskDTO dto, ActionType? tag = null)
         {
             try
-            {
+            {   // - TODO: Throws some InvalidCast Exception, fix
                 var newTask = ObjectMapper.AutoMapper.Map<Task>(dto);
+                truckList.ToList().Find(elem => elem.Id == newTask.TruckExecutorID).SetAvailability(false);
+                driverList.ToList().Find(elem => elem.Id == newTask.DriverExecutorID).SetTruckID(truckList.ToList().Find(elem => elem.Id == dto.TruckExecutorID).Id);
+                driverList.ToList().Find(elem => elem.AssignedTruckId == newTask.TruckExecutorID).SetTruckID(null);
                 taskList.Add(newTask);
             }
             catch { /*ignored*/ }
+            
+            RefreshParkingSpots();
+            OnChangesFinished();
         }
         #endregion
         
