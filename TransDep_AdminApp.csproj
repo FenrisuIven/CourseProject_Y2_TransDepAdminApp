@@ -278,6 +278,7 @@
     <Content Include="ClassDiagrams\Model\MainController.puml" />
     <Content Include="ClassDiagrams\Model\Misc\IDGenerator.puml" />
     <Content Include="ClassDiagrams\Model\Misc\VersionUpdater.puml" />
+    <Resource Include="images\*.png" />
     <Content Include="README.md" />
     <Content Include="Serialization\driverList.json" />
     <Content Include="Serialization\taskList.json" />
