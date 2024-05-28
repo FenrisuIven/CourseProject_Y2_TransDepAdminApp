@@ -37,7 +37,7 @@ namespace TransDep_AdminApp
         {
             object target = listBox.SelectedItem;
             Truck obj = target is TruckDTO ? ObjectMapper.AutoMapper.Map<TruckDTO, Truck>(target as TruckDTO) : (Truck)target;
-            int idx = MainController.Instance.truckList.ToList().FindIndex(elem => elem == obj);
+            int idx = MainController.Instance.truckList.ToList().FindIndex(elem => elem.Id == obj.Id);
             
             bool availability = !obj.Availability;
             MainController.Instance.truckList[idx].SetAvailability(availability);

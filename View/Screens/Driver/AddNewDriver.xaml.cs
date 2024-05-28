@@ -1,9 +1,7 @@
 using System;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using TransDep_AdminApp.Model;
 using TransDep_AdminApp.ViewModel;
 using TransDep_AdminApp.ViewModel.DTO;
 using TransDep_AdminApp.ViewModel.Validation;
@@ -26,6 +24,8 @@ namespace TransDep_AdminApp.View.Screens
             };
             input_DriverSelection.DataContext = localDriverVM;
             DriverData_UserCtrl.DataContext = localDriverVal;
+            Input_Category.ItemsSource = DriverConfiguration.Categories;
+            Input_Rating.ItemsSource = DriverConfiguration.Ratings;
             
             DriverInputCompletionEvent += localDriverVM.OnAdditionRequested;
         }
@@ -54,20 +54,11 @@ namespace TransDep_AdminApp.View.Screens
             Input_MiddleName.Text = target.FullName.Split(',')[1];
             Input_LastName.Text = target.FullName.Split(',')[2];
             
-            // - Target: when user selects DriverDTO from the list (ComboBox < input_DriverSelection >) ----------------
-            //           update the fields to contain the chars of that DTO so that user can edit them
-            //           TextBox-es works correctly, but ComboBox-es don't want to search for item based
-            //           on the inputted string. This is expected to work:
-            //           Input_Category.SelectedItem = target.Category
-            //           But it doesn't because Input_Category.Items contain only ComboBoxItem's
-            //           Same problem applies to Input_Rating, since it is also a ComboBox
-            var test = Input_Category.Items.Cast<ComboBoxItem>(); // IEnumerable<T>
-            Console.WriteLine((int)target.Category[0]); //for C outputs 67
-            Console.WriteLine((int)((string)((ComboBoxItem)Input_Category.Items[2]).Content)[0]); //for C outputs 67
-            Input_Category.SelectedItem = test.First(elem => elem.Content.Equals(target.Category)); //returns null
+            var activeCategoryIndex = DriverConfiguration.Categories.FindIndex(c => c == target.Category);
+            var activeRatingIndex = DriverConfiguration.Ratings.FindIndex(r => int.Parse(r) == target.Rating);
             
-            Input_Rating.SelectedItem = target.Rating.ToString();
-            // ---------------------------------------------------------------------------------------------------------
+            Input_Category.SelectedIndex = activeCategoryIndex;
+            Input_Rating.SelectedIndex = activeRatingIndex;
             
             input_DriverSelection.DataContext = localDriverVM;
             DriverData_UserCtrl.DataContext = localDriverVal;

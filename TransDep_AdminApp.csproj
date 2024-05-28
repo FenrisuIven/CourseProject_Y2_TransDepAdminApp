@@ -185,6 +185,7 @@
     <Compile Include="View\Screens\Driver\ChangeDriverInfo.xaml.cs">
       <DependentUpon>ChangeDriverInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Screens\Driver\DriverConfiguration.cs" />
     <Compile Include="View\Screens\Driver\DriverListDisplay.xaml.cs">
       <DependentUpon>DriverListDisplay.xaml</DependentUpon>
     </Compile>
