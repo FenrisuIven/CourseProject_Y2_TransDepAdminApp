@@ -4,12 +4,11 @@ using System.Windows;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using TransDep_AdminApp.ViewModel;
 using TransDep_AdminApp.Interfaces;
-using TransDep_AdminApp.Model.Parking;
 using TransDep_AdminApp.Model.Trucks;
-using TransDep_AdminApp.View;
 using TransDep_AdminApp.ViewModel.DTO;
 
 namespace TransDep_AdminApp.Model
@@ -17,6 +16,9 @@ namespace TransDep_AdminApp.Model
     
     public class MainController
     {
+        private static readonly string _projectRoot =
+            new DirectoryInfo(new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent!.FullName).Parent!.FullName;
+        
         public ObservableCollection<Truck> truckList { get; private set; }
         public ObservableCollection<Driver> driverList { get; private set; }
         public ObservableCollection<Task> taskList { get; private set; }
@@ -24,8 +26,8 @@ namespace TransDep_AdminApp.Model
         private TruckListVM _localTruckVM { get; set; }
         
         
-        public const string _serializationPath = "C:/Users/Nova/source/repos/TransDep_AdminApp/Serialization";
-        
+        public const string _serializationPath =  $"{_projectRoot}/Serialization";
+            
         // -- Singleton --
         private MainController() { }
         private static MainController _instance;
