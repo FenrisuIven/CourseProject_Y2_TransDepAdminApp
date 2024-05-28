@@ -33,6 +33,9 @@ namespace TransDep_AdminApp.View.Screens
 
             localTruckVal = TruckData_UserCtrl.DataContext as TruckValidation;
             localTruckVal!.TruckCharsValidation = TruckChars_UserCtrl.DataContext as TruckCharsValidationBase;
+
+            Input_DriverRating.ItemsSource = DriverConfiguration.Ratings;
+            Input_DriverCategory.ItemsSource = DriverConfiguration.Categories;
             
             TruckInputCompletionEvent += localTruckVM.OnActionRequested; 
             DriverInputCompletionEvent += localDriverVM.OnActionRequested;
@@ -94,11 +97,11 @@ namespace TransDep_AdminApp.View.Screens
             Close();
         }
 
-        public delegate void TruckInputCompleted(object sender, TruckValidation prop1, TruckDTO dto = null, string tag = null);
-        public delegate void DriverInputCompleted(object sender, DriverValidation prop1, DriverDTO dto = null, string tag = null);
+        public delegate void TruckInputCompleted(object sender, TruckValidation prop1, TruckDTO dto = null, ActionType? tag = null);
+        public delegate void DriverInputCompleted(object sender, DriverValidation prop1, DriverDTO dto = null, ActionType? tag = null);
         public event TruckInputCompleted TruckInputCompletionEvent;
         public event DriverInputCompleted DriverInputCompletionEvent;
-        public void OnCompletion(string tag = null)
+        public void OnCompletion(ActionType? tag = null)
         {
             TruckInputCompletionEvent?.Invoke(this, localTruckVal, null, tag);
             DriverInputCompletionEvent?.Invoke(this, localDriverVal, null, tag);

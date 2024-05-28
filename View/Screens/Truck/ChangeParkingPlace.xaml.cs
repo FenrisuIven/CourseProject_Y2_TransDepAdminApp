@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Windows;
+using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.Model;
 using TransDep_AdminApp.ViewModel;
 using TransDep_AdminApp.ViewModel.DTO;
@@ -23,6 +24,6 @@ public partial class ChangeParkingPlace : Window
     private void OnSaveAndQuit(object sender, RoutedEventArgs e)
     {
         var newDTO = ObjectMapper.AutoMapper.Map<TruckDTO>(_localTarget);
-        _localVM.OnActionRequested(this, null, newDTO, "replace");
+        _localVM.OnActionRequested(this, null, newDTO, ActionType.Replace);
     }
 }

@@ -38,11 +38,11 @@ namespace TransDep_AdminApp.ViewModel.Validation
                         break;
                     case "Rating":
                         if (string.IsNullOrEmpty(Rating)) return "Рейтинг обов'язковий";
-                        if (!new Regex("[^0-9.-]+").IsMatch(Rating)) return "Рейтинг водія повинен містити лише цифри";
+                        if (new Regex("[^0-9.-]+").IsMatch(Rating)) return "Рейтинг водія повинен містити лише цифри";
                         break;
                     case "Category":
                         if (string.IsNullOrEmpty(Category)) return "Категорія обов'язкова";
-                        if (new Regex(@"^(C(?!E)|CE|B(?!E)|BE)$").IsMatch(Category)) return "Рейтинг водія повинен бути однією з наяних категорій";
+                        if (!new Regex(@"^(C(?!E)|CE|B(?!E)|BE)$").IsMatch(Category)) return "Рейтинг водія повинен бути однією з наяних категорій";
                         break;
                 }
 

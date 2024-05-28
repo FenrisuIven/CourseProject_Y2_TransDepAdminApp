@@ -149,6 +149,7 @@
     <Compile Include="Model\Classes\TruckDerivedClasses\Container.cs" />
     <Compile Include="Model\Classes\TruckDerivedClasses\Refrigerated.cs" />
     <Compile Include="Model\Classes\TruckDerivedClasses\Tent.cs" />
+    <Compile Include="Model\Enums\ActionType.cs" />
     <Compile Include="Model\Enums\CargoTypes.cs" />
     <Compile Include="Model\Enums\TruckTypes.cs" />
     <Compile Include="Model\Interfaces\IDataGatherer.cs" />

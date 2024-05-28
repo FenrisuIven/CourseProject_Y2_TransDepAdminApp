@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
-
+using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.Model;
 using TransDep_AdminApp.Interfaces;
 using TransDep_AdminApp.ViewModel.DTO;
@@ -25,10 +25,10 @@ namespace TransDep_AdminApp.ViewModel
             
         }
         
-        public void OnActionRequested(object sender, TruckValidation val = null, TruckDTO dto = null, string tag = null)
+        public void OnActionRequested(object sender, TruckValidation val = null, TruckDTO dto = null, ActionType? tag = null)
         {
-            if (tag == "replace" && dto != null) RequestTransfer(dto, tag);
-            if (tag == "add" && val != null)
+            if (tag is ActionType.Replace && dto != null) RequestTransfer(dto, tag);
+            if (tag is ActionType.Add && val != null)
             {
                 var obj = new TruckDTO 
                 {
@@ -48,7 +48,7 @@ namespace TransDep_AdminApp.ViewModel
         }
         
         public event TransferDTOToModel<TruckListVM, TruckDTO> TransferDTO;
-        public void RequestTransfer(TruckDTO dto, string tag = null)
+        public void RequestTransfer(TruckDTO dto, ActionType? tag = null)
         {
             TransferDTO?.Invoke(this, dto);
         }

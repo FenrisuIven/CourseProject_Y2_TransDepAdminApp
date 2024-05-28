@@ -6,6 +6,7 @@ using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.CompilerServices;
+using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.ViewModel;
 using TransDep_AdminApp.Interfaces;
 using TransDep_AdminApp.Model.Parking;
@@ -108,7 +109,7 @@ namespace TransDep_AdminApp.Model
         }
         
         #region Truck 1/3
-        public void TruckActionRequested(TruckListVM sender, TruckDTO dto, string tag = null)
+        public void TruckActionRequested(TruckListVM sender, TruckDTO dto, ActionType? tag = null)
         {
             if (dto.Id is null) dto.Id = IDGenerator.GenerateRandom();
             if (dto.ParkingSpot == -1) dto.ParkingSpot = ParkingLotM.Instance.TakeFirstFreeSpot(dto.Id);
@@ -134,7 +135,7 @@ namespace TransDep_AdminApp.Model
             ParkingLotM.Instance.OnSpotAvailChanged();
             ((MainWindow)Application.Current.MainWindow)!.Refresh();
         }
-        public void RemoveTruck(object target)
+        private void RemoveTruck(object target)
         {
             var boxResult = MessageBox.Show("You really wanna remove this truck from the list?\n" +
                                             "Its info cannot be restored later!", "Remove truck from the list?",
@@ -146,7 +147,7 @@ namespace TransDep_AdminApp.Model
             truckList.Remove(obj);
             OnChangesFinished();
         }
-        public void ReplaceTruck(object target, object replace)
+        private void ReplaceTruck(object target, object replace)
         {
             Truck targetObj = target is TruckDTO ? ObjectMapper.AutoMapper.Map<Truck>(target) : (Truck)target;
             Truck replaceObj = replace is TruckDTO ? ObjectMapper.AutoMapper.Map<Truck>(replace) : (Truck)replace;
@@ -155,7 +156,7 @@ namespace TransDep_AdminApp.Model
         #endregion
         
         #region Driver 1/3
-        public void DriverActionRequested(DriverListVM sender, DriverDTO dto, string tag = null)
+        public void DriverActionRequested(DriverListVM sender, DriverDTO dto, ActionType? tag = null)
         {
             if (dto.Id is null)
             {
@@ -180,7 +181,7 @@ namespace TransDep_AdminApp.Model
 
             OnChangesFinished();
         }
-        public void RemoveDriver(object target)
+        private void RemoveDriver(object target)
         {
             var boxResult = MessageBox.Show("You really wanna remove this driver from the list?\n" +
                                             "Its info cannot be restored later!", "Remove driver from the list?",
@@ -190,7 +191,7 @@ namespace TransDep_AdminApp.Model
             Driver obj = target is DriverDTO ? ObjectMapper.AutoMapper.Map<Driver>(target) : (Driver)target;
             driverList.Remove(obj);
         }
-        public void ReplaceDriver(object target, object replace)
+        private void ReplaceDriver(object target, object replace)
         {
             Driver targetObj = target is DriverDTO ? ObjectMapper.AutoMapper.Map<Driver>(target) : (Driver)target;
             Driver replaceObj = replace is DriverDTO ? ObjectMapper.AutoMapper.Map<Driver>(replace) : (Driver)replace;
@@ -199,7 +200,7 @@ namespace TransDep_AdminApp.Model
         #endregion
         
         #region Task 1/3
-        public void TaskActionRequested(TaskListVM sender, TaskDTO dto, string tag = null)
+        public void TaskActionRequested(TaskListVM sender, TaskDTO dto, ActionType? tag = null)
         {
             try
             {

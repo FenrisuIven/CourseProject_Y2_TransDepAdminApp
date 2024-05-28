@@ -1,11 +1,11 @@
-using System.Runtime.CompilerServices;
+using TransDep_AdminApp.Enums;
 
 namespace TransDep_AdminApp.Interfaces
 {
-    public delegate void TransferDTOToModel<TSender, TDTO>(TSender sender, TDTO dto, string tag = null);
+    public delegate void TransferDTOToModel<TSender, TDTO>(TSender sender, TDTO dto, ActionType? tag = null);
     public interface ILayerTransfer<TSender, TDTO>
     {
         public event TransferDTOToModel<TSender,TDTO> TransferDTO;
-        public void RequestTransfer(TDTO dto, string tag);
+        public void RequestTransfer(TDTO dto, ActionType? tag);
     }
 }

@@ -44,7 +44,7 @@ namespace TransDep_AdminApp.View.Screens
             ((CargoValidation)CargoVal_UserCtrl.DataContext).TargetLoadValidationForChosenTruck = TargetLoadValidationForChosenTruckVal;
             TargetLoadValidationForChosenTruckVal.PropertyChanged += ((CargoValidation)CargoVal_UserCtrl.DataContext).OnLoadValidationForChosenTruckChanged;
             
-            TaskInputCompletionEvent += localTaskVM.OnAdditionRequested;
+            TaskInputCompletionEvent += localTaskVM.OnActionRequested;
         }
 
         private void Truck_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -71,11 +71,11 @@ namespace TransDep_AdminApp.View.Screens
             OnCompletion(taskValidation);
             Close();
         }
-        public delegate void TaskInputCompleted(object sender, TaskValidation prop1);
+        public delegate void TaskInputCompleted(object sender, TaskValidation prop1, TaskDTO dto = null, ActionType? tag = null);
         public event TaskInputCompleted TaskInputCompletionEvent;
-        public void OnCompletion(TaskValidation val)
+        public void OnCompletion(TaskValidation val, ActionType? tag = null)
         {
-            TaskInputCompletionEvent?.Invoke(this, val);
+            TaskInputCompletionEvent?.Invoke(this, val, null, tag);
         }
     }
 }

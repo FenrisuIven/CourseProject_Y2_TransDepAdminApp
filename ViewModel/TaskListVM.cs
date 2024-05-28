@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
-
+using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.Model;
 using TransDep_AdminApp.Interfaces;
 using TransDep_AdminApp.ViewModel.DTO;
@@ -24,31 +24,38 @@ namespace TransDep_AdminApp.ViewModel
             TransferDTO += MainController.Instance.TaskActionRequested;
         }
         
-        public void OnAdditionRequested(object sender, TaskValidation val)
-        {
-            var obj = new TaskDTO
+        public void OnActionRequested(object sender, TaskValidation val = null, TaskDTO dto = null, ActionType? tag = null)
+        { 
+            if (tag is ActionType.Add && val != null)
             {
-                Name = val.Name,
-                TruckExecutorID = val.Truck.Id,
-                DriverExecutorID = val.Driver.Id,
-                Route = new RouteDTO()
+                try
                 {
-                    Origin = val.RouteVal.StartPoint,
-                    Destination = val.RouteVal.EndPoint
-                },
-                Cargo = new CargoDTO()
-                {
-                    Weight = double.Parse(val.CargoVal.Weight),
-                    Volume = double.Parse(val.CargoVal.Volume),
-                    Amount = double.Parse(val.CargoVal.Amount),
+                    var obj = new TaskDTO
+                    {
+                        Name = val.Name,
+                        TruckExecutorID = val.Truck.Id,
+                        DriverExecutorID = val.Driver.Id,
+                        Route = new RouteDTO()
+                        {
+                            Origin = val.RouteVal.StartPoint,
+                            Destination = val.RouteVal.EndPoint
+                        },
+                        Cargo = new CargoDTO()
+                        {
+                            Weight = double.Parse(val.CargoVal.Weight),
+                            Volume = double.Parse(val.CargoVal.Volume),
+                            Amount = double.Parse(val.CargoVal.Amount),
+                        }
+                    };
+                    RequestTransfer(obj);
                 }
-            };
-            //if (everything is okay)
-            RequestTransfer(obj);
+                catch{ /*ignored*/ }
+            }
+            
         }
         
         public event TransferDTOToModel<TaskListVM, TaskDTO> TransferDTO;
-        public void RequestTransfer(TaskDTO dto, string tag = null)
+        public void RequestTransfer(TaskDTO dto, ActionType? tag = null)
         {
             TransferDTO?.Invoke(this, dto);
         }

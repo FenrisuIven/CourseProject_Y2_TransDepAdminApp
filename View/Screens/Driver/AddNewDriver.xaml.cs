@@ -1,6 +1,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.Model;
 using TransDep_AdminApp.ViewModel;
 using TransDep_AdminApp.ViewModel.DTO;
@@ -38,7 +39,7 @@ namespace TransDep_AdminApp.View.Screens
                 MessageBox.Show("Перевірте чи усі поля водія були правильно заповнені", null, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            OnCompletion();
+            OnCompletion(ActionType.Add);
             Close();
         }
 
@@ -53,16 +54,13 @@ namespace TransDep_AdminApp.View.Screens
             var activeCategoryIndex = DriverConfiguration.Categories.FindIndex(c => c == target.Category);
             var activeRatingIndex = DriverConfiguration.Ratings.FindIndex(r => int.Parse(r) == target.Rating);
             
-            Input_Category.SelectedIndex = activeCategoryIndex;
-            Input_Rating.SelectedIndex = activeRatingIndex;
-            
-            input_DriverSelection.DataContext = localDriverVM;
-            DriverData_UserCtrl.DataContext = localDriverVal;
+            Input_Category.SelectedItem = Input_Category.Items[activeCategoryIndex];
+            Input_Rating.SelectedItem = Input_Rating.Items[activeRatingIndex];
         }
         
-        public delegate void DriverInputCompleted(object sender, DriverValidation prop1, DriverDTO dto = null, string tag = null);
+        public delegate void DriverInputCompleted(object sender, DriverValidation prop1, DriverDTO dto = null, ActionType? tag = null);
         public event DriverInputCompleted DriverInputCompletionEvent;
-        public void OnCompletion(string tag = null)
+        public void OnCompletion(ActionType? tag = null)
         {
             DriverInputCompletionEvent?.Invoke(this, localDriverVal, null, tag);
         }

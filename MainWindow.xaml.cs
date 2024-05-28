@@ -56,7 +56,9 @@ namespace TransDep_AdminApp
             MainController.Instance.PropertyChanged(MainController.Instance.truckList[idx].Id, "Availability");*/
             //something strange
         }
-        private void RemoveTruck(object sender, RoutedEventArgs e) => MainController.Instance.RemoveTruck(listBox.SelectedItem);
+
+        private void RemoveTruck(object sender, RoutedEventArgs e) {}
+            // TODO: -- MainController.Instance.RemoveTruck(listBox.SelectedItem);
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
             MainController.Instance.Serialize();

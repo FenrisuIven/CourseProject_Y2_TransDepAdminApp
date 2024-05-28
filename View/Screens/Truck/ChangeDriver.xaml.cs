@@ -50,7 +50,7 @@ namespace TransDep_AdminApp.View.Screens
         {
             var oldTarget = targetTruck;
             targetTruck.DriverID = ((Driver)input_DriverSelection.SelectedItem).Id;
-            MainController.Instance.ReplaceTruck(oldTarget, targetTruck);
+            // TODO: -- MainController.Instance.ReplaceTruck(oldTarget, targetTruck);
             Close();
         }
     }
