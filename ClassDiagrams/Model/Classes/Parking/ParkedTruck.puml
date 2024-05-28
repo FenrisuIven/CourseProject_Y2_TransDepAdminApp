@@ -1,0 +1,11 @@
+@startuml
+class ParkedTruck {
+    + TruckId : string { get; set; }
+    + Name : string { get; set; }
+    + DriverName : string { get; set; }
+    + Spot : int { get; set; }
+    + Row : int { get; set; }
+    + Col : int { get; set; }
+    + SetRowColIdx (amountOfSpots : int) : void
+}
+@enduml

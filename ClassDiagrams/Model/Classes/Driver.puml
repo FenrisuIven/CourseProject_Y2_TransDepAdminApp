@@ -1,0 +1,14 @@
+@startuml
+class Driver {
+    + Id : string { get; private set; }
+    + AssignedTruckId : string { get; private set; }
+    + FirstName : string { get; private set; }
+    + MiddleName : string { get; private set; }
+    + LastName : string { get; private set; }
+    + Rating : int { get; private set; }
+    + Category : string { get; private set; }
+    + SetTruckID (value : string) : void
+    + GetString : string <<get>>
+    + <<override>> ToString() : string
+}
+@enduml

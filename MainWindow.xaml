@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TransDep_AdminApp"
+        xmlns:dto="clr-namespace:TransDep_AdminApp.ViewModel.DTO"
         xmlns:model="clr-namespace:TransDep_AdminApp.Model"
-        xmlns:parking="clr-namespace:TransDep_AdminApp.Model.Parking"
         mc:Ignorable="d"
         UseLayoutRounding="True"
         Title="MainWindow" 
@@ -13,10 +13,6 @@
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         Closing="MainWindow_OnClosing">
-    <Window.Resources>
-        <parking:ColumnToCanvasLeftConverter x:Key="ColumnToCanvasLeftConverter" />
-        <parking:RowToCanvasTopConverter x:Key="RowToCanvasTopConverter" />
-    </Window.Resources>
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Show raw Drivers data" Click="OpenWindow" Name="rawDriverData"/>
@@ -47,7 +43,7 @@
                  Grid.Row="0" Grid.Column="0"
                  Grid.RowSpan="2">
             <ListBox.DataContext>
-                <model:Truck/>
+                <dto:TruckDTO/>
             </ListBox.DataContext>
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -85,42 +81,12 @@
             </ListBox.ContextMenu>
         </ListBox>
 
-        <Canvas Name="ParkingCanvas"
-                Grid.Row="0" Grid.Column="1" 
-                Width="690" Height="625"
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Top" 
-                Margin="0,10,0,0">
-            <Canvas.Background>
-                <ImageBrush ImageSource="C:/Users/Nova/source/repos/TransDep_AdminApp/imgs/parkingGrid.png"/>  
-            </Canvas.Background>
-            <Canvas.DataContext>
-                <parking:ParkedTruck/>
-            </Canvas.DataContext>
-            <ItemsControl Name="ParkingLot_ItemsCtrl">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel MaxWidth="60" MinWidth="0">
-                            <TextBlock Text="{Binding TruckId}" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
-                            <Image Source="C:/Users/Nova/source/repos/TransDep_AdminApp/imgs/profilePic_placeholder.png"/>
-                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
-                            <TextBlock Text="{Binding DriverName}" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <Setter Property="Canvas.Left" Value="{Binding Col, Converter={StaticResource ColumnToCanvasLeftConverter}}" />
-                        <Setter Property="Canvas.Top" Value="{Binding Row, Converter={StaticResource RowToCanvasTopConverter}}" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
-        </Canvas>
+        <Frame Source="View/Pages/ParkingLot.xaml"
+               Grid.Row="0" Grid.Column="1"  
+               Width="690" Height="625" 
+               HorizontalAlignment="Center"  
+               VerticalAlignment="Top"  
+               Margin="0,10,0,0"/>
 
         <Button Name="newTruck"
                 Click="OpenWindow"
@@ -133,13 +99,25 @@
                        TextWrapping="Wrap"
                        TextAlignment="Center"/>
         </Button>
+        
+        <Button Name="newDriver"
+                Click="OpenWindow"
+                HorizontalAlignment="Left"  
+                VerticalAlignment="Top" 
+                Width="100" Height="45" 
+                Margin="155,0,0,0"
+                Grid.Row="1" Grid.Column="1">
+            <TextBlock Text="Додати нового водія"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+        </Button>
 
         <Button Name="newTask"
                 Click="OpenWindow"
                 HorizontalAlignment="Left"  
                 VerticalAlignment="Top" 
                 Width="110" Height="45" 
-                Margin="155,0,0,0"
+                Margin="270,0,0,0"
                 Grid.Row="1" Grid.Column="1">
             <TextBlock Text="Нове завдання"
                        TextWrapping="Wrap"

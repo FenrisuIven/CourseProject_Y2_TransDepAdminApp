@@ -24,15 +24,5 @@ namespace TransDep_AdminApp.ViewModel.Validation
             }
             return default;
         }
-
-        public static IDataErrorInfo CreateCargoValidation()
-        {
-            return new CargoValidation();
-        }
-
-        public static TaskValidation CreateTaskValidation()
-        {
-            return new TaskValidation();
-        }
     }
 }

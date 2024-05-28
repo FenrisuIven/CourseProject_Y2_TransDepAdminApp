@@ -1,0 +1,8 @@
+@startuml
+class Refrigerated {
+    + <<static>> allowedCarryingCapacity : double[]
+    + <<static>> allowedUsefulVolume : double[]
+    + <<static>> allowedCapacity : double[]
+}
+Truck <|-- Refrigerated
+@enduml

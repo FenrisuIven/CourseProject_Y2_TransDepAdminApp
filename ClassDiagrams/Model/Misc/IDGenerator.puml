@@ -1,0 +1,5 @@
+@startuml
+class IDGenerator <<static>> {
+    + {static} GenerateRandom (length: int) : string
+}
+@enduml

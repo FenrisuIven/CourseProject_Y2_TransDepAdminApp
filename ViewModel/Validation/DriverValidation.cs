@@ -15,11 +15,13 @@ namespace TransDep_AdminApp.ViewModel.Validation
         public string MiddleName { get; set; }
         public string Rating { get; set; }
         public string Category { get; set; }
+        public string[] IgnoredProps { get; set; }
         
         public string this[string name]
         {
             get
             {
+                if (IgnoredProps != null && IgnoredProps.Contains(name)) return default;
                 switch (name)
                 {
                     case "DriverDto":

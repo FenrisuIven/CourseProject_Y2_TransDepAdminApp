@@ -1,0 +1,25 @@
+@startuml
+class Task {
+    + Name : string { get; private set; }
+    + TruckExecutorID : string { get; private set; }
+    + DriverExecutorID : string { get; private set; }
+    + <<override>> ToString() : string
+}
+Task::Route --> Route
+Task::Cargo --> Cargo
+
+class Cargo {
+    + Weight : double { get; protected set; }
+    + Volume : double { get; protected set; }
+    + Amount : double { get; protected set; }
+    + Type : CargoType { get; protected set; }
+    + <<override>> ToString() : string
+}
+
+class Route {
+    + Origin : string { get; private set; }
+    + Destination : string { get; private set; }
+    + GetTime() : string
+    + GetRoute() : string
+}
+@enduml

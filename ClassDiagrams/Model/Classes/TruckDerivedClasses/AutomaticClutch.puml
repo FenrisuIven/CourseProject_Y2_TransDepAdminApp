@@ -1,0 +1,8 @@
+@startuml
+class AutomaticClutch {
+    + <<static>> allowedCarryingCapacity : double[]
+    + <<static>> allowedUsefulVolume : double[]
+    + <<static>> allowedCapacity : double[]
+}
+Truck <|-- AutomaticClutch
+@enduml

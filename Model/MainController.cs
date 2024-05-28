@@ -21,13 +21,9 @@ namespace TransDep_AdminApp.Model
         public ObservableCollection<Driver> driverList { get; private set; }
         public ObservableCollection<Task> taskList { get; private set; }
         
-        private TruckListVM _localTruckVM { get; set; }
-        
         
         public const string _serializationPath = "C:/Users/Nova/source/repos/TransDep_AdminApp/Serialization";
         
-        // -- Singleton --
-        private MainController() { }
         private static MainController _instance;
         public static MainController Instance
         {
@@ -37,8 +33,8 @@ namespace TransDep_AdminApp.Model
                 return _instance;
             }
         }
-        // -- Singleton --
-
+        private MainController() { }
+        
         public void Initialize()
         {
             Console.WriteLine(VersionUpdater.GetCurrentVersion());
@@ -83,8 +79,6 @@ namespace TransDep_AdminApp.Model
             taskList = new ObservableCollection<Task>(ObjectMapper.AutoMapper.Map<List<TaskDTO>, List<Task>>(objListTask));
 
             RefreshParkingSpots();
-
-            _localTruckVM = new();
         }
 
         public void Serialize()
@@ -107,21 +101,13 @@ namespace TransDep_AdminApp.Model
                     truck.SetParkingSpot(null);
                 }
             }
-            ParkingLot.Initialize();
-        }
-
-        public delegate void TruckPropertyChanged(string truckID, string propName);
-        public event TruckPropertyChanged TruckPropChanged;
-
-        public void PropertyChanged(string truckID, string propName = null)
-        {
-            TruckPropChanged?.Invoke(truckID, propName);
         }
         
+        #region Truck 1/3
         public void TruckAdditionRequested(TruckListVM sender, TruckDTO dto)
         {
             if (dto.Id is null) dto.Id = IDGenerator.GenerateRandom();
-            if (dto.ParkingSpot == -1) dto.ParkingSpot = ParkingLot.GetFreeSpotNum();
+            if (dto.ParkingSpot == -1) dto.ParkingSpot = ParkingLotM.Instance.TakeFirstFreeSpot(dto.Id);
 
             if (dto.DriverID is null)
             {
@@ -137,14 +123,34 @@ namespace TransDep_AdminApp.Model
             {
                 var newTruck = ObjectMapper.AutoMapper.Map<Truck>(dto);
                 truckList.Add(newTruck);
-                ParkingLot.AddParkedTruck(dto);
-                ParkingLot.TakePlace(dto.ParkingSpot);
             }
             catch { /*ignored*/ }
             
             RefreshParkingSpots();
+            ParkingLotM.Instance.OnSpotAvailChanged();
             ((MainWindow)Application.Current.MainWindow)!.Refresh();
         }
+        public void RemoveTruck(object target)
+        {
+            var boxResult = MessageBox.Show("You really wanna remove this truck from the list?\n" +
+                                            "Its info cannot be restored later!", "Remove truck from the list?",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes);
+            if (boxResult == MessageBoxResult.No) return;
+
+            Truck obj = target is TruckDTO ? ObjectMapper.AutoMapper.Map<TruckDTO, Truck>(target as TruckDTO) : (Truck)target;
+            if(obj.ParkingSpot.Value != null) ParkingLotM.Instance.FreeSpot(obj.ParkingSpot.Value);
+            truckList.Remove(obj);
+            OnChangesFinished();
+        }
+        public void ReplaceTruck(object target, object replace)
+        {
+            Truck targetObj = target is TruckDTO ? ObjectMapper.AutoMapper.Map<Truck>(target) : (Truck)target;
+            Truck replaceObj = replace is TruckDTO ? ObjectMapper.AutoMapper.Map<Truck>(replace) : (Truck)replace;
+            truckList = new ObservableCollection<Truck>(truckList.ToImmutableList().Replace(targetObj, replaceObj));
+        }
+        #endregion
+        
+        #region Driver 1/3
         public void DriverAdditionRequested(DriverListVM sender, DriverDTO dto)
         {
             if (dto.Id is null)
@@ -167,38 +173,8 @@ namespace TransDep_AdminApp.Model
                 driverList.Add(newDriver);
             }
             catch { /*ignored*/ }
-        }
-        
-        public void TaskAdditionRequested(TaskListVM sender, TaskDTO dto)
-        {
-            try
-            {
-                var newTask = ObjectMapper.AutoMapper.Map<Task>(dto);
-                taskList.Add(newTask);
-            }
-            catch { /*ignored*/ }
-        }
-        
-        public void RemoveTruck(object target)
-        {
-            var boxResult = MessageBox.Show("You really wanna remove this truck from the list?\n" +
-                                            "Its info cannot be restored later!", "Remove truck from the list?",
-                MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes);
-            if (boxResult == MessageBoxResult.No) return;
 
-            Truck obj = target is TruckDTO ? ObjectMapper.AutoMapper.Map<TruckDTO, Truck>(target as TruckDTO) : (Truck)target;
-            truckList.Remove(obj);
-        }
-        public void ReplaceTruck(object target, object replace)
-        {
-            Truck targetObj = target is TruckDTO ? ObjectMapper.AutoMapper.Map<Truck>(target) : (Truck)target;
-            Truck replaceObj = replace is TruckDTO ? ObjectMapper.AutoMapper.Map<Truck>(replace) : (Truck)replace;
-            truckList = new ObservableCollection<Truck>(truckList.ToImmutableList().Replace(targetObj, replaceObj));
-        }
-        public void AddDriver(object target)
-        {
-            Driver obj = target is DriverDTO ? ObjectMapper.AutoMapper.Map<Driver>(target) : (Driver)target;
-            driverList.Add(obj);
+            OnChangesFinished();
         }
         public void RemoveDriver(object target)
         {
@@ -216,6 +192,22 @@ namespace TransDep_AdminApp.Model
             Driver replaceObj = replace is DriverDTO ? ObjectMapper.AutoMapper.Map<Driver>(replace) : (Driver)replace;
             driverList = new ObservableCollection<Driver>(driverList.ToImmutableList().Replace(targetObj, replaceObj));
         }
-
+        #endregion
+        
+        #region Task 1/3
+        public void TaskAdditionRequested(TaskListVM sender, TaskDTO dto)
+        {
+            try
+            {
+                var newTask = ObjectMapper.AutoMapper.Map<Task>(dto);
+                taskList.Add(newTask);
+            }
+            catch { /*ignored*/ }
+        }
+        #endregion
+        
+        public delegate void FinChanges();
+        public event FinChanges FinishedChanges;
+        public void OnChangesFinished() => FinishedChanges?.Invoke();
     }
 }
