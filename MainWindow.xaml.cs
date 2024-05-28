@@ -70,19 +70,16 @@ namespace TransDep_AdminApp
             ParkingLot_ItemsCtrl.ItemsSource = ParkingLot.GetTrucksOnLot;
             ParkingLot_ItemsCtrl.Items.Refresh();
         }
-
-        public void ToggleTruckOnTaskCommand(object sender, RoutedEventArgs e)
+        
+        public void DepartureCommand(object sender, RoutedEventArgs e)
         {
-            MenuItem menuItem = (MenuItem)sender;
-            ContextMenu menu = (ContextMenu)menuItem.Parent;
-            var truckId = (string)menu.Tag;
-            var truck = MainController.Instance.truckList.First(truck => truck.Id == truckId);
-            
-            Action<string> cmd = truck.Availability ? ParkingLot_Ui.AnimateTruckDeparture : ParkingLot_Ui.AnimateTruckArrival;
-            truck.SetAvailability(!truck.Availability);
-            menuItem.Header = truck.Availability ? "Відправити" : "Повернути";
-            
-            cmd(truckId);
+            ParkingLot_Ui.AnimateTruckDeparture(MainController.Instance.truckList[2].Id);
         }
+        public void ArrivalCommand(object sender, RoutedEventArgs e)
+        {
+            ParkingLot_Ui.AnimateTruckArrival(MainController.Instance.truckList[2].Id);
+        }
+
+        
     }
 }

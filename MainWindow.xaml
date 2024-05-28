@@ -22,6 +22,8 @@
             <MenuItem Header="Show raw Drivers data" Click="OpenWindow" Name="rawDriverData"/>
             <MenuItem Header="Show raw Trucks data"  Click="OpenWindow" Name="rawTruckData"/>
             <MenuItem Header="Show raw Tasks data"   Click="OpenWindow" Name="rawTaskData"/>
+            <MenuItem Header="animate truck drive away" Click="DepartureCommand"/>
+            <MenuItem Header="animate truck drive in" Click="ArrivalCommand"/>
         </ContextMenu>
     </Window.ContextMenu>
     
@@ -50,15 +52,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <StackPanel.ContextMenu>
-                            <ContextMenu Tag="{Binding Id}">
-                                <MenuItem Name="aboutTruck" Header="Детальна інформація про вантажівку" Click="OpenWindow"/>
-                                <MenuItem Name="changeDriver" Header="Призначити нового водія" Click="OpenWindow"/>
-                                <MenuItem Name="changeParkingSpace" Header="Змінити місце паркування" Click="OpenWindow"/>
-                                <MenuItem Header="Видалити вантажівку" Click="RemoveTruck"/>
-                                <MenuItem Header="Command Placeholder" Click="ToggleTruckOnTaskCommand"/>
-                            </ContextMenu>
-                        </StackPanel.ContextMenu>
+                        
                         <TextBlock Text="{Binding Name, Mode=OneWay}" FontWeight="Bold"/>
                         <TextBlock>
                             <TextBlock.Text>
@@ -80,6 +74,15 @@
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Name="aboutTruck" Header="Детальна інформація про вантажівку" Click="OpenWindow"/>
+                    <MenuItem Name="changeDriver" Header="Призначити нового водія" Click="OpenWindow"/>
+                    <MenuItem Name="changeParkingSpace" Header="Змінити місце паркування" Click="OpenWindow"/>
+                    <MenuItem Header="Видалити зі списку" Click="RemoveTruck"/>
+                    <MenuItem Header="change availability" Click="ChangeAvalDeb"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
 
         <Canvas Name="ParkingCanvas"
@@ -95,15 +98,9 @@
                 <parking:ParkedTruck/>
             </Canvas.DataContext>
             <ItemsControl Name="ParkingLot_ItemsCtrl">
-                <!-- //dsa -->
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel MaxWidth="60" MinWidth="0">
-                            <StackPanel.ContextMenu>
-                                <ContextMenu Tag="{Binding TruckId}">
-                                    <MenuItem Header="Command Placeholder" Click="ToggleTruckOnTaskCommand"/>
-                                </ContextMenu>
-                            </StackPanel.ContextMenu>
                             <TextBlock Text="{Binding TruckId}" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
                             <Image Source="images/profile-pic_placeholder.png"/>
                             <TextBlock Text="{Binding Name}" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
