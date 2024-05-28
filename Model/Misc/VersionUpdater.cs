@@ -8,15 +8,14 @@ namespace TransDep_AdminApp
     {
         public static string GetCurrentVersion()
         {
-            List<string> res = new List<string>();
             DateTimeFormatInfo dfi = DateTimeFormatInfo.CurrentInfo;
             Calendar cal = dfi.Calendar;
 
             int numOfWeek = cal.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
             int numOfDay = cal.GetDayOfMonth(DateTime.Now);
             
-            int gitPushNum = 20;        //Last Update: 28.05.2024, 21.06
-            int countThisWeek = 2;      //Last Update: 28.05.2024  (skip 25 = z)
+            int gitPushNum = 21;        //Last Update: 28.05.2024, 22.44
+            int countThisWeek = 3;      //Last Update: 28.05.2024  (skip 25 = z)
             char verChar = Convert.ToChar((countThisWeek % 26) + 97);
             
             return $"24{numOfWeek}{verChar}" + 

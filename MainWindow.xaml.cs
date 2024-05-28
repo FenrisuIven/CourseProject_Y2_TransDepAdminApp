@@ -72,8 +72,8 @@ namespace TransDep_AdminApp
         }
         public void Refresh()
         {
-            //ParkingLot_ItemsCtrl.ItemsSource = ParkingLot.GetTrucksOnLot;
-            //ParkingLot_ItemsCtrl.Items.Refresh();
+            _localTruckVM = new();
+            listBox.ItemsSource = _localTruckVM.TruckList;
         }
         
         public void DepartureCommand(object sender, RoutedEventArgs e)

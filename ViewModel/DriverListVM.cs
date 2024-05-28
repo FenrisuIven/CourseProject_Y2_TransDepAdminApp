@@ -22,12 +22,12 @@ namespace TransDep_AdminApp.ViewModel
             TransferDTO += MainController.Instance.DriverActionRequested;
         }
         
-        public void OnActionRequested(object sender, DriverValidation val = null, DriverDTO dto = null, ActionType? tag = null)
+        public void OnActionRequested(DriverValidation val = null, DriverDTO dto = null, DriverDTO replaceWith = null, ActionType? tag = null)
         {
-            if (tag is ActionType.Replace && dto != null) RequestTransfer(dto, tag);
+            if (tag is ActionType.Replace && dto != null && replaceWith != null) RequestTransfer(dto, replaceWith, tag);
+            if (tag is ActionType.Remove && dto != null) RequestTransfer(dto, null, tag);
             if (tag is ActionType.Add && val != null)
             {
-                
                 try
                 {
                     var obj = new DriverDTO 
@@ -38,7 +38,7 @@ namespace TransDep_AdminApp.ViewModel
                         Rating = int.Parse(val.Rating),
                         Category = val.Category
                     };
-                    RequestTransfer(obj, tag);
+                    RequestTransfer(obj, null, tag);
                 }
                 catch { /*ignored*/ }
             }
@@ -50,9 +50,9 @@ namespace TransDep_AdminApp.ViewModel
         }
 
         public event TransferDTOToModel<DriverListVM, DriverDTO> TransferDTO;
-        public void RequestTransfer(DriverDTO dto, ActionType? tag = null)
+        public void RequestTransfer(DriverDTO dto, DriverDTO replaceWith = null, ActionType? tag = null)
         {
-            TransferDTO?.Invoke(this, dto);
+            TransferDTO?.Invoke(this, dto, replaceWith);
         }
     }
 }

@@ -58,11 +58,11 @@ namespace TransDep_AdminApp.View.Screens
             Input_Rating.SelectedItem = Input_Rating.Items[activeRatingIndex];
         }
         
-        public delegate void DriverInputCompleted(object sender, DriverValidation prop1, DriverDTO dto = null, ActionType? tag = null);
+        public delegate void DriverInputCompleted(DriverValidation prop1, DriverDTO dto = null, DriverDTO prop2 = null, ActionType? tag = null);
         public event DriverInputCompleted DriverInputCompletionEvent;
         public void OnCompletion(ActionType? tag = null)
         {
-            DriverInputCompletionEvent?.Invoke(this, localDriverVal, null, tag);
+            DriverInputCompletionEvent?.Invoke(localDriverVal, null, null, tag);
         }
     }
 }

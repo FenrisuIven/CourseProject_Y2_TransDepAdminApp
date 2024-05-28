@@ -97,14 +97,14 @@ namespace TransDep_AdminApp.View.Screens
             Close();
         }
 
-        public delegate void TruckInputCompleted(object sender, TruckValidation prop1, TruckDTO dto = null, ActionType? tag = null);
-        public delegate void DriverInputCompleted(object sender, DriverValidation prop1, DriverDTO dto = null, ActionType? tag = null);
+        public delegate void TruckInputCompleted(TruckValidation prop1, TruckDTO dto = null, TruckDTO prop2 = null, ActionType? tag = null);
+        public delegate void DriverInputCompleted(DriverValidation prop1, DriverDTO dto = null, DriverDTO prop2 = null, ActionType? tag = null);
         public event TruckInputCompleted TruckInputCompletionEvent;
         public event DriverInputCompleted DriverInputCompletionEvent;
         public void OnCompletion(ActionType? tag = null)
         {
-            TruckInputCompletionEvent?.Invoke(this, localTruckVal, null, tag);
-            DriverInputCompletionEvent?.Invoke(this, localDriverVal, null, tag);
+            TruckInputCompletionEvent?.Invoke(localTruckVal, null, null, tag);
+            DriverInputCompletionEvent?.Invoke(localDriverVal, null, null, tag);
         }
     }
     public class InvertedBoolConverter : IValueConverter

@@ -110,7 +110,28 @@ namespace TransDep_AdminApp.Model
         }
         
         #region Truck 1/3
-        public void TruckActionRequested(TruckListVM sender, TruckDTO dto, ActionType? tag = null)
+        public void TruckActionRequested(TruckListVM sender, TruckDTO dto, TruckDTO replaceWith = null, ActionType? tag = null)
+        {
+            switch (tag.Value)
+            {
+                case ActionType.Add:
+                    AddTruck(dto);
+                    break;
+                case ActionType.Remove:
+                    RemoveTruck(dto);
+                    break;
+                case ActionType.Replace:
+                    if (replaceWith == null) break;
+                    ReplaceTruck(dto, replaceWith);
+                    break;
+            }
+            
+            RefreshParkingSpots();
+            ParkingLotM.Instance.OnSpotAvailChanged();
+            ((MainWindow)Application.Current.MainWindow)!.Refresh();
+        }
+
+        private void AddTruck(TruckDTO dto)
         {
             if (dto.Id is null) dto.Id = IDGenerator.GenerateRandom();
             if (dto.ParkingSpot == -1) dto.ParkingSpot = ParkingLotM.Instance.TakeFirstFreeSpot(dto.Id);
@@ -131,33 +152,54 @@ namespace TransDep_AdminApp.Model
                 truckList.Add(newTruck);
             }
             catch { /*ignored*/ }
-            
-            RefreshParkingSpots();
-            ParkingLotM.Instance.OnSpotAvailChanged();
-            ((MainWindow)Application.Current.MainWindow)!.Refresh();
         }
-        private void RemoveTruck(object target)
+        private void RemoveTruck(TruckDTO target)
         {
             var boxResult = MessageBox.Show("You really wanna remove this truck from the list?\n" +
                                             "Its info cannot be restored later!", "Remove truck from the list?",
                 MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes);
             if (boxResult == MessageBoxResult.No) return;
 
-            Truck obj = target is TruckDTO ? ObjectMapper.AutoMapper.Map<TruckDTO, Truck>(target as TruckDTO) : (Truck)target;
+            Truck obj = ObjectMapper.AutoMapper.Map<TruckDTO, Truck>(target);
             if(obj.ParkingSpot.Value != null) ParkingLotM.Instance.FreeSpot(obj.ParkingSpot.Value);
             truckList.Remove(obj);
             OnChangesFinished();
         }
-        private void ReplaceTruck(object target, object replace)
+        private void ReplaceTruck(TruckDTO target, TruckDTO replace)
         {
-            Truck targetObj = target is TruckDTO ? ObjectMapper.AutoMapper.Map<Truck>(target) : (Truck)target;
-            Truck replaceObj = replace is TruckDTO ? ObjectMapper.AutoMapper.Map<Truck>(replace) : (Truck)replace;
+            if (target.Id != replace.Id) return;
+            Truck targetObj = truckList.ToList().Find(elem => elem.Id == target.Id);
+            Truck replaceObj = ObjectMapper.AutoMapper.Map<Truck>(replace);
             truckList = new ObservableCollection<Truck>(truckList.ToImmutableList().Replace(targetObj, replaceObj));
+            if (target.ParkingSpot != replace.ParkingSpot)
+            {
+                ParkingLotM.Instance.FreeSpot(target.ParkingSpot);
+                ParkingLotM.Instance.TakeSpot(replace.ParkingSpot, replace.Id);
+            }
         }
         #endregion
         
         #region Driver 1/3
-        public void DriverActionRequested(DriverListVM sender, DriverDTO dto, ActionType? tag = null)
+        public void DriverActionRequested(DriverListVM sender, DriverDTO dto, DriverDTO replaceWith = null, ActionType? tag = null)
+        {
+            switch (tag)
+            {
+                case ActionType.Add:
+                    AddDriver(dto);
+                    break;
+                case ActionType.Remove:
+                    RemoveDriver(dto);
+                    break;
+                case ActionType.Replace:
+                    if (replaceWith == null) break;
+                    ReplaceDriver(dto, replaceWith);
+                    break;
+            }
+            
+            OnChangesFinished();
+        }
+
+        private void AddDriver(DriverDTO dto)
         {
             if (dto.Id is null)
             {
@@ -179,29 +221,40 @@ namespace TransDep_AdminApp.Model
                 driverList.Add(newDriver);
             }
             catch { /*ignored*/ }
-
-            OnChangesFinished();
         }
-        private void RemoveDriver(object target)
+        private void RemoveDriver(DriverDTO dto)
         {
             var boxResult = MessageBox.Show("You really wanna remove this driver from the list?\n" +
                                             "Its info cannot be restored later!", "Remove driver from the list?",
                 MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes);
             if (boxResult == MessageBoxResult.No) return;
 
-            Driver obj = target is DriverDTO ? ObjectMapper.AutoMapper.Map<Driver>(target) : (Driver)target;
-            driverList.Remove(obj);
+            var driver = ObjectMapper.AutoMapper.Map<Driver>(dto);
+            driverList.Remove(driver);
         }
-        private void ReplaceDriver(object target, object replace)
+        private void ReplaceDriver(DriverDTO target, DriverDTO replace)
         {
-            Driver targetObj = target is DriverDTO ? ObjectMapper.AutoMapper.Map<Driver>(target) : (Driver)target;
-            Driver replaceObj = replace is DriverDTO ? ObjectMapper.AutoMapper.Map<Driver>(replace) : (Driver)replace;
+            Driver targetObj = ObjectMapper.AutoMapper.Map<Driver>(target);
+            Driver replaceObj = ObjectMapper.AutoMapper.Map<Driver>(replace);
             driverList = new ObservableCollection<Driver>(driverList.ToImmutableList().Replace(targetObj, replaceObj));
         }
         #endregion
         
         #region Task 1/3
-        public void TaskActionRequested(TaskListVM sender, TaskDTO dto, ActionType? tag = null)
+        public void TaskActionRequested(TaskListVM sender, TaskDTO dto, TaskDTO replaceWith = null, ActionType? tag = null)
+        {
+            switch (tag)
+            {
+                case ActionType.Add:
+                    AddTask(dto);
+                    break;
+            }
+            
+            RefreshParkingSpots();
+            OnChangesFinished();
+        }
+
+        private void AddTask(TaskDTO dto)
         {
             try
             {   // - TODO: Throws some InvalidCast Exception, fix
@@ -212,9 +265,6 @@ namespace TransDep_AdminApp.Model
                 taskList.Add(newTask);
             }
             catch { /*ignored*/ }
-            
-            RefreshParkingSpots();
-            OnChangesFinished();
         }
         #endregion
         

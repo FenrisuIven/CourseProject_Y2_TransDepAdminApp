@@ -23,7 +23,18 @@ public partial class ChangeParkingPlace : Window
 
     private void OnSaveAndQuit(object sender, RoutedEventArgs e)
     {
-        var newDTO = ObjectMapper.AutoMapper.Map<TruckDTO>(_localTarget);
-        _localVM.OnActionRequested(this, null, newDTO, ActionType.Replace);
+        var newDTO = new TruckDTO {
+            Type = _localTarget.Type,
+            Id = _localTarget.Id,
+            DriverID = _localTarget.DriverID,
+            Name = _localTarget.Name,
+            CarryingCapacity = _localTarget.CarryingCapacity,
+            UsefulVolume = _localTarget.UsefulVolume,
+            Capacity = _localTarget.Capacity,
+            Availability = _localTarget.Availability,
+            ParkingSpot = (int)ParkingPlace.SelectedItem
+        };
+        _localVM.OnActionRequested(null, _localTarget, newDTO,ActionType.Replace);
+        Close();
     }
 }

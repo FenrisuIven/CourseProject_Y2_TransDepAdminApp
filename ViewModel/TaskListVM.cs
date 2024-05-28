@@ -56,9 +56,9 @@ namespace TransDep_AdminApp.ViewModel
         }
         
         public event TransferDTOToModel<TaskListVM, TaskDTO> TransferDTO;
-        public void RequestTransfer(TaskDTO dto, ActionType? tag = null)
+        public void RequestTransfer(TaskDTO dto, TaskDTO replaceWith = null,ActionType? tag = null)
         {
-            TransferDTO?.Invoke(this, dto);
+            TransferDTO?.Invoke(this, dto, null);
         }
     }
 }

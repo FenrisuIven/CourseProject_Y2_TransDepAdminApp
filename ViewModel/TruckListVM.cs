@@ -25,34 +25,38 @@ namespace TransDep_AdminApp.ViewModel
             
         }
         
-        public void OnActionRequested(object sender, TruckValidation val = null, TruckDTO dto = null, ActionType? tag = null)
+        public void OnActionRequested(TruckValidation val = null, TruckDTO dto = null, TruckDTO replaceWith = null, ActionType? tag = null)
         {
-            if (tag is ActionType.Replace && dto != null) RequestTransfer(dto, tag);
+            if (tag is ActionType.Replace && dto != null && replaceWith != null) RequestTransfer(dto, replaceWith, tag);
+            if (tag is ActionType.Remove && dto != null) RequestTransfer(dto, null, tag);
             if (tag is ActionType.Add && val != null)
             {
-                var obj = new TruckDTO 
+                try
                 {
-                    Type = val.Type!.Value,
-                    Id = null,
-                    DriverID = null,
-                    Name = val.Name ?? val.Model + " " + val.Brand, 
-                    CarryingCapacity = val.TruckCharsValidation.CarryingCapacity!.Value,
-                    UsefulVolume = val.TruckCharsValidation.UsefulVolume!.Value,
-                    Capacity = val.TruckCharsValidation.Capacity!.Value,
-                    Availability = true,
-                    ParkingSpot = -1
-                };
-                //if (everything is okay)
-                RequestTransfer(obj, tag);
+                    var obj = new TruckDTO 
+                    {
+                        Type = val.Type!.Value,
+                        Id = null,
+                        DriverID = null,
+                        Name = val.Name ?? val.Model + " " + val.Brand, 
+                        CarryingCapacity = val.TruckCharsValidation.CarryingCapacity!.Value,
+                        UsefulVolume = val.TruckCharsValidation.UsefulVolume!.Value,
+                        Capacity = val.TruckCharsValidation.Capacity!.Value,
+                        Availability = true,
+                        ParkingSpot = -1
+                    };
+                    RequestTransfer(obj, null, tag);
+                }
+                catch { /*ignore*/ }
             }
         }
 
         public List<TruckDTO> GetFreeTrucksList() => TruckList.Where(elem => elem.Availability).ToList();
         
         public event TransferDTOToModel<TruckListVM, TruckDTO> TransferDTO;
-        public void RequestTransfer(TruckDTO dto, ActionType? tag = null)
+        public void RequestTransfer(TruckDTO dto, TruckDTO replaceWith = null, ActionType? tag = null)
         {
-            TransferDTO?.Invoke(this, dto);
+            TransferDTO?.Invoke(this, dto, replaceWith, tag);
         }
     }
 }
