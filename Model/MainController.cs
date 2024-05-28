@@ -8,9 +8,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using TransDep_AdminApp.ViewModel;
 using TransDep_AdminApp.Interfaces;
-using TransDep_AdminApp.Model.Parking;
 using TransDep_AdminApp.Model.Trucks;
-using TransDep_AdminApp.View;
 using TransDep_AdminApp.ViewModel.DTO;
 
 namespace TransDep_AdminApp.Model
@@ -21,13 +19,15 @@ namespace TransDep_AdminApp.Model
         private static readonly string _projectRoot =
             new DirectoryInfo(new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent!.FullName).Parent!.FullName;
         
-        public static readonly string _serializationPath = $"{_projectRoot}/Serialization";
         public ObservableCollection<Truck> truckList { get; private set; }
         public ObservableCollection<Driver> driverList { get; private set; }
         public ObservableCollection<Task> taskList { get; private set; }
         
         private TruckListVM _localTruckVM { get; set; }
         
+        
+        public const string _serializationPath =  $"{_projectRoot}/Serialization";
+            
         // -- Singleton --
         private MainController() { }
         private static MainController _instance;

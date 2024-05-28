@@ -1,18 +1,13 @@
-namespace TransDep_AdminApp.Model.Parking
+namespace TransDep_AdminApp.Model
 {
-    public struct ParkingSpot
+    public class ParkingSpot
     {
-        public int SpotNum { get; private set; }
-        public int Row { get; private set; }
-        public int Col { get; private set; }
-        public bool Taken { get; set; }
+        public int SpotNum { get; set; }
+        public ParkingSpot() {}
 
-        public ParkingSpot(int spotNum, int amountOfSpots)
+        public ParkingSpot(int spotNum)
         {
             SpotNum = spotNum;
-            Row = (spotNum - 1) / (amountOfSpots / 2);
-            Col = (spotNum - 1) % (amountOfSpots / 2);
-            Taken = false;
         }
     }
 }

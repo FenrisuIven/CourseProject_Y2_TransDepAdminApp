@@ -3,6 +3,7 @@
 
 ![obviously not working preview image](https://github.com/FenrisuIven/CourseProject_Y2_TransDepAdminApp/blob/development/preview/preview_2420a19_09.png?raw=true)
 
+<b>2421b26_11:</b> Backup for re-writing Parking System<br><br>
 <b>2421a20_10:</b> Convert and adjust structure to fully implement MVVM Pattern. MainControllers and everything works, but serialization broke in the process. More clear folder structure.<br><br>
 <b>2420a19_09:</b> Parking display system WIP, new trucks gets displayed on the parking grid. WIP for drive-out and drive-in animation. MainController and UI_Controller transferred to Singleton pattern. Fixes and adjustments to Add Truck logic, WIP logic for ParkingLot and Parking Places handling. Dev List-display windows that display all of the info, attached to each truck/driver instance. Profile-pics system WIP.<br><br>
 <b>2419b10_08:</b> Truck data validation in AddNewTruck window, Transfer objects WIP, Truck addition partially works (only the "truck" side, new truck is present in main list and in ListBox), Object mapper works for all of the DTOs, Small Main Window UI refactor<br><br>
