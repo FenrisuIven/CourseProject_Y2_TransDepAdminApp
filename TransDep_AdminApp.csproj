@@ -138,6 +138,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\Classes\Cargo.cs" />
     <Compile Include="Model\Classes\Driver.cs" />
+    <Compile Include="Model\Classes\DriverConfiguration.cs" />
     <Compile Include="Model\Classes\Parking\ParkedTruck.cs" />
     <Compile Include="Model\Classes\Parking\ParkingLotM.cs" />
     <Compile Include="Model\Classes\Parking\ParkingSpot.cs" />
@@ -185,7 +186,6 @@
     <Compile Include="View\Screens\Driver\ChangeDriverInfo.xaml.cs">
       <DependentUpon>ChangeDriverInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Screens\Driver\DriverConfiguration.cs" />
     <Compile Include="View\Screens\Driver\DriverListDisplay.xaml.cs">
       <DependentUpon>DriverListDisplay.xaml</DependentUpon>
     </Compile>
@@ -279,11 +279,11 @@
     <Content Include="ClassDiagrams\Model\MainController.puml" />
     <Content Include="ClassDiagrams\Model\Misc\IDGenerator.puml" />
     <Content Include="ClassDiagrams\Model\Misc\VersionUpdater.puml" />
-    <Resource Include="images\*.png" />
     <Content Include="README.md" />
     <Content Include="Serialization\driverList.json" />
     <Content Include="Serialization\taskList.json" />
     <Content Include="Serialization\truckList.json" />
+    <Resource Include="images\*.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

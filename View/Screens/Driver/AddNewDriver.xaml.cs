@@ -1,7 +1,7 @@
 using System;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using TransDep_AdminApp.Model;
 using TransDep_AdminApp.ViewModel;
 using TransDep_AdminApp.ViewModel.DTO;
 using TransDep_AdminApp.ViewModel.Validation;
@@ -24,11 +24,13 @@ namespace TransDep_AdminApp.View.Screens
             };
             input_DriverSelection.DataContext = localDriverVM;
             DriverData_UserCtrl.DataContext = localDriverVal;
+            
             Input_Category.ItemsSource = DriverConfiguration.Categories;
             Input_Rating.ItemsSource = DriverConfiguration.Ratings;
             
-            DriverInputCompletionEvent += localDriverVM.OnAdditionRequested;
+            DriverInputCompletionEvent += localDriverVM.OnActionRequested;
         }
+        
         public void SaveAndQuit(object sender, EventArgs e)
         {
             if (!localDriverVal.isValid())
@@ -38,12 +40,6 @@ namespace TransDep_AdminApp.View.Screens
             }
             OnCompletion();
             Close();
-        }
-        public delegate void DriverInputCompleted(object sender, DriverValidation prop1);
-        public event DriverInputCompleted DriverInputCompletionEvent;
-        public void OnCompletion([CallerMemberName] string memberName = null)
-        {
-            DriverInputCompletionEvent?.Invoke(this, localDriverVal);
         }
 
         private void DriverSelection_Changed(object sender, SelectionChangedEventArgs e)
@@ -62,6 +58,13 @@ namespace TransDep_AdminApp.View.Screens
             
             input_DriverSelection.DataContext = localDriverVM;
             DriverData_UserCtrl.DataContext = localDriverVal;
+        }
+        
+        public delegate void DriverInputCompleted(object sender, DriverValidation prop1, DriverDTO dto = null, string tag = null);
+        public event DriverInputCompleted DriverInputCompletionEvent;
+        public void OnCompletion(string tag = null)
+        {
+            DriverInputCompletionEvent?.Invoke(this, localDriverVal, null, tag);
         }
     }
 }

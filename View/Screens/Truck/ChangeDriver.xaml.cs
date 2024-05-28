@@ -14,12 +14,12 @@ namespace TransDep_AdminApp.View.Screens
     public partial class ChangeDriver : Window
     {
         private MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
-        private Truck targetTruck;
-        public ChangeDriver()
+        private TruckDTO targetTruck;
+        public ChangeDriver(TruckDTO target)
         {
             InitializeComponent();
             input_DriverSelection.ItemsSource = MainController.Instance.driverList;
-            targetTruck = mainWindow.listBox.SelectedItem as Truck;
+            targetTruck = target;
             Initialize();
             input_DriverSelection.SelectedIndex = MainController.Instance.driverList.ToList().FindIndex(elem => elem.Id == targetTruck.DriverID);
         }
@@ -49,7 +49,7 @@ namespace TransDep_AdminApp.View.Screens
         private void SaveAndQuit_OnClick(object sender, RoutedEventArgs e)
         {
             var oldTarget = targetTruck;
-            targetTruck.SetDriverID(((Driver)input_DriverSelection.SelectedItem).Id);
+            targetTruck.DriverID = ((Driver)input_DriverSelection.SelectedItem).Id;
             MainController.Instance.ReplaceTruck(oldTarget, targetTruck);
             Close();
         }

@@ -8,18 +8,29 @@
         Title="ChangeParkingSpace" 
         WindowStyle="SingleBorderWindow"
         ResizeMode="NoResize"
-        Height="140" Width="260">
+        Height="90" Width="235"
+        SizeToContent="WidthAndHeight">
     <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Height" Value="28"/>
+        </Style>
+        <Style TargetType="{x:Type FrameworkElement}" x:Key="inputInfo_Base">
+            <Setter Property="Control.VerticalAlignment" Value="Stretch"/>
+            <Setter Property="Control.HorizontalAlignment" Value="Left"/>
+            <Setter Property="Control.VerticalContentAlignment" Value="Center"/>
+        </Style>
         <Style TargetType="{x:Type FrameworkElement}" x:Key="itemAlignments">
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
+        <local:InvertedBoolConverter x:Key="invertedBoolConverter" />
+        <local:SelectionAvailableConverter x:Key="selectionAvailableConverter" />
+        
     </Window.Resources>
-    <Grid>
+    <Grid MinWidth="235" MinHeight="90">
         <Label Content="Місце паркування:" Margin="10" Style="{StaticResource itemAlignments}"/>
-        <ComboBox Width="100" Height="30" Style="{StaticResource itemAlignments}" Margin="130,8,0,0">
-            <ComboBoxItem Content="10"/>
-        </ComboBox>
-        <Button Width="60" Height="35" Content="Save" Style="{StaticResource itemAlignments}" Margin="170,50,0,0"/>
+        <ComboBox Name="ParkingPlace" Width="100" Height="25" Style="{StaticResource itemAlignments}" Template="{DynamicResource ComboBox_Transparent}"  Margin="130,12,0,0"/>
+        <Button Click="OnSaveAndQuit" Width="60" Height="35" Content="Save" Style="{StaticResource itemAlignments}" Margin="170,50,0,0"/>
     </Grid>
 </Window>

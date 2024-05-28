@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TransDep_AdminApp.View.Screens;
+namespace TransDep_AdminApp.Model;
 
 public static class DriverConfiguration
 {

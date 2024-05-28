@@ -31,7 +31,8 @@ namespace TransDep_AdminApp
         }
         private void OpenWindow(object sender, RoutedEventArgs e)
         {
-            UI_NewWindowHandler.Window(sender);
+            var target = listBox.SelectedItem;
+            UI_NewWindowHandler.Window(sender, target);
         }
         private void ChangeAvalDeb(object sender, RoutedEventArgs e)
         {
@@ -42,6 +43,18 @@ namespace TransDep_AdminApp
             bool availability = !obj.Availability;
             MainController.Instance.truckList[idx].SetAvailability(availability);
             
+            //something strange
+            /*if (availability)
+            {
+                MainController.Instance.truckList[idx].SetParkingSpot(ParkingLot.GetFreeSpotNum());
+                ParkingLot.AddParkedTruck(obj.Id);
+                ParkingLot.TakePlace(MainController.Instance.truckList[idx].ParkingSpot!.Value);
+            }
+            //if (!availability) ParkingLot.Initialize();
+            MainController.Instance.RefreshParkingSpots();
+            
+            MainController.Instance.PropertyChanged(MainController.Instance.truckList[idx].Id, "Availability");*/
+            //something strange
         }
         private void RemoveTruck(object sender, RoutedEventArgs e) => MainController.Instance.RemoveTruck(listBox.SelectedItem);
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)

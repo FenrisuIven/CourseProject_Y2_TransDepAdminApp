@@ -18,21 +18,25 @@ namespace TransDep_AdminApp.ViewModel
             DriverList = new ObservableCollection<DriverDTO>(
                 ObjectMapper.AutoMapper.Map<List<Driver>, List<DriverDTO>>(
                     MainController.Instance.driverList.ToList()));
-            TransferDTO += MainController.Instance.DriverAdditionRequested;
+            TransferDTO += MainController.Instance.DriverActionRequested;
         }
         
-        public void OnAdditionRequested(object sender, DriverValidation val)
+        public void OnActionRequested(object sender, DriverValidation val = null, DriverDTO dto = null, string tag = null)
         {
-            var obj = new DriverDTO 
+            if (tag == "replace" && dto != null) RequestTransfer(dto, tag);
+            if (tag == "add" && val != null)
             {
-                Id = null,
-                FullName = val.FirstName + "," + val.MiddleName + "," + val.LastName,
-                AssignedTruckID = null,
-                Rating = int.Parse(val.Rating.Remove(0,38)),
-                Category = val.Category.Remove(0,38)
-            };
-            //if (everything is okay)
-            RequestTransfer(obj);
+                var obj = new DriverDTO 
+                {
+                    Id = null,
+                    FullName = val.FirstName + "," + val.MiddleName + "," + val.LastName,
+                    AssignedTruckID = null,
+                    Rating = int.Parse(val.Rating.Remove(0,38)),
+                    Category = val.Category.Remove(0,38)
+                };
+                //if (everything is okay)
+                RequestTransfer(obj, tag);
+            }
         }
 
         public List<DriverDTO> GetFreeDriversList()

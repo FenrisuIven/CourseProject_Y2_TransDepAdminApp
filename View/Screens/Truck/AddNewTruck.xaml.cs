@@ -10,6 +10,7 @@ using System.Windows.Data;
 using TransDep_AdminApp.Model;
 using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.ViewModel;
+using TransDep_AdminApp.ViewModel.DTO;
 using TransDep_AdminApp.ViewModel.Validation;
 
 namespace TransDep_AdminApp.View.Screens
@@ -33,8 +34,8 @@ namespace TransDep_AdminApp.View.Screens
             localTruckVal = TruckData_UserCtrl.DataContext as TruckValidation;
             localTruckVal!.TruckCharsValidation = TruckChars_UserCtrl.DataContext as TruckCharsValidationBase;
             
-            TruckInputCompletionEvent += localTruckVM.OnAdditionRequested; 
-            DriverInputCompletionEvent += localDriverVM.OnAdditionRequested;
+            TruckInputCompletionEvent += localTruckVM.OnActionRequested; 
+            DriverInputCompletionEvent += localDriverVM.OnActionRequested;
         }
 
         private void Check_CreateNewDriver_OnChecked(object sender, RoutedEventArgs e)
@@ -93,14 +94,14 @@ namespace TransDep_AdminApp.View.Screens
             Close();
         }
 
-        public delegate void TruckInputCompleted(object sender, TruckValidation prop1);
-        public delegate void DriverInputCompleted(object sender, DriverValidation prop1);
+        public delegate void TruckInputCompleted(object sender, TruckValidation prop1, TruckDTO dto = null, string tag = null);
+        public delegate void DriverInputCompleted(object sender, DriverValidation prop1, DriverDTO dto = null, string tag = null);
         public event TruckInputCompleted TruckInputCompletionEvent;
         public event DriverInputCompleted DriverInputCompletionEvent;
-        public void OnCompletion([CallerMemberName] string memberName = null)
+        public void OnCompletion(string tag = null)
         {
-            TruckInputCompletionEvent?.Invoke(this, localTruckVal);
-            DriverInputCompletionEvent?.Invoke(this, localDriverVal);
+            TruckInputCompletionEvent?.Invoke(this, localTruckVal, null, tag);
+            DriverInputCompletionEvent?.Invoke(this, localDriverVal, null, tag);
         }
     }
     public class InvertedBoolConverter : IValueConverter

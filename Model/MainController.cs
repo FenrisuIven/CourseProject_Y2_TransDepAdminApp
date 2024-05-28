@@ -10,6 +10,7 @@ using TransDep_AdminApp.ViewModel;
 using TransDep_AdminApp.Interfaces;
 using TransDep_AdminApp.Model.Parking;
 using TransDep_AdminApp.Model.Trucks;
+using TransDep_AdminApp.View;
 using TransDep_AdminApp.ViewModel.DTO;
 
 namespace TransDep_AdminApp.Model
@@ -25,8 +26,8 @@ namespace TransDep_AdminApp.Model
         public ObservableCollection<Task> taskList { get; private set; }
         
         
-        public string _serializationPath = $"{_projectRoot}/Serialization";
-            
+        public const string _serializationPath = "C:/Users/Nova/source/repos/TransDep_AdminApp/Serialization";
+        
         private static MainController _instance;
         public static MainController Instance
         {
@@ -107,7 +108,7 @@ namespace TransDep_AdminApp.Model
         }
         
         #region Truck 1/3
-        public void TruckAdditionRequested(TruckListVM sender, TruckDTO dto)
+        public void TruckActionRequested(TruckListVM sender, TruckDTO dto, string tag = null)
         {
             if (dto.Id is null) dto.Id = IDGenerator.GenerateRandom();
             if (dto.ParkingSpot == -1) dto.ParkingSpot = ParkingLotM.Instance.TakeFirstFreeSpot(dto.Id);
@@ -154,7 +155,7 @@ namespace TransDep_AdminApp.Model
         #endregion
         
         #region Driver 1/3
-        public void DriverAdditionRequested(DriverListVM sender, DriverDTO dto)
+        public void DriverActionRequested(DriverListVM sender, DriverDTO dto, string tag = null)
         {
             if (dto.Id is null)
             {
@@ -198,7 +199,7 @@ namespace TransDep_AdminApp.Model
         #endregion
         
         #region Task 1/3
-        public void TaskAdditionRequested(TaskListVM sender, TaskDTO dto)
+        public void TaskActionRequested(TaskListVM sender, TaskDTO dto, string tag = null)
         {
             try
             {

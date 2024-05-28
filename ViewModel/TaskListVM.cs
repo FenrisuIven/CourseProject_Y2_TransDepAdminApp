@@ -21,7 +21,7 @@ namespace TransDep_AdminApp.ViewModel
             TaskList = new ObservableCollection<TruckDTO>(
                 ObjectMapper.AutoMapper.Map<List<Truck>, List<TruckDTO>>(
                     MainController.Instance.truckList.ToList()));
-            TransferDTO += MainController.Instance.TaskAdditionRequested;
+            TransferDTO += MainController.Instance.TaskActionRequested;
         }
         
         public void OnAdditionRequested(object sender, TaskValidation val)
@@ -48,7 +48,7 @@ namespace TransDep_AdminApp.ViewModel
         }
         
         public event TransferDTOToModel<TaskListVM, TaskDTO> TransferDTO;
-        public void RequestTransfer(TaskDTO dto, [CallerMemberName] string senderName = null)
+        public void RequestTransfer(TaskDTO dto, string tag = null)
         {
             TransferDTO?.Invoke(this, dto);
         }

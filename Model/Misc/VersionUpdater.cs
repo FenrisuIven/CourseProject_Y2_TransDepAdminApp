@@ -15,8 +15,8 @@ namespace TransDep_AdminApp
             int numOfWeek = cal.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
             int numOfDay = cal.GetDayOfMonth(DateTime.Now);
             
-            int gitPushNum = 12;        //Last Update: 26.05.2024, 19.58
-            int countThisWeek = 2;      //Last Update: 26.05.2024  (skip 25 = z)
+            int gitPushNum = 18;        //Last Update: 28.05.2024, 20.22
+            int countThisWeek = 0;      //Last Update: 28.05.2024  (skip 25 = z)
             char verChar = Convert.ToChar((countThisWeek % 26) + 97);
             
             return $"24{numOfWeek}{verChar}" + 
