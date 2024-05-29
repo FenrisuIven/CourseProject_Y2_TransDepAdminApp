@@ -7,6 +7,7 @@ namespace TransDep_AdminApp.Model
         public string Origin { get; private set; }
         public string Destination { get; private set; }
 
+        public Route() {}
         public Route(string start, string finish)
         {
             Origin = start;

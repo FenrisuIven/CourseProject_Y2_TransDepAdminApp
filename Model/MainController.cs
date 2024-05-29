@@ -1,18 +1,17 @@
 using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
-using System.Runtime.CompilerServices;
+using Microsoft.Windows.Themes;
 using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.ViewModel;
-using TransDep_AdminApp.Interfaces;
 using TransDep_AdminApp.Model.Parking;
-using TransDep_AdminApp.Model.Trucks;
 using TransDep_AdminApp.View;
-using TransDep_AdminApp.View.Screens;
 using TransDep_AdminApp.ViewModel.DTO;
 
 namespace TransDep_AdminApp.Model
@@ -84,9 +83,24 @@ namespace TransDep_AdminApp.Model
             driverList = new ObservableCollection<Driver>(ObjectMapper.AutoMapper.Map<List<DriverDTO>, List<Driver>>(objListDriver));
             taskList = new ObservableCollection<Task>(ObjectMapper.AutoMapper.Map<List<TaskDTO>, List<Task>>(objListTask));
 
+            truckList.ToList().ForEach(truck =>
+            {
+                truck.AvailabilityChanged += TruckAvailabilityChanged;
+            });
+            
+            //RefreshColors();
             RefreshParkingSpots();
+            
         }
 
+        /*private void RefreshColors()
+        {
+            truckList.ToList().ForEach(truck =>
+            {
+                if (truck.AssignedColor.ToString() != "#00000000") truck.SetColor(ColorGenerator.GenerateRandom());
+            });
+        }*/
+        
         public void Serialize()
         {
             var dtoListTruck = ObjectMapper.AutoMapper.Map<List<Truck>, List<TruckDTO>>(truckList.ToList());
@@ -128,15 +142,16 @@ namespace TransDep_AdminApp.Model
             
             RefreshParkingSpots();
             ParkingLotM.Instance.OnSpotAvailChanged();
-            ((MainWindow)Application.Current.MainWindow)!.Refresh();
+            OnChangesFinished();
         }
 
         private void AddTruck(TruckDTO dto)
         {
-            if (dto.Id is null) dto.Id = IDGenerator.GenerateRandom();
+            if (dto.Id == null) dto.Id = IDGenerator.GenerateRandom();
             if (dto.ParkingSpot == -1) dto.ParkingSpot = ParkingLotM.Instance.TakeFirstFreeSpot(dto.Id);
-
-            if (dto.DriverID is null)
+            if (dto.AssignedColor == Colors.Red) dto.AssignedColor = ColorGenerator.GenerateRandom();
+            
+            if (dto.DriverID == null)
             {
                 var targetDriver = driverList.ToList().Find(elem => elem.AssignedTruckId is null);
                 if (targetDriver != null)
@@ -150,6 +165,8 @@ namespace TransDep_AdminApp.Model
             {
                 var newTruck = ObjectMapper.AutoMapper.Map<Truck>(dto);
                 truckList.Add(newTruck);
+                truckList.Last().AvailabilityChanged += TruckAvailabilityChanged;
+                driverList.ToList().Find(elem => elem.Id == dto.DriverID).SetTruckID(dto.Id);
             }
             catch { /*ignored*/ }
         }
@@ -170,6 +187,7 @@ namespace TransDep_AdminApp.Model
             if (target.Id != replace.Id) return;
             Truck targetObj = truckList.ToList().Find(elem => elem.Id == target.Id);
             Truck replaceObj = ObjectMapper.AutoMapper.Map<Truck>(replace);
+            replaceObj.AvailabilityChanged += TruckAvailabilityChanged;
             truckList = new ObservableCollection<Truck>(truckList.ToImmutableList().Replace(targetObj, replaceObj));
             if (target.ParkingSpot != replace.ParkingSpot)
             {
@@ -257,15 +275,27 @@ namespace TransDep_AdminApp.Model
         private void AddTask(TaskDTO dto)
         {
             try
-            {   // - TODO: Throws some InvalidCast Exception, fix
+            {
                 var newTask = ObjectMapper.AutoMapper.Map<Task>(dto);
-                truckList.ToList().Find(elem => elem.Id == newTask.TruckExecutorID).SetAvailability(false);
-                driverList.ToList().Find(elem => elem.Id == newTask.DriverExecutorID).SetTruckID(truckList.ToList().Find(elem => elem.Id == dto.TruckExecutorID).Id);
-                driverList.ToList().Find(elem => elem.AssignedTruckId == newTask.TruckExecutorID).SetTruckID(null);
+                
+                var truckIdx = truckList.ToList().FindIndex(elem => elem.Id == newTask.TruckExecutorID);
+                truckList[truckIdx].SetAvailability(false);
+                
+                var driverIdx = driverList.ToList().FindIndex(elem => elem.Id == newTask.DriverExecutorID);
+                driverList[driverIdx].SetTruckID(truckList[truckIdx].Id);
+                driverList[driverIdx].SetTruckID(null);
+                
                 taskList.Add(newTask);
             }
-            catch { /*ignored*/ }
+            catch { /*ignore*/ }
         }
+
+        private void TruckAvailabilityChanged(string id, bool newAvail)
+        {
+            var tag = newAvail ? "arr" : "dep";
+            ParkingLotVM.Instance.RequestTruckAnimation(id, tag);
+        }
+
         #endregion
         
         public delegate void FinChanges();

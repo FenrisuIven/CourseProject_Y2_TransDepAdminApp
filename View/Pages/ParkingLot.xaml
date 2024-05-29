@@ -6,15 +6,19 @@
       xmlns:local="clr-namespace:TransDep_AdminApp.View"
       xmlns:parking="clr-namespace:TransDep_AdminApp.Model.Parking"
       mc:Ignorable="d"
-      Title="ParkingLot" Width="690" Height="625">
+      Title="ParkingLot" 
+      Width="690" Height="625">
     <Page.Resources>
         <local:ColumnToCanvasLeftConverter x:Key="ColumnToCanvasLeftConverter" />
         <local:RowToCanvasTopConverter x:Key="RowToCanvasTopConverter" />
+        <local:ColorToImageConverter x:Key="ColorToImageConverter" />
     </Page.Resources>
     <Grid>
-        <Canvas Width="690" Height="625"
+        <Canvas Name="canvas"
+                Width="690" Height="625"
                 HorizontalAlignment="Center" 
-                VerticalAlignment="Top">
+                VerticalAlignment="Top"
+                ClipToBounds="True">
             <Canvas.Background>
                 <ImageBrush ImageSource="/images/parking-grid.png"/>  
             </Canvas.Background>
@@ -26,7 +30,7 @@
                     <DataTemplate>
                         <StackPanel MaxWidth="60" MinWidth="0">
                             <TextBlock Text="{Binding TruckId}" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
-                            <Image Source="/images/profile-pic_placeholder.png"/>
+                            <Image Source="{Binding AssignedColor, Converter={StaticResource ColorToImageConverter}}"/>
                             <TextBlock Text="{Binding Name}" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
                             <TextBlock Text="{Binding DriverName}" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" />
                         </StackPanel>

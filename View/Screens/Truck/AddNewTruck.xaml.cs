@@ -17,17 +17,15 @@ namespace TransDep_AdminApp.View.Screens
 {
     public partial class AddNewTruck : Window
     {
-        public TruckListVM localTruckVM;
-        public TruckValidation localTruckVal; 
-        public DriverListVM localDriverVM;
-        public DriverValidation localDriverVal;
+        public TruckListVM localTruckVM = new();
+        public TruckValidation localTruckVal = new(); 
+        public DriverListVM localDriverVM = new();
+        public DriverValidation localDriverVal = new();
       
         #region ViewSide
         public AddNewTruck()
         {
             InitializeComponent();
-            localTruckVM = new TruckListVM();
-            localDriverVM = new DriverListVM();
             input_DriverSelection.ItemsSource = localDriverVM.GetFreeDriversList();
             input_TruckType.ItemsSource = TruckTypeConvert.dictionary.Values;
 
@@ -37,19 +35,20 @@ namespace TransDep_AdminApp.View.Screens
             Input_DriverRating.ItemsSource = DriverConfiguration.Ratings;
             Input_DriverCategory.ItemsSource = DriverConfiguration.Categories;
             
+            input_DriverSelection.DataContext = localDriverVal;
+            SecondRow_UserCtrl.DataContext = null;
+            
             TruckInputCompletionEvent += localTruckVM.OnActionRequested; 
             DriverInputCompletionEvent += localDriverVM.OnActionRequested;
         }
 
         private void Check_CreateNewDriver_OnChecked(object sender, RoutedEventArgs e)
         {
-            localDriverVal = new();
             input_DriverSelection.DataContext = null;
             SecondRow_UserCtrl.DataContext = localDriverVal;
         }
         private void Check_CreateNewDriver_OnUnchecked(object sender, RoutedEventArgs e)
         {
-            localDriverVal = new();
             input_DriverSelection.DataContext = localDriverVal;
             SecondRow_UserCtrl.DataContext = null;
         }
@@ -93,7 +92,10 @@ namespace TransDep_AdminApp.View.Screens
                     return;
                 }
             }
-            OnCompletion();
+
+            if (localDriverVal.DriverDto != null) localTruckVal.DesiredDriverID = localDriverVal.DriverDto.Id;
+            
+            OnCompletion(ActionType.Add);
             Close();
         }
 

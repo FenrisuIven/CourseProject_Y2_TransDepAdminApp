@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:TransDep_AdminApp"
         xmlns:dto="clr-namespace:TransDep_AdminApp.ViewModel.DTO"
         xmlns:model="clr-namespace:TransDep_AdminApp.Model"
+        xmlns:view="clr-namespace:TransDep_AdminApp.View"
         mc:Ignorable="d"
         UseLayoutRounding="True"
         Title="MainWindow" 
@@ -47,25 +48,39 @@
             </ListBox.DataContext>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
+                    <StackPanel Orientation="Horizontal">
                         
-                        <TextBlock Text="{Binding Name, Mode=OneWay}" FontWeight="Bold"/>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}Вантажопідйомність: {0} тонн | Місткість: {1} європаллета | Корисний обсяг: {2} м.куб.">
-                                    <Binding Path="CarryingCapacity"/>
-                                    <Binding Path="Capacity"/>
-                                    <Binding Path="UsefulVolume"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}Вільність: {0}">
-                                    <Binding Path="Availability"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
+                        <StackPanel Margin="0,0,6,10">
+                            <Image MaxHeight="40" >
+                                <Image.Source>
+                                    <Binding Path="AssignedColor">
+                                        <Binding.Converter>
+                                            <view:ColorToImageConverter/>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Image.Source>
+                            </Image>
+                        </StackPanel>
+                        
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name, Mode=OneWay}" FontWeight="Bold"/>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}Вантажопідйомність: {0} тонн | Місткість: {1} європаллета | Корисний обсяг: {2} м.куб.">
+                                        <Binding Path="CarryingCapacity"/>
+                                        <Binding Path="Capacity"/>
+                                        <Binding Path="UsefulVolume"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}Вільність: {0}">
+                                        <Binding Path="Availability"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </StackPanel>
                         
                     </StackPanel>
                 </DataTemplate>
@@ -76,14 +91,16 @@
                     <MenuItem Name="changeDriver" Header="Призначити нового водія" Click="OpenWindow"/>
                     <MenuItem Name="changeParkingSpace" Header="Змінити місце паркування" Click="OpenWindow"/>
                     <MenuItem Header="Видалити зі списку" Click="RemoveTruck"/>
-                    <MenuItem Header="change availability" Click="ChangeAvalDeb"/>
+                    <MenuItem Header="change availability" Click="ChangeAvalDev"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
 
-        <Frame Source="View/Pages/ParkingLot.xaml"
+        <Frame Name="ParkingFrame"
+               Source="View/Pages/ParkingLot.xaml"
                Grid.Row="0" Grid.Column="1"  
                Width="690" Height="625" 
+               MaxWidth="690" MaxHeight="625"
                HorizontalAlignment="Center"  
                VerticalAlignment="Top"  
                Margin="0,10,0,0"/>

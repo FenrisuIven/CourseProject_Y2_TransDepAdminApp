@@ -19,7 +19,7 @@ namespace TransDep_AdminApp.Model.Parking
             }
         }
 
-        public ObservableCollection<ParkingSpot> ParkingSpots;
+        public ObservableCollection<ParkingSpot> ParkingSpots { get; set; }
         
         public ParkingLotM()
         {

@@ -14,6 +14,7 @@ namespace TransDep_AdminApp.ViewModel.Validation
         public string Model { get; set; }
         public ComboBoxItem Quality { get; set; }
         public TruckCharsValidationBase TruckCharsValidation { get; set; }
+        public string DesiredDriverID { get; set; }
         
         public string this[string name]
         {

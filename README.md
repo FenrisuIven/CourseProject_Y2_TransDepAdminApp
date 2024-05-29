@@ -1,8 +1,9 @@
 
 <div style="text-align:justify">
 
-![obviously not working preview image](https://github.com/FenrisuIven/CourseProject_Y2_TransDepAdminApp/blob/development/preview/preview_2420a19_09.png?raw=true)
+![obviously not working preview image](https://github.com/FenrisuIven/CourseProject_Y2_TransDepAdminApp/blob/development/preview/preview_2422e29_22.png?raw=true)
 
+<b>2422e29_22:</b> MainWindow UI re-haul, Truck AssignedColor logic and handler of displaying colored profile image, Logic of displaying custom images that will allow to assign custom profile picture to each truck, Parking logic fixes and adjustments, Truck Availability change now triggers animations of departure and arrival, basic Task system assigns Truck Availability, DriverID to Truck and TruckID to Driver correctly, Fixes to AddTruck and AddDriver<br><br>
 <b>2422d28_21:</b> Change to most of the events' signature, Adjustments to M-VM-V interactions, Fixes to ChangeParkingSpot logic<br><br>
 <b>2422c28_20:</b> Fixes to NewTask validations, passing the validation to MainController and overall working with it. Currently not working due to some issue in cast and/or mapping of TDTO to T<br><br>
 <b>2422b28_19:</b> Fix to DriverValidation, changes to AddNewTruck, Add new enum ActionType -- required changes being made to all the code that is for handling requests of actions with objects<br><br>

@@ -28,6 +28,7 @@ namespace TransDep_AdminApp.ViewModel
             if (tag is ActionType.Remove && dto != null) RequestTransfer(dto, null, tag);
             if (tag is ActionType.Add && val != null)
             {
+                if (val.DriverDto != null) return;
                 try
                 {
                     var obj = new DriverDTO 
@@ -52,7 +53,7 @@ namespace TransDep_AdminApp.ViewModel
         public event TransferDTOToModel<DriverListVM, DriverDTO> TransferDTO;
         public void RequestTransfer(DriverDTO dto, DriverDTO replaceWith = null, ActionType? tag = null)
         {
-            TransferDTO?.Invoke(this, dto, replaceWith);
+            TransferDTO?.Invoke(this, dto, replaceWith, tag);
         }
     }
 }

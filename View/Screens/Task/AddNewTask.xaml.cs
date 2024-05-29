@@ -67,7 +67,7 @@ namespace TransDep_AdminApp.View.Screens
         {
             if (localTaskVal.IsValid() == false)
             {
-                MessageBox.Show("Перевірте чи усі поля водія були правильно заповнені", null, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Перевірте чи усі поля були правильно заповнені", null, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
             OnCompletion(null, ActionType.Add);

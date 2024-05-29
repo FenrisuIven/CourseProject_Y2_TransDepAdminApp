@@ -14,7 +14,7 @@ namespace TransDep_AdminApp.ViewModel
 {
     public class TaskListVM : ILayerTransfer<TaskListVM, TaskDTO>
     {
-        public ObservableCollection<TruckDTO> TaskList;
+        public ObservableCollection<TruckDTO> TaskList { get; set; }
 
         public TaskListVM()
         {
@@ -25,10 +25,10 @@ namespace TransDep_AdminApp.ViewModel
         }
         
         public void OnActionRequested(object sender, TaskValidation val = null, TaskDTO dto = null, ActionType? tag = null)
-        { 
-            if (tag is ActionType.Add && val != null)
+        {
+            try
             {
-                try
+                if (tag is ActionType.Add && val != null)
                 {
                     var obj = new TaskDTO
                     {
@@ -47,18 +47,16 @@ namespace TransDep_AdminApp.ViewModel
                             Amount = double.Parse(val.CargoVal.Amount),
                         }
                     };
-                    RequestTransfer(obj);
+                    RequestTransfer(obj, null, tag);
                 }
-                catch(Exception e)
-                { /*ignored*/ }
             }
-            
+            catch{ /*ignored*/ }
         }
         
         public event TransferDTOToModel<TaskListVM, TaskDTO> TransferDTO;
-        public void RequestTransfer(TaskDTO dto, TaskDTO replaceWith = null,ActionType? tag = null)
+        public void RequestTransfer(TaskDTO dto, TaskDTO replaceWith = null, ActionType? tag = null)
         {
-            TransferDTO?.Invoke(this, dto, null);
+            TransferDTO?.Invoke(this, dto, null, tag);
         }
     }
 }

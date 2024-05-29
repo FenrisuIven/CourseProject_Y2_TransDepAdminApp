@@ -3,7 +3,9 @@ using System.Linq;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
+using System.Windows.Media;
 using TransDep_AdminApp.Enums;
 using TransDep_AdminApp.Model;
 using TransDep_AdminApp.Interfaces;
@@ -18,13 +20,22 @@ namespace TransDep_AdminApp.ViewModel
 
         public TruckListVM()
         {
+            SetTruckList();
+            TransferDTO += MainController.Instance.TruckActionRequested;
+            
+            MainController.Instance.FinishedChanges += () =>
+            {
+                SetTruckList();
+                CollectionChanged?.Invoke();
+            };
+        }
+
+        private void SetTruckList()
+        {
             TruckList = new ObservableCollection<TruckDTO>(
                 ObjectMapper.AutoMapper.Map<List<Truck>, List<TruckDTO>>(
                     MainController.Instance.truckList.ToList()));
-            TransferDTO += MainController.Instance.TruckActionRequested;
-            
         }
-        
         public void OnActionRequested(TruckValidation val = null, TruckDTO dto = null, TruckDTO replaceWith = null, ActionType? tag = null)
         {
             if (tag is ActionType.Replace && dto != null && replaceWith != null) RequestTransfer(dto, replaceWith, tag);
@@ -37,8 +48,9 @@ namespace TransDep_AdminApp.ViewModel
                     {
                         Type = val.Type!.Value,
                         Id = null,
-                        DriverID = null,
-                        Name = val.Name ?? val.Model + " " + val.Brand, 
+                        DriverID = val.DesiredDriverID,
+                        AssignedColor = Colors.Red,
+                        Name = val.Name ?? val.Brand + " " + val.Model, 
                         CarryingCapacity = val.TruckCharsValidation.CarryingCapacity!.Value,
                         UsefulVolume = val.TruckCharsValidation.UsefulVolume!.Value,
                         Capacity = val.TruckCharsValidation.Capacity!.Value,
@@ -50,6 +62,8 @@ namespace TransDep_AdminApp.ViewModel
                 catch { /*ignore*/ }
             }
         }
+        public delegate void OnCollectionChanged();
+        public event OnCollectionChanged CollectionChanged;
 
         public List<TruckDTO> GetFreeTrucksList() => TruckList.Where(elem => elem.Availability).ToList();
         

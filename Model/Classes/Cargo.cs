@@ -9,6 +9,7 @@ namespace TransDep_AdminApp.Model
         public double Amount { get; protected set; }
         public CargoType Type { get; protected set; }
 
+        public Cargo() {}
         public Cargo(double weight, double volume, double amount, CargoType type)
         {
             Weight = weight;

@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Media;
 using TransDep_AdminApp.Interfaces;
 
 namespace TransDep_AdminApp.Model.Trucks 
@@ -10,8 +11,8 @@ namespace TransDep_AdminApp.Model.Trucks
         public static double[] allowedCarryingCapacity = { 50, 90 };
         public static double[] allowedCapacity = { 50, 90 };
         //TODO: ---------------------------------
-        public Tent(string id, string driverId, string name, int carryingCapacity, int usefulVolume, int capacity, int parkingSpot, bool availability = true) 
-            : base(id, driverId ,name, carryingCapacity, usefulVolume, capacity, availability, parkingSpot) { }
+        public Tent(string id, string driverId, string name, int carryingCapacity, int usefulVolume, int capacity, int parkingSpot, Color assignedColor,bool availability = true) 
+            : base(id, driverId ,name, carryingCapacity, usefulVolume, capacity, availability, parkingSpot, assignedColor) { }
         
     }
 }

@@ -10,7 +10,9 @@ namespace TransDep_AdminApp.Model
         public string DriverExecutorID { get; private set; }
         public Route Route { get; private set; }
         public Cargo Cargo { get; private set; }
-        
+
+        public Task() { }
+
         public Task(string name, object truck, object driver, object route, object cargo)
         {
             Name = name;

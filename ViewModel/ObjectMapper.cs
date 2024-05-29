@@ -9,7 +9,7 @@ namespace TransDep_AdminApp.ViewModel
 {
     public class ObjectMapper
     {
-        public static Mapper AutoMapper => new Mapper(GetMapperConfig());    //TODO: Rename AutoMapper to smth
+        public static Mapper AutoMapper => new Mapper(GetMapperConfig());
         public static MapperConfiguration GetMapperConfig()
         {
             return new MapperConfiguration(cfg =>
@@ -43,12 +43,10 @@ namespace TransDep_AdminApp.ViewModel
                 cfg.CreateMap<Route, RouteDTO>().ReverseMap();
                 
                 cfg.CreateMap<Task, TaskDTO>()
-                    .ForMember(dest => dest.TruckExecutorID, opt => opt.MapFrom(src => src.TruckExecutorID))
-                    .ForMember(dest => dest.DriverExecutorID, opt => opt.MapFrom(src => src.DriverExecutorID))
-                    .ForMember(dest => dest.Route, opt => opt.MapFrom(src => src.Route))
-                    .ForMember(dest => dest.Cargo, opt => opt.MapFrom(src => src.Cargo));
+                    .ForMember(dest => dest.Route, opt => opt.MapFrom(src => AutoMapper.Map<RouteDTO>(src.Route)))
+                    .ForMember(dest => dest.Cargo, opt => opt.MapFrom(src => AutoMapper.Map<CargoDTO>(src.Cargo)));
                 
-                cfg.CreateMap<TaskDTO, Task>().ConstructUsing(dto => new Task(dto.Name, dto.TruckExecutorID, dto.DriverExecutorID, dto.Route, dto.Cargo));
+                cfg.CreateMap<TaskDTO, Task>();
             });
         }
         
