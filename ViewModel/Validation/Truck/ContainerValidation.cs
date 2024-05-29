@@ -4,9 +4,9 @@ using TransDep_AdminApp.Model.Trucks;
 
 namespace TransDep_AdminApp.ViewModel.Validation
 {
-    public class AutoClutchValidation : TruckCharsValidationBase, IDataErrorInfo
+    public class ContainerValidation : TruckCharsValidationBase, IDataErrorInfo
     {
-        public AutoClutchValidation()
+        public ContainerValidation()
         {
             carryingCapacity = AutomaticClutch.allowedCarryingCapacity;
             usefulVolume = AutomaticClutch.allowedUsefulVolume;

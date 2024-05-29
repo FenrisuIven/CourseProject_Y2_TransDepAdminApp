@@ -26,9 +26,15 @@ namespace TransDep_AdminApp.ViewModel
         private ParkingLotVM()
         {
             Initialize();
-            ParkingLotM.Instance.SpotAvailabilityChanged += Initialize;
+            ParkingLotM.Instance.SpotAvailabilityChanged += OnAvailChanged;
         }
 
+        public void OnAvailChanged(string tag)
+        {
+            if (tag == "over") ParkedTrucks = null;
+            Initialize();
+        }
+        
         public void Initialize()
         {
             if (ParkedTrucks != null) return;

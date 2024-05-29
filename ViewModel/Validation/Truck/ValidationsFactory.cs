@@ -14,13 +14,13 @@ namespace TransDep_AdminApp.ViewModel.Validation
                     return new AutoClutchValidation();
                 
                 case TruckType.Container: 
-                    return new AutoClutchValidation();
+                    return new ContainerValidation();
                 
                 case TruckType.Refrigerated: 
-                    return new AutoClutchValidation();
+                    return new RefrigeratedValidation();
                 
                 case TruckType.Tent: 
-                    return new AutoClutchValidation();
+                    return new TentValidation();
             }
             return default;
         }

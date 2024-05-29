@@ -24,8 +24,9 @@ namespace TransDep_AdminApp
 
             localTruckVM.CollectionChanged += () =>
             {
+                //listBox.ItemsSource = null;
+                //listBox.Items.Refresh();
                 listBox.ItemsSource = localTruckVM.TruckList;
-                listBox.Items.Refresh();
             };
 
             /*var truckDTO = MainController.Instance.truckList[1];
@@ -43,8 +44,9 @@ namespace TransDep_AdminApp
             UI_NewWindowHandler.Window(sender, target);
         }
 
-        private void RemoveTruck(object sender, RoutedEventArgs e) {}
-            // TODO: -- MainController.Instance.RemoveTruck(listBox.SelectedItem);
+        private void RemoveTruck(object sender, RoutedEventArgs e) => 
+            localTruckVM.OnActionRequested(null, listBox.SelectedItem as TruckDTO, null, ActionType.Remove);
+        
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
             MainController.Instance.Serialize();

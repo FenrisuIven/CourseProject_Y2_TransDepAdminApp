@@ -23,7 +23,7 @@ namespace TransDep_AdminApp.ViewModel
             SetTruckList();
             TransferDTO += MainController.Instance.TruckActionRequested;
             
-            MainController.Instance.FinishedChanges += () =>
+            MainController.Instance.FinishedChanges += (tag) =>
             {
                 SetTruckList();
                 CollectionChanged?.Invoke();

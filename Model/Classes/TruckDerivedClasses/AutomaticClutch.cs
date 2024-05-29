@@ -5,9 +5,9 @@ namespace TransDep_AdminApp.Model.Trucks
 {
     public class AutomaticClutch : Truck
     {
-        public static double[] allowedCarryingCapacity = { 50, 90 }; //Вантажопідйомність
-        public static double[] allowedUsefulVolume = { 50, 90 };     //Корисний обсяг
-        public static double[] allowedCapacity = { 50, 90 };         //Місткість
+        public static double[] allowedCarryingCapacity = { 15, 25 }; //Вантажопідйомність
+        public static double[] allowedUsefulVolume = { 60, 120 };    //Корисний обсяг
+        public static double[] allowedCapacity = { 20, 30 };         //Місткість
         
         public AutomaticClutch(
             string _id, string _driverId, string _name, 

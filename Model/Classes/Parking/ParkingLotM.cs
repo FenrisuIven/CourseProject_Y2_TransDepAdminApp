@@ -58,11 +58,11 @@ namespace TransDep_AdminApp.Model.Parking
             }
         }
 
-        public delegate void SpotAvailChanged();
+        public delegate void SpotAvailChanged(string tag);
         public event SpotAvailChanged SpotAvailabilityChanged;
-        public void OnSpotAvailChanged()
+        public void OnSpotAvailChanged(string tag = null)
         {
-            SpotAvailabilityChanged?.Invoke();
+            SpotAvailabilityChanged?.Invoke(tag);
         }
     }
 }

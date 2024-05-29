@@ -110,8 +110,7 @@
             </Grid>
         </StackPanel>
         
-        <Button Name="saveAndQuit"
-                Click="SaveAndQuit_OnClick"
+        <Button Click="OnSaveAndQuit"
                 Content="Зберегти"
                 Grid.Row="1"
                 Width="100" Height="40" 

@@ -7,17 +7,24 @@ using TransDep_AdminApp.ViewModel.DTO;
 
 namespace TransDep_AdminApp.ViewModel
 {
-    public class ObjectMapper
+    public class ObjectMapper   
     {
         public static Mapper AutoMapper => new Mapper(GetMapperConfig());
         public static MapperConfiguration GetMapperConfig()
         {
             return new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Refrigerated, TruckDTO>().ForMember(dest => dest.Type, opt => opt.MapFrom(elem => TruckType.Refrigerated)).ReverseMap();
-                cfg.CreateMap<AutomaticClutch, TruckDTO>().ForMember(dest => dest.Type, opt => opt.MapFrom(elem => TruckType.AutoClutch)).ReverseMap();
-                cfg.CreateMap<Container, TruckDTO>().ForMember(dest => dest.Type, opt => opt.MapFrom(elem => TruckType.Container)).ReverseMap();
-                cfg.CreateMap<Tent, TruckDTO>().ForMember(dest => dest.Type, opt => opt.MapFrom(elem => TruckType.Tent)).ReverseMap();
+                cfg.CreateMap<Refrigerated, TruckDTO>()
+                    .ForMember(dest => dest.Type, opt => opt.MapFrom(elem => TruckType.Refrigerated)).ReverseMap();
+                
+                cfg.CreateMap<AutomaticClutch, TruckDTO>()
+                    .ForMember(dest => dest.Type, opt => opt.MapFrom(elem => TruckType.AutoClutch)).ReverseMap();
+                
+                cfg.CreateMap<Container, TruckDTO>()
+                    .ForMember(dest => dest.Type, opt => opt.MapFrom(elem => TruckType.Container)).ReverseMap();
+                
+                cfg.CreateMap<Tent, TruckDTO>()
+                    .ForMember(dest => dest.Type, opt => opt.MapFrom(elem => TruckType.Tent)).ReverseMap();
 
                 cfg.CreateMap<TruckDTO, Truck>().ConvertUsing((dto, obj, ctx) =>
                 {

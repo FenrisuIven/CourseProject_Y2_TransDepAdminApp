@@ -4,13 +4,13 @@ using TransDep_AdminApp.Model.Trucks;
 
 namespace TransDep_AdminApp.ViewModel.Validation
 {
-    public class AutoClutchValidation : TruckCharsValidationBase, IDataErrorInfo
+    public class TentValidation : TruckCharsValidationBase, IDataErrorInfo
     {
-        public AutoClutchValidation()
+        public TentValidation()
         {
-            carryingCapacity = AutomaticClutch.allowedCarryingCapacity;
-            usefulVolume = AutomaticClutch.allowedUsefulVolume;
-            capacity = AutomaticClutch.allowedCapacity;
+            carryingCapacity = Tent.allowedCarryingCapacity;
+            usefulVolume = Tent.allowedUsefulVolume;
+            capacity = Tent.allowedCapacity;
         }
         public string this[string name]
         {

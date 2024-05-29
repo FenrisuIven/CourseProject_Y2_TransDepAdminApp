@@ -26,6 +26,7 @@ public partial class ChangeParkingPlace : Window
         var newDTO = new TruckDTO {
             Type = _localTarget.Type,
             Id = _localTarget.Id,
+            AssignedColor = _localTarget.AssignedColor,
             DriverID = _localTarget.DriverID,
             Name = _localTarget.Name,
             CarryingCapacity = _localTarget.CarryingCapacity,

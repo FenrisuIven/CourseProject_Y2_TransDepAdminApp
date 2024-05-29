@@ -158,9 +158,8 @@
     <Compile Include="Model\Enums\ActionType.cs" />
     <Compile Include="Model\Enums\CargoTypes.cs" />
     <Compile Include="Model\Enums\TruckTypes.cs" />
-    <Compile Include="Model\Interfaces\IDataGatherer.cs" />
-    <Compile Include="Model\Interfaces\ILayerTransfer.cs" />
     <Compile Include="Model\Interfaces\IValidationValid.cs" />
+    <Compile Include="Model\Interfaces\ILayerTransfer.cs" />
     <Compile Include="Model\MainController.cs" />
     <Compile Include="Model\Misc\ColorGenerator.cs" />
     <Compile Include="Model\Misc\IDGenerator.cs" />
@@ -183,8 +182,11 @@
     <Compile Include="ViewModel\Validation\TaskValidation.cs" />
     <Compile Include="ViewModel\Validation\TruckValidation.cs" />
     <Compile Include="ViewModel\Validation\Truck\AutoClutchValidation.cs" />
+    <Compile Include="ViewModel\Validation\Truck\ContainerValidation.cs" />
+    <Compile Include="ViewModel\Validation\Truck\RefrigeratedValidation.cs" />
+    <Compile Include="ViewModel\Validation\Truck\TentValidation.cs" />
     <Compile Include="ViewModel\Validation\Truck\TruckCharsValidationBase.cs" />
-    <Compile Include="ViewModel\Validation\ValidationsFactory.cs" />
+    <Compile Include="ViewModel\Validation\Truck\ValidationsFactory.cs" />
     <Compile Include="View\Pages\ParkingLot.xaml.cs">
       <DependentUpon>ParkingLot.xaml</DependentUpon>
     </Compile>

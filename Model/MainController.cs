@@ -44,36 +44,6 @@ namespace TransDep_AdminApp.Model
         {
             Console.WriteLine(VersionUpdater.GetCurrentVersion());
             ((MainWindow)Application.Current.MainWindow).version.Text = VersionUpdater.GetCurrentVersion();
-            
-            /*var _driverList = ObjectMapper.AutoMapper.Map<List<Driver>, List<DriverDTO>>(new List<Driver> {
-                new (IDGenerator.GenerateRandom(), "Степан, Андрійович, Бандера", 10, "CE"),
-                new (IDGenerator.GenerateRandom(), "Степан, Андрійович, Бандера", 7, "CE"),
-                new (IDGenerator.GenerateRandom(), "Степан, Андрійович, Бандера", 9, "C"),
-                new (IDGenerator.GenerateRandom(), "Степан, Андрійович, Бандера", 8, "CE"),
-                new (IDGenerator.GenerateRandom(), "Степан, Андрійович, Бандера", 4, "CE"),
-                new (IDGenerator.GenerateRandom(), "Степан, Андрійович, Бандера", 5, "CE"),
-            });
-            driverList = new ObservableCollection<DriverDTO>(_driverList);
-
-            var _truckList = ObjectMapper.AutoMapper.Map<List<Truck>, List<TruckDTO>>(new List<Truck>
-            {
-                new Tent(IDGenerator.GenerateRandom(), driverList[0].Id, "Тентова фура №1", 60, 60, 60, 1, false),
-                new Refrigerated(IDGenerator.GenerateRandom(), driverList[1].Id, "Рефрижератор №1", 60, 60, 60, 2, false),
-                new Tent(IDGenerator.GenerateRandom(), driverList[2].Id, "Тентова фура №2", 60, 60, 60, 0),
-                new Refrigerated(IDGenerator.GenerateRandom(), driverList[0].Id, "Рефрижератор №2", 60, 60, 60, 3),
-                new Tent(IDGenerator.GenerateRandom(), driverList[0].Id, "Тентова фура №3", 60, 60, 60, 4, false),
-                new Refrigerated(IDGenerator.GenerateRandom(), driverList[0].Id, "Рефрижератор №3", 60, 60, 60, 5)
-            });
-                //.Select(elem => ObjectMapper.AutoMapper.Map<TruckDTO>(elem));
-            truckList = new ObservableCollection<TruckDTO>(_truckList);
-            taskList = new ObservableCollection<TaskDTO>();
-            
-            
-            for (int i = 0; i < truckList.Count; i++)
-            {
-                truckList[0].DriverID = driverList[i].Id;
-                driverList[i].AssignedTruckID = truckList[i].Id;
-            }*/
 
             var objListTruck = FileIO<TruckDTO>.Deserialize(_serializationPath + "/truckList.json");
             var objListDriver = FileIO<DriverDTO>.Deserialize(_serializationPath + "/driverList.json");
@@ -88,18 +58,8 @@ namespace TransDep_AdminApp.Model
                 truck.AvailabilityChanged += TruckAvailabilityChanged;
             });
             
-            //RefreshColors();
             RefreshParkingSpots();
-            
         }
-
-        /*private void RefreshColors()
-        {
-            truckList.ToList().ForEach(truck =>
-            {
-                if (truck.AssignedColor.ToString() != "#00000000") truck.SetColor(ColorGenerator.GenerateRandom());
-            });
-        }*/
         
         public void Serialize()
         {
@@ -142,7 +102,7 @@ namespace TransDep_AdminApp.Model
             
             RefreshParkingSpots();
             ParkingLotM.Instance.OnSpotAvailChanged();
-            OnChangesFinished();
+            if(tag != ActionType.Add) OnChangesFinished();
         }
 
         private void AddTruck(TruckDTO dto)
@@ -166,7 +126,9 @@ namespace TransDep_AdminApp.Model
                 var newTruck = ObjectMapper.AutoMapper.Map<Truck>(dto);
                 truckList.Add(newTruck);
                 truckList.Last().AvailabilityChanged += TruckAvailabilityChanged;
-                driverList.ToList().Find(elem => elem.Id == dto.DriverID).SetTruckID(dto.Id);
+                if (dto.DriverID != null) driverList.ToList().Find(elem => elem.Id == dto.DriverID).SetTruckID(dto.Id);
+                
+                if (dto.DriverID != null) ParkingLotM.Instance.OnSpotAvailChanged("over");
             }
             catch { /*ignored*/ }
         }
@@ -177,9 +139,21 @@ namespace TransDep_AdminApp.Model
                 MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.Yes);
             if (boxResult == MessageBoxResult.No) return;
 
-            Truck obj = ObjectMapper.AutoMapper.Map<TruckDTO, Truck>(target);
-            if(obj.ParkingSpot.Value != null) ParkingLotM.Instance.FreeSpot(obj.ParkingSpot.Value);
-            truckList.Remove(obj);
+            int idx = truckList.ToList().FindIndex(elem => elem.Id == target.Id);
+            if (truckList[idx].ParkingSpot != null)
+            {
+                if (truckList[idx].ParkingSpot.Value != -1)
+                {
+                    ParkingLotM.Instance.FreeSpot(truckList[idx].ParkingSpot.Value);
+                }
+            }
+
+            var driverIdx = driverList.ToList().FindIndex(elem => elem.AssignedTruckId == target.Id);
+            driverList[driverIdx].SetTruckID(null);
+            truckList.Remove(truckList[idx]);
+            
+            ParkingLotM.Instance.OnSpotAvailChanged("over");
+            
             OnChangesFinished();
         }
         private void ReplaceTruck(TruckDTO target, TruckDTO replace)
@@ -194,6 +168,7 @@ namespace TransDep_AdminApp.Model
                 ParkingLotM.Instance.FreeSpot(target.ParkingSpot);
                 ParkingLotM.Instance.TakeSpot(replace.ParkingSpot, replace.Id);
             }
+            ParkingLotM.Instance.OnSpotAvailChanged("over");
         }
         #endregion
         
@@ -215,6 +190,7 @@ namespace TransDep_AdminApp.Model
             }
             
             OnChangesFinished();
+            if (tag == ActionType.Add && dto.AssignedTruckID != null) ParkingLotM.Instance.OnSpotAvailChanged("over");
         }
 
         private void AddDriver(DriverDTO dto)
@@ -298,8 +274,8 @@ namespace TransDep_AdminApp.Model
 
         #endregion
         
-        public delegate void FinChanges();
+        public delegate void FinChanges(string tag);
         public event FinChanges FinishedChanges;
-        public void OnChangesFinished() => FinishedChanges?.Invoke();
+        public void OnChangesFinished(string tag = null) => FinishedChanges?.Invoke(tag);
     }
 }
