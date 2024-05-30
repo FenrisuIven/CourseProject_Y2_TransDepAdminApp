@@ -34,9 +34,9 @@ namespace TransDep_AdminApp.View.Screens
 
         private void UpdateLabels(DriverDTO obj)
         {
-            firstName_Label.Content = obj.FullName.Split(',')[2];
+            firstName_Label.Content = obj.FullName.Split(',')[1];
             surName_Label.Content = obj.FullName.Split(',')[2];
-            lastName_Label.Content = obj.FullName.Split(',')[2];
+            lastName_Label.Content = obj.FullName.Split(',')[0];
             id_Label.Content = obj.Id;
             rating_Label.Content = obj.Rating + "/10";
             category_Label.Content = obj.Category;

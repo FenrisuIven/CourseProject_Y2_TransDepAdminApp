@@ -91,7 +91,6 @@
                     <MenuItem Name="changeDriver" Header="Призначити нового водія" Click="OpenWindow"/>
                     <MenuItem Name="changeParkingSpace" Header="Змінити місце паркування" Click="OpenWindow"/>
                     <MenuItem Header="Видалити зі списку" Click="RemoveTruck"/>
-                    <MenuItem Header="change availability" Click="ChangeAvalDev"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>

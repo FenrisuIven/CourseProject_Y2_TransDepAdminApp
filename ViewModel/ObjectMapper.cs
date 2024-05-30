@@ -7,7 +7,7 @@ using TransDep_AdminApp.ViewModel.DTO;
 
 namespace TransDep_AdminApp.ViewModel
 {
-    public class ObjectMapper   
+    public static class ObjectMapper   
     {
         public static Mapper AutoMapper => new Mapper(GetMapperConfig());
         public static MapperConfiguration GetMapperConfig()

@@ -63,9 +63,13 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Label Content="Назва:"    Grid.Row="0" Grid.Column="0"/>
-                <Label Name="truckName_Label" Content="Name"
+                <Label Name="truckName_Label" MaxWidth="140"
                        Style="{DynamicResource inputLabel_l}"
-                       Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                       Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Label.Content>
+                        <TextBlock MaxWidth="140" TextTrimming="CharacterEllipsis"/>
+                    </Label.Content>
+                </Label>
                 <Label Content="Номер:"       Grid.Row="1" Grid.Column="0"/>
                 <Label Name="truckId_Label" Content="ID"
                        Style="{DynamicResource inputLabel_l}"

@@ -72,13 +72,13 @@ namespace TransDep_AdminApp.View.Screens
         {
             if (!localTruckVal.IsValid())
             {
-                MessageBox.Show("Перевірте чи усі поля вантажівки були правильно заповнені", null, MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show("Перевірте чи усі поля водія були правильно заповнені", null, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
 
             if (check_CreateNewDriver.IsChecked == true)
             {
-                if (!localDriverVal.isValid())
+                if (!localDriverVal.IsValid())
                 {
                     MessageBox.Show("Перевірте чи усі поля водія були правильно заповнені", null, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     return;

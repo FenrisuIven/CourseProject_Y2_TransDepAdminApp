@@ -34,7 +34,7 @@ namespace TransDep_AdminApp.View.Screens
         
         public void SaveAndQuit(object sender, EventArgs e)
         {
-            if (!localDriverVal.isValid())
+            if (!localDriverVal.IsValid())
             {
                 MessageBox.Show("Перевірте чи усі поля водія були правильно заповнені", null, MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;

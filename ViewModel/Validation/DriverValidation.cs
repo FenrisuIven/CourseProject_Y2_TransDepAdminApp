@@ -3,11 +3,12 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using GoogleMapsApi.Entities.DistanceMatrix.Response;
+using TransDep_AdminApp.Interfaces;
 using TransDep_AdminApp.ViewModel.DTO;
 
 namespace TransDep_AdminApp.ViewModel.Validation
 {
-    public class DriverValidation : IDataErrorInfo
+    public class DriverValidation : IDataErrorInfo, IValidationValid
     {
         public DriverDTO? DriverDto { get; set; }
         public string LastName { get; set; }
@@ -50,7 +51,7 @@ namespace TransDep_AdminApp.ViewModel.Validation
             }
         }
         public string Error => null;
-        public bool isValid() => 
+        public bool IsValid() => 
             GetType().GetProperties()
                 .Where(elem => elem.Name != "DriverDto")
                 .Select(elem => elem.Name)

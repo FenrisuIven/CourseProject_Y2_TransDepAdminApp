@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:TransDep_AdminApp.View.Screens"
-        xmlns:base="clr-namespace:TransDep_AdminApp.Model"
+        xmlns:dto="clr-namespace:TransDep_AdminApp.ViewModel.DTO"
         mc:Ignorable="d"
         Title="Змінити водія для вантажівки"
         WindowStyle="SingleBorderWindow"
@@ -69,11 +69,18 @@
                           Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                           SelectionChanged="Input_DriverSelection_OnSelectionChanged">
                     <ComboBox.DataContext>
-                        <base:Driver/>
+                        <dto:DriverDTO/>
                     </ComboBox.DataContext>
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path=GetString}"/>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0}: {1}">
+                                        <Binding Path="Id"/>
+                                        <Binding Path="FullName"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>

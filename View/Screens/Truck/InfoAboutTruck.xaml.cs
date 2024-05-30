@@ -12,11 +12,11 @@ namespace TransDep_AdminApp.View.Screens
 {
     public partial class InfoAboutTruck : Window
     {
-        private Truck targetTruck;
+        private TruckDTO targetTruck;
         public InfoAboutTruck(TruckDTO target)
         {
             InitializeComponent();
-            targetTruck = ((MainWindow)Application.Current.MainWindow).listBox.SelectedItem as Truck;
+            targetTruck = target;
             InitializeTruckInfo();
             InitializeDriverInfo();
         }

@@ -62,10 +62,11 @@ namespace TransDep_AdminApp.ViewModel
                 catch { /*ignore*/ }
             }
         }
+        public List<TruckDTO> GetFreeTrucksList() => TruckList.Where(elem => elem.Availability).ToList();
+        
         public delegate void OnCollectionChanged();
         public event OnCollectionChanged CollectionChanged;
 
-        public List<TruckDTO> GetFreeTrucksList() => TruckList.Where(elem => elem.Availability).ToList();
         
         public event TransferDTOToModel<TruckListVM, TruckDTO> TransferDTO;
         public void RequestTransfer(TruckDTO dto, TruckDTO replaceWith = null, ActionType? tag = null)
