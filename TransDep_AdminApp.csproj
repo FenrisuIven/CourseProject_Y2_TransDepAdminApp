@@ -13,6 +13,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <LangVersion>10</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,10 +34,98 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=8.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>packages\Autofac.8.0.0\lib\netstandard2.0\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Extensions.DependencyInjection, Version=9.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>packages\Autofac.Extensions.DependencyInjection.9.0.0\lib\netstandard2.0\Autofac.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleMapsApi, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\GoogleMapsApi.1.2.1\lib\netstandard2.0\GoogleMapsApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.9.0.0-preview.3.24172.9\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.DependencyInjection.Abstractions.8.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="RandomColorGenerator.WPF, Version=1.0.1.0, Culture=neutral, processorArchitecture=X86">
+      <HintPath>packages\randomColorSharped.WPF.1.0.1\lib\net40\RandomColorGenerator.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Collections.Immutable.9.0.0-preview.3.24172.9\lib\net462\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Diagnostics.DiagnosticSource.7.0.2\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.Encodings.Web.9.0.0-preview.3.24172.9\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.Json.9.0.0-preview.3.24172.9\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -44,17 +133,97 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WriteableBitmapEx.Wpf, Version=1.6.8.0, Culture=neutral, PublicKeyToken=50375ca6144f1c69, processorArchitecture=MSIL">
+      <HintPath>packages\WriteableBitmapEx.1.6.8\lib\net40\WriteableBitmapEx.Wpf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controller\Controller.cs" />
-    <Compile Include="Controller\Misc\VersionUpdater.cs" />
-    <Compile Include="Controller\TruckList.cs" />
-    <Compile Include="Model\Placeholder_ModelClass.cs" />
-    <Compile Include="UI\UI_Controller.cs" />
+    <Compile Include="Model\Classes\Cargo.cs" />
+    <Compile Include="Model\Classes\Driver.cs" />
+    <Compile Include="Model\Classes\DriverConfiguration.cs" />
+    <Compile Include="Model\Classes\Parking\ParkedTruck.cs" />
+    <Compile Include="Model\Classes\Parking\ParkingLotM.cs" />
+    <Compile Include="Model\Classes\Parking\ParkingSpot.cs" />
+    <Compile Include="Model\Classes\Route.cs" />
+    <Compile Include="Model\Classes\Task.cs" />
+    <Compile Include="Model\Classes\Truck.cs" />
+    <Compile Include="Model\Classes\TruckDerivedClasses\AutomaticClutch.cs" />
+    <Compile Include="Model\Classes\TruckDerivedClasses\Container.cs" />
+    <Compile Include="Model\Classes\TruckDerivedClasses\Refrigerated.cs" />
+    <Compile Include="Model\Classes\TruckDerivedClasses\Tent.cs" />
+    <Compile Include="Model\Enums\ActionType.cs" />
+    <Compile Include="Model\Enums\CargoTypes.cs" />
+    <Compile Include="Model\Enums\TruckTypes.cs" />
+    <Compile Include="Model\Interfaces\IValidationValid.cs" />
+    <Compile Include="Model\Interfaces\ILayerTransfer.cs" />
+    <Compile Include="Model\MainController.cs" />
+    <Compile Include="Model\Misc\ColorGenerator.cs" />
+    <Compile Include="Model\Misc\IDGenerator.cs" />
+    <Compile Include="Model\Misc\VersionUpdater.cs" />
+    <Compile Include="Serialization\FileIO.cs" />
+    <Compile Include="ViewModel\DriverListVM.cs" />
+    <Compile Include="ViewModel\DTO\CargoDTO.cs" />
+    <Compile Include="ViewModel\DTO\DriverDTO.cs" />
+    <Compile Include="ViewModel\DTO\RouteDTO.cs" />
+    <Compile Include="ViewModel\DTO\TaskDTO.cs" />
+    <Compile Include="ViewModel\DTO\TruckDTO.cs" />
+    <Compile Include="ViewModel\ObjectMapper.cs" />
+    <Compile Include="ViewModel\ParkingLotVM.cs" />
+    <Compile Include="ViewModel\TaskListVM.cs" />
+    <Compile Include="ViewModel\TruckListVM.cs" />
+    <Compile Include="ViewModel\Validation\CargoValidation.cs" />
+    <Compile Include="ViewModel\Validation\DriverValidation.cs" />
+    <Compile Include="ViewModel\Validation\LoadValidationForChosenTruck.cs" />
+    <Compile Include="ViewModel\Validation\RouteValidation.cs" />
+    <Compile Include="ViewModel\Validation\TaskValidation.cs" />
+    <Compile Include="ViewModel\Validation\TruckValidation.cs" />
+    <Compile Include="ViewModel\Validation\Truck\AutoClutchValidation.cs" />
+    <Compile Include="ViewModel\Validation\Truck\ContainerValidation.cs" />
+    <Compile Include="ViewModel\Validation\Truck\RefrigeratedValidation.cs" />
+    <Compile Include="ViewModel\Validation\Truck\TentValidation.cs" />
+    <Compile Include="ViewModel\Validation\Truck\TruckCharsValidationBase.cs" />
+    <Compile Include="ViewModel\Validation\Truck\ValidationsFactory.cs" />
+    <Compile Include="View\Pages\ParkingLot.xaml.cs">
+      <DependentUpon>ParkingLot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Screens\Driver\AddNewDriver.xaml.cs">
+      <DependentUpon>AddNewDriver.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Screens\Driver\ChangeDriverInfo.xaml.cs">
+      <DependentUpon>ChangeDriverInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Screens\Driver\DriverListDisplay.xaml.cs">
+      <DependentUpon>DriverListDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Screens\Task\AddNewTask.xaml.cs">
+      <DependentUpon>AddNewTask.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Screens\Task\ChangeTruck.xaml.cs">
+      <DependentUpon>ChangeTruck.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Screens\Task\TaskListDisplay.xaml.cs">
+      <DependentUpon>TaskListDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Screens\Truck\AddNewTruck.xaml.cs">
+      <DependentUpon>AddNewTruck.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Screens\Truck\ChangeDriver.xaml.cs">
+      <DependentUpon>ChangeDriver.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Screens\Truck\ChangeParkingPlace.xaml.cs">
+      <DependentUpon>ChangeParkingPlace.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Screens\Truck\InfoAboutTruck.xaml.cs">
+      <DependentUpon>InfoAboutTruck.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Screens\Truck\TruckListDisplay.xaml.cs">
+      <DependentUpon>TruckListDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UI_NewWindowHandler.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,14 +236,20 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Pages\ParkingLot.xaml" />
+    <Page Include="View\Screens\Driver\AddNewDriver.xaml" />
+    <Page Include="View\Screens\Driver\ChangeDriverInfo.xaml" />
+    <Page Include="View\Screens\Driver\DriverListDisplay.xaml" />
+    <Page Include="View\Screens\Task\AddNewTask.xaml" />
+    <Page Include="View\Screens\Task\ChangeTruck.xaml" />
+    <Page Include="View\Screens\Task\TaskListDisplay.xaml" />
+    <Page Include="View\Screens\Truck\AddNewTruck.xaml" />
+    <Page Include="View\Screens\Truck\ChangeDriver.xaml" />
+    <Page Include="View\Screens\Truck\ChangeParkingPlace.xaml" />
+    <Page Include="View\Screens\Truck\InfoAboutTruck.xaml" />
+    <Page Include="View\Screens\Truck\TruckListDisplay.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Trucks\AutomaticClutch.cs" />
-    <Compile Include="Model\Trucks\Container.cs" />
-    <Compile Include="Model\Trucks\Refrigerated.cs" />
-    <Compile Include="Model\Trucks\Tent.cs" />
-    <Compile Include="Model\Trucks\Truck.cs" />
-    <Compile Include="Model\Trucks\Truck_ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -90,6 +265,35 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClassDiagrams\include.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Cargo.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Driver.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Parking\ParkedTruck.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Parking\ParkingLotM.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Parking\ParkingSpot.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Route.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Task.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\Truck.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\TruckDerivedClasses\AutomaticClutch.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\TruckDerivedClasses\Container.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\TruckDerivedClasses\Refrigerated.puml" />
+    <Content Include="ClassDiagrams\Model\Classes\TruckDerivedClasses\Tent.puml" />
+    <Content Include="ClassDiagrams\Model\Enums\CargoTypes.puml" />
+    <Content Include="ClassDiagrams\Model\Enums\TruckTypes.puml" />
+    <Content Include="ClassDiagrams\Model\Interfaces\IDataGatherer.puml" />
+    <Content Include="ClassDiagrams\Model\Interfaces\ILayerTransfer.puml" />
+    <Content Include="ClassDiagrams\Model\Interfaces\IValidationValid.puml" />
+    <Content Include="ClassDiagrams\Model\MainController.puml" />
+    <Content Include="ClassDiagrams\Model\Misc\IDGenerator.puml" />
+    <Content Include="ClassDiagrams\Model\Misc\VersionUpdater.puml" />
+    <Content Include="README.md" />
+    <Content Include="Serialization\driverList.json" />
+    <Content Include="Serialization\taskList.json" />
+    <Content Include="Serialization\truckList.json" />
+    <Resource Include="images\*.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,0 +1,20 @@
+@startuml
+class MainController <<Singleton>> {
+    + <<const>> _serializationPath : string
+    + <<event>> FinishedChanges : FinChanges 
+    + ObservableCollection truckList<Truck>
+    + ObservableCollection driverList<Driver>
+    + ObservableCollection taskList<Task>
+    + Initialize () : void
+    + Serialize () : void
+    + RefreshParkingSpots () : void
+    + TruckAdditionRequested (sender: TruckListVM, dto: TruckDTO) : void
+    + TaskAdditionRequested (sender: TaskListVM, dto: TaskDTO) : void
+    + DriverAdditionRequested (sender: DriverListVM, dto: DriverDTO) : void
+    + ReplaceTruck (target: object, replace: object) : void
+    + ReplaceDriver (target: object, replace: object) : void
+    + RemoveTruck (target: object) : void
+    + RemoveDriver (target: object) : void
+    + OnChangesFinished () : void
+}
+@enduml

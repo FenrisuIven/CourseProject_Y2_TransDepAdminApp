@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="fr.socolin.rider.plugins.hsf.settings.storage.UserSettingsStorageService">
+    <option name="rules" value="ruleId=3bd5f657-ec88-4237-954a-9f237f9cc87d&amp;pattern=%5E%24&amp;order=0&amp;icon=none&amp;disabled=false/ruleId=dcdb4917-3416-4766-92d4-5edaf491a912&amp;pattern=Serialization&amp;order=0&amp;icon=hsf.icons.built-in.Nodes.Folder&amp;priority=1000&amp;foregroundColorHex=%23f5c62d&amp;disabled=false" />
+    <option name="nestingRules" value="ruleId=eea5166d-7b7c-4b83-91a6-91c2655f7340&amp;pattern=%5E%24&amp;order=0&amp;disabled=false" />
+  </component>
+</project>

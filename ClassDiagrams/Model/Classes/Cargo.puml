@@ -1,0 +1,14 @@
+@startuml
+class Cargo {
+    + Weight : double { get; protected set; }
+    + Volume : double { get; protected set; }
+    + Amount : double { get; protected set; }
+    + Type : CargoType { get; protected set; }
+    + <<override>> ToString() : string
+}
+enum CargoType {
+    RequiresRefrigerator,
+    DoesNotNeedRefrigerator
+}
+Cargo::Type --> CargoType
+@enduml

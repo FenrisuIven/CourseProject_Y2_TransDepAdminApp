@@ -1,0 +1,5 @@
+@startuml
+interface "IDataGatherer"<T > {
+    GatherData () : T
+}
+@enduml

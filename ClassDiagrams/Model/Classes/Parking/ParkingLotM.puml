@@ -1,0 +1,14 @@
+@startuml
+class ParkingLotM <<singleton>> {
+    + ParkingSpots : ObservableCollection <ParkingSpot>
+    +  <<event>> SpotAvailabilityChanged : SpotAvailChanged 
+    + TakeSpot (spotNum : int, truckID : string) : void
+    + FreeSpot (spotNum : int) : void
+    + GetFirstFree () : int
+    + TakeFirstFreeSpot (truckId : string) : int
+    + Initialize () : void
+    + RefreshAvailability () : void
+    + OnSpotAvailChanged () : void
+}
+ParkingLotM::ParkingSpots --> ParkingSpot
+@enduml

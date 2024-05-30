@@ -1,0 +1,15 @@
+@startuml
+class Truck {
+    + Id : string { get; protected set; }
+    + DriverID : string? { get; protected set; }
+    + Name : string { get; protected set; }
+    + CarryingCapacity : int { get; protected set; }
+    + UsefulVolume : int { get; protected set; }
+    + Capacity : int { get; protected set; }
+    + Availability : bool { get; protected set; }
+    + ParkingSpot : int? { get; protected set; }
+    + SetAvailability(val:bool) : void
+    + SetParkingSpot(value:int?) : void
+    + SetDriverID(value:string) : void
+}
+@enduml

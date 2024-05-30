@@ -1,0 +1,8 @@
+@startuml
+class Tent {
+    + <<static>> allowedCarryingCapacity : double[]
+    + <<static>> allowedUsefulVolume : double[]
+    + <<static>> allowedCapacity : double[]
+}
+Truck <|-- Tent
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+interface "ILayerTransfer" < TSender, TDTO > {
+    + <<event>> TransferDTO : TransferDTOToModel <TSender,TDTO> 
+    + {method} RequestTransfer (dto: TDTO, senderName: string) : void
+}
+class "TransferDTOToModel" <TSender, TDTO> <<delegate>> {}
+@enduml
