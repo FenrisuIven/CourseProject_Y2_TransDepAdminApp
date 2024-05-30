@@ -139,7 +139,6 @@
                        TextWrapping="Wrap"
                        TextAlignment="Center"/>
         </Button>
-        
         <TextBox x:Name="version" Text="0" 
             Background="{x:Null}" 
             BorderBrush="{x:Null}" 
